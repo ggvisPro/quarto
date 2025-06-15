@@ -7,17 +7,19 @@ format:
   html:
     html-math-method: katex
     code-tools: true
-    self-contained: true
+    self-contained: false
     # code-fold: true
 execute:
   warning: false
+  cache: true
+  freeze: auto
 ---
 
 # 基本概念
 
 现在有下面这张表格，记录了钻石相关的一些信息：
 
-```{r}
+```{r load-data}
 library(tidyverse)
 diamonds <- diamonds |> filter(carat < 3)
 knitr::kable(head(ggplot2::diamonds))
@@ -55,7 +57,7 @@ which part of the data analysis process is the most interesting? Which part is t
 
 ### 饼图(Pie)
 不得不说，饼图是最常见的单个分类变量可视化方式，那么直接，又那么简单。
-```{r}
+```{r Univariate-Categorical-Variable-Pie}
 library(tidyplots)
 energy |>
   tidyplot(y = energy, color = energy_source) |>
@@ -64,7 +66,7 @@ energy |>
 
 ### 甜甜圈图(Donut)
 甜甜圈图是饼图的变种，去掉了中间的空心部分，形成一个甜甜圈形状。
-```{r}
+```{r Univariate-Categorical-Variable-Donut}
 energy |>
   tidyplot(y = energy, color = energy_source) |>
   add_donut()
@@ -83,7 +85,7 @@ energy |>
 
 ### 直方图(Histogram)
 下图是 `r nrow(diamonds)` 个钻石的克拉数分布，X轴是克拉数，Y轴是频数。
-```{r}
+```{r Univariate-Continuous-Variable-Histogram-Binwidth-0.5}
 ggplot(diamonds, aes(x = carat)) +
   geom_histogram(binwidth = 0.5) 
 ```
@@ -93,13 +95,13 @@ What do you notice from the histogram?
 :::
 
 让我们改变一下 binwidth 的大小，看看会有什么不同。
-```{r}
+```{r Univariate-Continuous-Variable-Histogram-Binwidth-0.1}
 ggplot(diamonds, aes(x = carat)) +
   geom_histogram(binwidth = 0.1) 
 ```
 
 好像有些不一样了，继续改变 binwidth 的大小：
-```{r}
+```{r Univariate-Continuous-Variable-Histogram-Binwidth-0.01}
 ggplot(diamonds, aes(x = carat)) +
   geom_histogram(binwidth = 0.01) 
 ```
@@ -113,7 +115,7 @@ Why are there more diamonds slightly to the right of each peak than there are sl
 
 ### 密度曲线图(Density)
 密度曲线图可以帮助我们更好地理解数据的分布情况。下图是钻石克拉数的密度曲线图，X轴是克拉数，Y轴是分布密度,
-```{r}
+```{r Univariate-Continuous-Variable-Density}
 ggplot(diamonds, aes(x = carat)) +
   geom_density()
 ```
@@ -133,7 +135,7 @@ How to interpret this boxplot?
 
 ### 小提琴图(Violin)
 箱线图很好,但仅展示了四分位数等,而小提琴图则显示了数据的分布密度,可以更好地展示数据的分布情况。
-```{r}
+```{r Univariate-Continuous-Variable-Violin}
 ggplot(diamonds |> filter(cut == "Fair"), aes(x = cut, y = carat)) +
   geom_violin() 
 ```
@@ -141,7 +143,7 @@ ggplot(diamonds |> filter(cut == "Fair"), aes(x = cut, y = carat)) +
 
 ### 小提琴图(Violin) + 箱线图(Boxplot)
 还有一种把小提琴图和箱线图结合的方式，近年来在科研界比较流行。
-```{r}
+```{r Univariate-Continuous-Variable-Violin-Boxplot}
 ggplot(diamonds |> filter(cut == "Fair"), aes(x = cut, y = carat)) +
   geom_violin() +
   geom_boxplot(width = 0.1, fill = "white")
@@ -157,7 +159,7 @@ How to interpret this plot?
 
 ### 折线图(Line)
 下面是不同切割质量的钻石的价格情况的折线图
-```{r}
+```{r Univariate-Continuous-Variable-Line}
 ggplot(diamonds, aes(x = price, color = cut)) + 
   geom_freqpoly(binwidth = 500, linewidth = 0.75)
 ```
@@ -169,14 +171,14 @@ Why is this plot ugly?
 
 ### 密度曲线图(Density)
 当各组数据差得较多时,纵轴用count不太合适,会造成摩天大厦+小平层,不如把纵轴改为density:
-```{r}
+```{r Univariate-Continuous-Variable-Density-Freqpoly}
 ggplot(diamonds, aes(x = price, y = after_stat(density), color = cut)) + 
   geom_freqpoly(binwidth = 500, linewidth = 0.75)
 ```
 好多了吧 ●'◡'● (好吧,还是有点丑)
 
 分面(facet)会好一点吗? 
-```{r}
+```{r Univariate-Continuous-Variable-Density-Facet}
 ggplot(diamonds, aes(x = price, fill = cut)) + 
   geom_density() + 
   facet_wrap(~ cut, nrow = 1) + 
@@ -185,7 +187,7 @@ ggplot(diamonds, aes(x = price, fill = cut)) +
 
 ### 山脊图(Ridge)
 近年来还流行一种“山脊图(Ridge)”，它可以更好地展示多个分布的重叠情况。
-```{r}
+```{r Univariate-Continuous-Variable-Ridge}
 library(ggridges)
 ggplot(diamonds, aes(x = price, y = cut, fill = cut)) + 
   geom_density_ridges(alpha = 0.5) + 
@@ -194,13 +196,13 @@ ggplot(diamonds, aes(x = price, y = cut, fill = cut)) +
 
 ### 并排箱线图(Boxplot)
 箱线图也是一种直观的可视化方式
-```{r}
+```{r Univariate-Continuous-Variable-Boxplot}
 ggplot(diamonds, aes(x = cut, y = price)) +
   geom_boxplot()
 ```
 
 或许还可以上点颜色, 让它显得花里胡哨:
-```{r}
+```{r Univariate-Continuous-Variable-Boxplot-Color}
 ggplot(diamonds, aes(x = cut, y = price, fill = cut)) +
   geom_boxplot(outlier.shape = NA) +
   theme(legend.position = "none") + 
@@ -214,7 +216,7 @@ Why does the boxplot show that the price of diamonds with "Fair" cut is higher t
 
 ### 折线图(Line)
 还有一种策略,是算出数值的平均数(或其他特征),然后绘制折线图:
-```{r}
+```{r Univariate-Continuous-Variable-Line-Mean}
 diamonds |>
   group_by(cut) |>
   summarise(price = mean(price)) |>
@@ -229,7 +231,7 @@ diamonds |>
 
 ### 点图(Dot)
 下图是一个点图，展示了钻石的切割质量和颜色之间的关系。点的大小表示组合的数量
-```{r}
+```{r Univariate-Categorical-Variable-Dot}
 ggplot(diamonds, aes(x = cut, y = color)) +
   geom_count()
 ```
@@ -237,7 +239,7 @@ ggplot(diamonds, aes(x = cut, y = color)) +
 
 ### 色块图(Tile)
 让我们再来换一种表达形式——色块图,色块的颜色表示组合的数量.
-```{r}
+```{r Univariate-Categorical-Variable-Tile}
 diamonds |> 
   count(color, cut) |>  
   ggplot(aes(x = color, y = cut)) +
@@ -251,12 +253,10 @@ Which one do you prefer, the dot plot or the tile plot? Why?
 ### 堆叠条形图(Barstack)
 又到了~我不喜欢的~堆叠条形图了.
 下面两个图是钻石的颜色和切割质量的堆叠条形图，分别展示了每种颜色的钻石在不同切割质量下的数量分布。
-```{r}
+```{r Univariate-Categorical-Variable-Barstack}
 ggplot(diamonds, aes(x = color, fill = cut)) +
   geom_bar()
-```
 
-```{r}
 ggplot(diamonds, aes(x = color, fill = cut)) +
   geom_bar(position = "fill")
 ```
@@ -267,7 +267,7 @@ What is the difference between the two stacked bar charts?
 
 ### 分面面包圈图(Facet Donut)
 其实就是多个面包圈图组合在一起,用ppt也能做.
-```{r}
+```{r Univariate-Categorical-Variable-Facet-Donut}
 df <- 
   read_csv("https://tidyplots.org/data/electricity-generation-in-Germany.csv")
 
@@ -284,7 +284,7 @@ df |>
 
 ### 散点图(Scatter)
 下图是钻石的克拉数和价格之间的散点图，X轴是克拉数，Y轴是价格。
-```{r}
+```{r Univariate-Continuous-Variable-Scatter}
 ggplot(diamonds, aes(x = carat, y = price)) +
   geom_point()
 ```
@@ -298,7 +298,7 @@ ggplot(diamonds, aes(x = carat, y = price)) +
 稍微好一点,但是还有一些更好的策略.
 
 ### 分格散点图(bin)
-```{r}
+```{r Univariate-Continuous-Variable-Scatter-Bin}
 ggplot(diamonds, aes(x = carat, y = price)) +
   geom_bin2d()
 
@@ -308,7 +308,7 @@ ggplot(diamonds, aes(x = carat, y = price)) +
 
 ### 排序箱线图(Order Boxplot)
 把其中一个变量分成若干个区间,然后在每个区间内绘制箱线图,可以更好地展示数据的分布情况.
-```{r}
+```{r Univariate-Continuous-Variable-Scatter-Order-Boxplot}
 ggplot(diamonds, aes(x = carat, y = price)) + 
   geom_boxplot(aes(group = cut_width(carat, 0.1)))
 ```
@@ -319,7 +319,7 @@ When do you think a Order Boxplot Plot is useful?
 
 ### 散点图(Scatter) + 线性回归(Linear Regression)
 换一个数据较少的例子,这是一个散点图，展示了汽车的发动机排量和高速公路油耗之间的关系。红色的点表示2座跑车。
-```{r}
+```{r Univariate-Continuous-Variable-Scatter-Linear-Regression}
 ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_point() +
   geom_point(
@@ -333,8 +333,8 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 ```
 
 
-对于专业客户,我们可以在散点图上添加线性回归线,来展示两者之间的关系.
-```{r}
+我们还可以在散点图上添加线性回归线,来展示两者之间的关系.
+```{r Univariate-Continuous-Variable-Scatter-Linear-Regression-Line}
 ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_point() +
   geom_smooth()
