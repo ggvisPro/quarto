@@ -5,10 +5,10 @@ date: "2025-06-24"
 toc: true
 format:
   html:
-    html-math-method: katex
-    code-tools: true
     self-contained: false
-    code-fold: true
+    code-tools: true
+    code-fold: show
+    code-summary: "Show/Hide Code"
 execute:
   warning: false
   cache: true
@@ -20,6 +20,7 @@ execute:
 现在有下面这张表格，记录了钻石相关的一些信息：
 
 ```{r load-data}
+#| echo: true
 library(tidyverse)
 diamonds <- diamonds |> filter(carat < 3)
 knitr::kable(head(ggplot2::diamonds))
