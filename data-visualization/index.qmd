@@ -130,6 +130,7 @@ What is the relationship between the density curve and the histogram above?
 ### 箱线图(Boxplot)
 箱线图是用来展示数据分布的图形，主要用于显示数据的中位数、四分位数、异常值等信息。
 ![](https://r4ds.hadley.nz/images/EDA-boxplot.png)
+
 ::: {.callout-important title="思考题"}
 How to interpret this boxplot?
 :::
@@ -141,6 +142,29 @@ ggplot(diamonds |> filter(cut == "Fair"), aes(x = cut, y = carat)) +
   geom_violin() 
 ```
 小提琴图显示分布密度
+
+::: {.callout-important title="思考题"}
+what is the difference in the three plots(boxplot, density plot, histogram)?
+:::
+
+下图很地解释了直方图、密度曲线图和箱线图这三者之前的关系
+
+```{R}
+# Left
+p_left <- ggplot(diamonds, aes(x = carat)) +
+  geom_histogram(binwidth = 0.1)
+
+# Middle
+p_middle <- ggplot(diamonds, aes(x = carat)) +
+  geom_density()
+
+# Right
+p_right <- ggplot(diamonds, aes(x = carat)) +
+  geom_boxplot()
+
+library(patchwork)
+p_left + p_middle + p_right
+```
 
 ### 小提琴图(Violin) + 箱线图(Boxplot)
 还有一种把小提琴图和箱线图结合的方式，近年来在科研界比较流行。
@@ -309,10 +333,10 @@ ggplot(diamonds, aes(x = carat, y = price)) +
 
 ### 排序箱线图(Order Boxplot)
 把其中一个变量分成若干个区间,然后在每个区间内绘制箱线图,可以更好地展示数据的分布情况.
-```{r Univariate-Continuous-Variable-Scatter-Order-Boxplot}
+`**``{r Univariate-Continuous-Variable-Scatter-Order-Boxplot}
 ggplot(diamonds, aes(x = carat, y = price)) + 
   geom_boxplot(aes(group = cut_width(carat, 0.1)))
-```
+```**
 
 ::: {.callout-important title="思考题"}
 When do you think a Order Boxplot Plot is useful?
