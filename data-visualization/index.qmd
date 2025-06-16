@@ -60,25 +60,29 @@ which part of the data analysis process is the most interesting? Which part is t
 不得不说，饼图是最常见的单个分类变量可视化方式，那么直接，又那么简单。
 ```{r Univariate-Categorical-Variable-Pie}
 library(tidyplots)
-energy |>
-  tidyplot(y = energy, color = energy_source) |>
-  add_pie()
+ggplot(diamonds, aes(x = 1, fill = cut)) + 
+  geom_bar(color = "white") + 
+  coord_polar(theta = "y") + 
+  theme_void()
 ```
 
 ### 甜甜圈图(Donut)
 甜甜圈图是饼图的变种，去掉了中间的空心部分，形成一个甜甜圈形状。
 ```{r Univariate-Categorical-Variable-Donut}
-energy |>
-  tidyplot(y = energy, color = energy_source) |>
-  add_donut()
+ggplot(diamonds, aes(x = 2, fill = cut)) + 
+  geom_bar(color = "white") +
+  xlim(0.5, 2.5) +  # 这里设置中心空白洞的大小
+  coord_polar(theta = "y") + 
+  theme_void() + 
+  theme(legend.position = "none")
 ```
 
 ### 堆叠条形图(Barstack)
 堆叠条形图是另一种常见的单个分类变量可视化方式~~(我不喜欢,我觉得它不直观)~~
 ```{r}
-energy |>
-  tidyplot(y = energy, color = energy_source) |>
-  add_barstack_absolute()
+ggplot(diamonds, aes(x = 1, fill = cut)) + 
+  geom_bar(color = "white") + 
+  theme_classic()
 ```
 
 ## 连续性变量（Continuous Variable）
@@ -293,16 +297,12 @@ What is the difference between the two stacked bar charts?
 ### 分面面包圈图(Facet Donut)
 其实就是多个面包圈图组合在一起,用ppt也能做.
 ```{r Univariate-Categorical-Variable-Facet-Donut}
-df <- 
-  read_csv("https://tidyplots.org/data/electricity-generation-in-Germany.csv")
-
-df |> 
-  dplyr::filter(year %in% c(2003, 2013, 2023)) |> 
-  tidyplot(y = energy, color = energy_type) |> 
-  add_donut() |> 
-  remove_legend_title() |> 
-  split_plot(by = year, ncol = 3, widths = 50, heights = 50) &
-  theme(legend.position = "bottom") 
+ggplot(diamonds, aes(x = 1, fill = color)) +
+  geom_bar(color = "white") + 
+  xlim(-0.5, 1.5) + 
+  coord_polar(theta = "y") + 
+  theme_void() + 
+  facet_wrap(~ cut, scales="free_y", nrow = 2)
 ```
 
 ## 两个数值变量(Two numerical variables)
