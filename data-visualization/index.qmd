@@ -59,7 +59,6 @@ which part of the data analysis process is the most interesting? Which part is t
 ### 饼图(Pie)
 不得不说，饼图是最常见的单个分类变量可视化方式，那么直接，又那么简单。
 ```{r Univariate-Categorical-Variable-Pie}
-library(tidyplots)
 ggplot(diamonds, aes(x = 1, fill = cut)) + 
   geom_bar(color = "white") + 
   coord_polar(theta = "y") + 
@@ -73,8 +72,7 @@ ggplot(diamonds, aes(x = 2, fill = cut)) +
   geom_bar(color = "white") +
   xlim(0.5, 2.5) +  # 这里设置中心空白洞的大小
   coord_polar(theta = "y") + 
-  theme_void() + 
-  theme(legend.position = "none")
+  theme_void()
 ```
 
 ### 堆叠条形图(Barstack)
@@ -166,7 +164,6 @@ p_middle <- ggplot(diamonds, aes(x = carat)) +
 p_right <- ggplot(diamonds, aes(x = carat)) +
   geom_boxplot()
 
-library(patchwork)
 p_left + p_middle + p_right
 ```
 
