@@ -1,17 +1,21 @@
 
 # 基线资料
-
+## 基础情况
 ```{r}
 # 读取数据
 library(tidyverse)
 library(glue)
+library(knitr)
 
 df0 <- read_csv("./data/没有中文字符的数据.csv") # 带有type0的数据
 df_name <- read_csv("./data/新-变量注解.csv") |> filter(!is.na(Variable))
 df <- df0 |> filter(X1 %in% c("1", "2")) # 有分娩结局
 ```
 
-共有 **`r nrow(df0)`** 例样本(住院次数)，剔除了 **`r nrow(df0) - nrow(df)`** 例无分娩结局样本 (本院多次住院,则仅保留分娩当次, 剔除其它未分娩住院; 本院住院但最终未在本院分娩, 则剔除)，保留了 **`r nrow(df)`** 例样本。
+共有 **`r nrow(df0)`** 例样本(住院次数)，剔除了 **`r nrow(df0) - nrow(df)`** 例无分娩结局样本:
+
+- 本院多次住院,则仅保留分娩当次, 剔除其它未分娩住院; 
+- 本院住院但最终未在本院分娩, 则剔除;
 
 最终有 **`r nrow(df)`** 例样本, **`r ncol(df)`** 个变量 (如果1个PAH产妇分娩2次,计做2例样本) 。
 
@@ -20,39 +24,33 @@ df <- df0 |> filter(X1 %in% c("1", "2")) # 有分娩结局
 
 ```{r}
 # 数据概览
-knitr::kable(head(df))
+kable(head(df))
 ```
 
 
-
-**PAH 分度:** (0:NA; 1:轻度; 2:中度; 3:重度)
-
 ```{r}
-table(df$V26)
+table(df$V26) |> kable(caption = "PAH分度 (0:NA; 1:轻度; 2:中度; 3:重度)")
 ```
 
 
-
-**心功能分级:** (0:NA; 1:I级; 2:II级; 3:III级; 4:IV级)
-
 ```{r}
-table(df$V21)
+table(df$V21) |> kable(caption = "心功能分级 (0:NA; 1:I级; 2:II级; 3:III级; 4:IV级)")
 ```
 
 
 ```{r}
 
-print("年龄(随): ")
-print(summary(df$V114))
+print("年龄(岁): ")
+summary(df$V114)
 
 print("孕周(周): ")
-print(summary(df$V20))
+summary(df$V20)
 ```
 
-以下是基线资料统计摘要:
+## 临床资料
 
 ```{r}
-# 基线资料统计摘要
+# 临床基线资料统计摘要
 df_general <- df |>
     select(
         V22,
@@ -162,16 +160,45 @@ df_general_summary <- df_general |>
     left_join(df_name, join_by(variable == Variable)) # 添加变量注解
 
 # 展示表格
-knitr::kable(
+kable(
     df_general_summary |> select(Label, `0(%)`, `1(%)`, `NA`),
-    caption = glue("基线资料统计摘要 (n = {nrow(df_general)})")
+    caption = glue("临床基线资料统计摘要 (n = {nrow(df_general)})")
 )
 ```
 
 
-# 妊娠结局
+## 超声及化验
 
-终止妊娠的有 **`r table(df$X1)[[2]]`** 例，分娩的有 **`r table(df$X1)[[1]]`** 例。
+```{r}
+# 超声及化验基线资料统计摘要
+cols_to_select <- paste0("X", seq(3, 763, by = 6))
+df_test <- df[, cols_to_select]
+
+df_test |>
+    pivot_longer(
+        cols = everything(),
+        names_to = "variable",
+        values_to = "value"
+    ) |>
+    group_by(variable) |>
+
+    # 计算统计摘要
+    summarise(
+        n = n(),
+        mean = round(mean(value, na.rm = TRUE), 2),
+        median = round(median(value, na.rm = TRUE), 2),
+        sd = round(sd(value, na.rm = TRUE), 2),
+        `NA` = sum(is.na(value))
+    ) |>
+    left_join(df_name, join_by(variable == Variable)) |> # 添加变量注解
+
+    # 展示表格
+    select(Label, n, mean, sd, median,  `NA`) |>
+    kable(caption = glue("超声及化验基线资料统计摘要 (n = {nrow(df)})"))
+```
+
+
+# 妊娠结局
 
 ```{r}
 # 妊娠结局
@@ -225,7 +252,7 @@ df_outcome_summary <- df_outcome |>
     left_join(df_name, join_by(variable == Variable))  # 添加变量注解
 
     # 展示表格
-    knitr::kable(
+kable(
         df_outcome_summary |> select(Label, `0(%)`, `1(%)`, `NA`),
         caption = glue("妊娠结局统计摘要 (n = {nrow(df_outcome)})")
     )
@@ -234,6 +261,7 @@ df_outcome_summary <- df_outcome |>
 
 ![妊娠结局](./output/outcome.png)
 
+# 不良事件
 
 ```{r}
 # 筛选不良事件
@@ -274,7 +302,7 @@ df_bad_summary <- df_bad |>
     ) |>
     left_join(df_name, join_by(variable == Variable)) # 添加变量注解
 
-knitr::kable(
+kable(
     df_bad_summary |> select(Label, `0(%)`, `1(%)`, `NA`),
     caption = glue("不良事件统计摘要 (n = {nrow(df_bad)})")
 )

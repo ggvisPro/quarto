@@ -75,10 +75,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#基线资料" id="toc-基线资料" class="nav-link active" data-scroll-target="#基线资料">基线资料</a>
+  <ul class="collapse">
+  <li><a href="#基础情况" id="toc-基础情况" class="nav-link" data-scroll-target="#基础情况">基础情况</a></li>
+  <li><a href="#临床资料" id="toc-临床资料" class="nav-link" data-scroll-target="#临床资料">临床资料</a></li>
+  <li><a href="#超声及化验" id="toc-超声及化验" class="nav-link" data-scroll-target="#超声及化验">超声及化验</a></li>
+  </ul></li>
+  <li><a href="#妊娠结局" id="toc-妊娠结局" class="nav-link" data-scroll-target="#妊娠结局">妊娠结局</a></li>
+  <li><a href="#不良事件" id="toc-不良事件" class="nav-link" data-scroll-target="#不良事件">不良事件</a></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -114,26 +129,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="基线资料" class="level1">
 <h1>基线资料</h1>
+<section id="基础情况" class="level2">
+<h2 class="anchored" data-anchor-id="基础情况">基础情况</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Show/Hide Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 读取数据</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df0 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"./data/没有中文字符的数据.csv"</span>) <span class="co"># 带有type0的数据</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>df_name <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"./data/新-变量注解.csv"</span>) <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Variable))</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df0 <span class="sc">|&gt;</span> <span class="fu">filter</span>(X1 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>)) <span class="co"># 有分娩结局</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>df0 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"./data/没有中文字符的数据.csv"</span>) <span class="co"># 带有type0的数据</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df_name <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"./data/新-变量注解.csv"</span>) <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Variable))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df0 <span class="sc">|&gt;</span> <span class="fu">filter</span>(X1 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>)) <span class="co"># 有分娩结局</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>共有 <strong>1123</strong> 例样本(住院次数)，剔除了 <strong>245</strong> 例无分娩结局样本 (本院多次住院,则仅保留分娩当次, 剔除其它未分娩住院; 本院住院但最终未在本院分娩, 则剔除)，保留了 <strong>878</strong> 例样本。</p>
+<p>共有 <strong>1123</strong> 例样本(住院次数)，剔除了 <strong>245</strong> 例无分娩结局样本:</p>
+<ul>
+<li>本院多次住院,则仅保留分娩当次, 剔除其它未分娩住院;</li>
+<li>本院住院但最终未在本院分娩, 则剔除;</li>
+</ul>
 <p>最终有 <strong>878</strong> 例样本, <strong>886</strong> 个变量 (如果1个PAH产妇分娩2次,计做2例样本) 。</p>
 <p>以下是最终的数据表(仅展示前6行):</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show/Hide Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 数据概览</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -7248,41 +7270,91 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-<p><strong>PAH 分度:</strong> (0:NA; 1:轻度; 2:中度; 3:重度)</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show/Hide Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>V26)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>V26) <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"PAH分度 (0:NA; 1:轻度; 2:中度; 3:重度)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-  0   1   2   3 
-617  89  47 124 </code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>PAH分度 (0:NA; 1:轻度; 2:中度; 3:重度)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Var1</th>
+<th style="text-align: right;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">617</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">89</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">47</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">124</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<p><strong>心功能分级:</strong> (0:NA; 1:I级; 2:II级; 3:III级; 4:IV级)</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show/Hide Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>V21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>V21) <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"心功能分级 (0:NA; 1:I级; 2:II级; 3:III级; 4:IV级)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-  0   1   2   3   4 
-176 111 364 178  49 </code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>心功能分级 (0:NA; 1:I级; 2:II级; 3:III级; 4:IV级)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Var1</th>
+<th style="text-align: right;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">176</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">111</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">364</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">178</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: right;">49</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Show/Hide Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"年龄(随): "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"年龄(岁): "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "年龄(随): "</code></pre>
+<pre><code>[1] "年龄(岁): "</code></pre>
 </div>
 <details class="code-fold">
 <summary>Show/Hide Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(df<span class="sc">$</span>V114))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df<span class="sc">$</span>V114)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
@@ -7290,142 +7362,144 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <details class="code-fold">
 <summary>Show/Hide Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"孕周(周): "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"孕周(周): "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "孕周(周): "</code></pre>
 </div>
 <details class="code-fold">
 <summary>Show/Hide Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(df<span class="sc">$</span>V20))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df<span class="sc">$</span>V20)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
    6.00   12.00   31.00   26.06   37.00   41.00     387 </code></pre>
 </div>
 </div>
-<p>以下是基线资料统计摘要:</p>
+</section>
+<section id="临床资料" class="level2">
+<h2 class="anchored" data-anchor-id="临床资料">临床资料</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Show/Hide Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 基线资料统计摘要</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df_general <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        V22,</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        V23,</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        V24,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        V25,</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        V27,</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        V28,</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        V29,</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        V30,</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        V31,</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        V32,</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        V33,</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>        V35,</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        V36,</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        V37,</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>        V38,</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>        V39,</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>        V40,</span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>        V41,</span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>        V42,</span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>        V43,</span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>        V45,</span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>        V47,</span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>        V48,</span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>        V49,</span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>        V50,</span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>        V51,</span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>        V52,</span>
-<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>        V53,</span>
-<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>        V54,</span>
-<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>        V55,</span>
-<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>        V56,</span>
-<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>        V57,</span>
-<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>        V58,</span>
-<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>        V59,</span>
-<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>        V60,</span>
-<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>        V61,</span>
-<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>        V62,</span>
-<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>        V63,</span>
-<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>        V64,</span>
-<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>        V65,</span>
-<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>        V66,</span>
-<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>        V67,</span>
-<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>        V68,</span>
-<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>        V69,</span>
-<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>        V70,</span>
-<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>        V71,</span>
-<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>        V72,</span>
-<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>        V73,</span>
-<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>        V74,</span>
-<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>        V75,</span>
-<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>        V76,</span>
-<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>        V77,</span>
-<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>        V78,</span>
-<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>        V79,</span>
-<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a>        V80,</span>
-<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>        V81,</span>
-<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a>        V82,</span>
-<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a>        V83,</span>
-<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a>        V84,</span>
-<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>        V85,</span>
-<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a>        V86,</span>
-<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a>        V87,</span>
-<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a>        V88,</span>
-<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a>        V89,</span>
-<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a>        V90,</span>
-<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a>        V91,</span>
-<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a>        V92,</span>
-<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a>        V93,</span>
-<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a>        V94,</span>
-<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a>        V95,</span>
-<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>        V96,</span>
-<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a>        V97,</span>
-<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a>        V98,</span>
-<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a>        V99,</span>
-<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a>        V100,</span>
-<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a>        V111,</span>
-<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a>        V112,</span>
-<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a>        V113,</span>
-<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a>        V121,</span>
-<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a>        V122,</span>
-<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a>df_general_summary <span class="ot">&lt;-</span> df_general <span class="sc">|&gt;</span></span>
-<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 转换为长数据</span></span>
-<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
-<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
-<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
-<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
-<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(variable) <span class="sc">|&gt;</span></span>
-<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 计算统计摘要</span></span>
-<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(value <span class="sc">==</span> <span class="st">"1"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
-<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '1', na.rm = TRUE)} ({round(mean(value == '1', na.rm = TRUE)*100, 2)}%)"</span></span>
-<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
-<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '0', na.rm = TRUE)} ({round(mean(value == '0', na.rm = TRUE)*100, 2)}%)"</span></span>
-<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">NA</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(value)),</span>
-<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(df_name, <span class="fu">join_by</span>(variable <span class="sc">==</span> Variable)) <span class="co"># 添加变量注解</span></span>
-<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a><span class="co"># 展示表格</span></span>
-<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a>    df_general_summary <span class="sc">|&gt;</span> <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">NA</span><span class="st">`</span>),</span>
-<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">glue</span>(<span class="st">"基线资料统计摘要 (n = {nrow(df_general)})"</span>)</span>
-<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 临床基线资料统计摘要</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df_general <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        V22,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        V23,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        V24,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        V25,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        V27,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        V28,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        V29,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        V30,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        V31,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        V32,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        V33,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        V35,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        V36,</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        V37,</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>        V38,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>        V39,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>        V40,</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>        V41,</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>        V42,</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>        V43,</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>        V45,</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>        V47,</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>        V48,</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>        V49,</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>        V50,</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>        V51,</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>        V52,</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>        V53,</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>        V54,</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>        V55,</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>        V56,</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>        V57,</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>        V58,</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>        V59,</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>        V60,</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>        V61,</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>        V62,</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>        V63,</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>        V64,</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>        V65,</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>        V66,</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>        V67,</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>        V68,</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>        V69,</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>        V70,</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>        V71,</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>        V72,</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>        V73,</span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>        V74,</span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>        V75,</span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>        V76,</span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>        V77,</span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a>        V78,</span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>        V79,</span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a>        V80,</span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a>        V81,</span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>        V82,</span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>        V83,</span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a>        V84,</span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a>        V85,</span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a>        V86,</span>
+<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a>        V87,</span>
+<span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a>        V88,</span>
+<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a>        V89,</span>
+<span id="cb13-68"><a href="#cb13-68" aria-hidden="true" tabindex="-1"></a>        V90,</span>
+<span id="cb13-69"><a href="#cb13-69" aria-hidden="true" tabindex="-1"></a>        V91,</span>
+<span id="cb13-70"><a href="#cb13-70" aria-hidden="true" tabindex="-1"></a>        V92,</span>
+<span id="cb13-71"><a href="#cb13-71" aria-hidden="true" tabindex="-1"></a>        V93,</span>
+<span id="cb13-72"><a href="#cb13-72" aria-hidden="true" tabindex="-1"></a>        V94,</span>
+<span id="cb13-73"><a href="#cb13-73" aria-hidden="true" tabindex="-1"></a>        V95,</span>
+<span id="cb13-74"><a href="#cb13-74" aria-hidden="true" tabindex="-1"></a>        V96,</span>
+<span id="cb13-75"><a href="#cb13-75" aria-hidden="true" tabindex="-1"></a>        V97,</span>
+<span id="cb13-76"><a href="#cb13-76" aria-hidden="true" tabindex="-1"></a>        V98,</span>
+<span id="cb13-77"><a href="#cb13-77" aria-hidden="true" tabindex="-1"></a>        V99,</span>
+<span id="cb13-78"><a href="#cb13-78" aria-hidden="true" tabindex="-1"></a>        V100,</span>
+<span id="cb13-79"><a href="#cb13-79" aria-hidden="true" tabindex="-1"></a>        V111,</span>
+<span id="cb13-80"><a href="#cb13-80" aria-hidden="true" tabindex="-1"></a>        V112,</span>
+<span id="cb13-81"><a href="#cb13-81" aria-hidden="true" tabindex="-1"></a>        V113,</span>
+<span id="cb13-82"><a href="#cb13-82" aria-hidden="true" tabindex="-1"></a>        V121,</span>
+<span id="cb13-83"><a href="#cb13-83" aria-hidden="true" tabindex="-1"></a>        V122,</span>
+<span id="cb13-84"><a href="#cb13-84" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-85"><a href="#cb13-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-86"><a href="#cb13-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-87"><a href="#cb13-87" aria-hidden="true" tabindex="-1"></a>df_general_summary <span class="ot">&lt;-</span> df_general <span class="sc">|&gt;</span></span>
+<span id="cb13-88"><a href="#cb13-88" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 转换为长数据</span></span>
+<span id="cb13-89"><a href="#cb13-89" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb13-90"><a href="#cb13-90" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb13-91"><a href="#cb13-91" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
+<span id="cb13-92"><a href="#cb13-92" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb13-93"><a href="#cb13-93" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb13-94"><a href="#cb13-94" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(variable) <span class="sc">|&gt;</span></span>
+<span id="cb13-95"><a href="#cb13-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-96"><a href="#cb13-96" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 计算统计摘要</span></span>
+<span id="cb13-97"><a href="#cb13-97" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb13-98"><a href="#cb13-98" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb13-99"><a href="#cb13-99" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(value <span class="sc">==</span> <span class="st">"1"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb13-100"><a href="#cb13-100" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
+<span id="cb13-101"><a href="#cb13-101" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '1', na.rm = TRUE)} ({round(mean(value == '1', na.rm = TRUE)*100, 2)}%)"</span></span>
+<span id="cb13-102"><a href="#cb13-102" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb13-103"><a href="#cb13-103" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
+<span id="cb13-104"><a href="#cb13-104" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '0', na.rm = TRUE)} ({round(mean(value == '0', na.rm = TRUE)*100, 2)}%)"</span></span>
+<span id="cb13-105"><a href="#cb13-105" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb13-106"><a href="#cb13-106" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">NA</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(value)),</span>
+<span id="cb13-107"><a href="#cb13-107" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb13-108"><a href="#cb13-108" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(df_name, <span class="fu">join_by</span>(variable <span class="sc">==</span> Variable)) <span class="co"># 添加变量注解</span></span>
+<span id="cb13-109"><a href="#cb13-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-110"><a href="#cb13-110" aria-hidden="true" tabindex="-1"></a><span class="co"># 展示表格</span></span>
+<span id="cb13-111"><a href="#cb13-111" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb13-112"><a href="#cb13-112" aria-hidden="true" tabindex="-1"></a>    df_general_summary <span class="sc">|&gt;</span> <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">NA</span><span class="st">`</span>),</span>
+<span id="cb13-113"><a href="#cb13-113" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">glue</span>(<span class="st">"临床基线资料统计摘要 (n = {nrow(df_general)})"</span>)</span>
+<span id="cb13-114"><a href="#cb13-114" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>基线资料统计摘要 (n = 878)</caption>
+<caption>临床基线资料统计摘要 (n = 878)</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Label</th>
@@ -7920,67 +7994,1141 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="妊娠结局" class="level1">
-<h1>妊娠结局</h1>
-<p>终止妊娠的有 <strong>295</strong> 例，分娩的有 <strong>583</strong> 例。</p>
+<section id="超声及化验" class="level2">
+<h2 class="anchored" data-anchor-id="超声及化验">超声及化验</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Show/Hide Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 妊娠结局</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df_outcome <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        V10,</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        V12,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        V13,</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        V14,</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        V15,</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>        V16,</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>        V18,</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        V17,</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        V19,</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>        V44,</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        V46,</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        V101,</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        V102,</span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>        V103,</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>        V104,</span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>        V105,</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        V107,</span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>        V109,</span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>        V110,</span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>        V118,</span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>        V123,</span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>df_outcome_summary <span class="ot">&lt;-</span> df_outcome <span class="sc">|&gt;</span></span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 转换为长数据</span></span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(variable) <span class="sc">|&gt;</span></span>
-<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 计算统计摘要</span></span>
-<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(value <span class="sc">==</span> <span class="st">"1"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
-<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '1', na.rm = TRUE)} ({round(mean(value == '1', na.rm = TRUE)*100, 2)}%)"</span></span>
-<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
-<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '0', na.rm = TRUE)} ({round(mean(value == '0', na.rm = TRUE)*100, 2)}%)"</span></span>
-<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">NA</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(value)),</span>
-<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(df_name, <span class="fu">join_by</span>(variable <span class="sc">==</span> Variable))  <span class="co"># 添加变量注解</span></span>
-<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 展示表格</span></span>
-<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>        df_outcome_summary <span class="sc">|&gt;</span> <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">NA</span><span class="st">`</span>),</span>
-<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="fu">glue</span>(<span class="st">"妊娠结局统计摘要 (n = {nrow(df_outcome)})"</span>)</span>
-<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 超声及化验基线资料统计摘要</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>cols_to_select <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"X"</span>, <span class="fu">seq</span>(<span class="dv">3</span>, <span class="dv">763</span>, <span class="at">by =</span> <span class="dv">6</span>))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>df_test <span class="ot">&lt;-</span> df[, cols_to_select]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>df_test <span class="sc">|&gt;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(variable) <span class="sc">|&gt;</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 计算统计摘要</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean =</span> <span class="fu">round</span>(<span class="fu">mean</span>(value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">median =</span> <span class="fu">round</span>(<span class="fu">median</span>(value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd =</span> <span class="fu">round</span>(<span class="fu">sd</span>(value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">NA</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(value))</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(df_name, <span class="fu">join_by</span>(variable <span class="sc">==</span> Variable)) <span class="sc">|&gt;</span> <span class="co"># 添加变量注解</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 展示表格</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Label, n, mean, sd, median,  <span class="st">`</span><span class="at">NA</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">caption =</span> <span class="fu">glue</span>(<span class="st">"超声及化验基线资料统计摘要 (n = {nrow(df)})"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>超声及化验基线资料统计摘要 (n = 878)</caption>
+<colgroup>
+<col style="width: 56%">
+<col style="width: 5%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Label</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">median</th>
+<th style="text-align: right;">NA</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">超声缩短分数_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">35.03</td>
+<td style="text-align: right;">4.56</td>
+<td style="text-align: right;">35.00</td>
+<td style="text-align: right;">728</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">超声主动脉最大流速_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">138.90</td>
+<td style="text-align: right;">43.17</td>
+<td style="text-align: right;">131.00</td>
+<td style="text-align: right;">721</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">超声左室流出道流速_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">148.80</td>
+<td style="text-align: right;">40.43</td>
+<td style="text-align: right;">125.00</td>
+<td style="text-align: right;">873</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">超声E波最大流速_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">104.66</td>
+<td style="text-align: right;">44.72</td>
+<td style="text-align: right;">100.00</td>
+<td style="text-align: right;">721</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">超声A波最大流速_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">76.64</td>
+<td style="text-align: right;">43.64</td>
+<td style="text-align: right;">65.00</td>
+<td style="text-align: right;">727</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">超声肺动脉最大流速_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">120.27</td>
+<td style="text-align: right;">44.40</td>
+<td style="text-align: right;">113.00</td>
+<td style="text-align: right;">721</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">*白细胞(WBC)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">8.15</td>
+<td style="text-align: right;">2.31</td>
+<td style="text-align: right;">8.01</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">红细胞(RBC)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">4.56</td>
+<td style="text-align: right;">0.85</td>
+<td style="text-align: right;">4.33</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">超声主干径_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">27.38</td>
+<td style="text-align: right;">6.70</td>
+<td style="text-align: right;">26.00</td>
+<td style="text-align: right;">719</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*血小板(PLT)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">209.51</td>
+<td style="text-align: right;">59.49</td>
+<td style="text-align: right;">207.00</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">*血红蛋白(Hb)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">136.75</td>
+<td style="text-align: right;">22.81</td>
+<td style="text-align: right;">133.00</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">淋巴细胞百分比(LYM%)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">22.19</td>
+<td style="text-align: right;">7.59</td>
+<td style="text-align: right;">22.00</td>
+<td style="text-align: right;">769</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">单核细胞百分比(MONO%)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">5.02</td>
+<td style="text-align: right;">1.64</td>
+<td style="text-align: right;">4.70</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">中性粒细胞百分比(NE%)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">71.53</td>
+<td style="text-align: right;">7.60</td>
+<td style="text-align: right;">72.00</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">淋巴细胞数(LYM)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">1.74</td>
+<td style="text-align: right;">0.53</td>
+<td style="text-align: right;">1.67</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">单核细胞数(MONO)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.36</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">中性粒细胞数(NE)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">5.92</td>
+<td style="text-align: right;">2.10</td>
+<td style="text-align: right;">5.80</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*红细胞压积(HCT)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">39.61</td>
+<td style="text-align: right;">6.70</td>
+<td style="text-align: right;">38.00</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">*红细胞平均体积(MCV)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">87.14</td>
+<td style="text-align: right;">5.41</td>
+<td style="text-align: right;">88.00</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">超声右肺动脉径_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">20.86</td>
+<td style="text-align: right;">4.34</td>
+<td style="text-align: right;">20.00</td>
+<td style="text-align: right;">812</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">*平均血红蛋白量(MCH)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">30.14</td>
+<td style="text-align: right;">2.46</td>
+<td style="text-align: right;">30.70</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*平均血红蛋白浓度(MCHC)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">345.48</td>
+<td style="text-align: right;">12.13</td>
+<td style="text-align: right;">347.00</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">红细胞分布宽度SD_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">43.56</td>
+<td style="text-align: right;">4.24</td>
+<td style="text-align: right;">42.70</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">红细胞分布宽度CV_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">13.87</td>
+<td style="text-align: right;">1.99</td>
+<td style="text-align: right;">13.20</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">血小板平均体积(MPV)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">10.16</td>
+<td style="text-align: right;">1.17</td>
+<td style="text-align: right;">10.20</td>
+<td style="text-align: right;">579</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">血小板压积(PCT)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">579</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">血小板分布宽度(PDW)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">12.94</td>
+<td style="text-align: right;">2.61</td>
+<td style="text-align: right;">12.60</td>
+<td style="text-align: right;">579</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">嗜酸细胞数(EOS)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">0.14</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">嗜酸细胞百分比(EOS%)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">1.02</td>
+<td style="text-align: right;">1.45</td>
+<td style="text-align: right;">0.70</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">嗜碱细胞数(BAS)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">超声左肺动脉径_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">20.51</td>
+<td style="text-align: right;">3.78</td>
+<td style="text-align: right;">20.00</td>
+<td style="text-align: right;">811</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">嗜碱细胞百分比(BAS%)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">0.24</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">567</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">大血小板比率(P_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">26.45</td>
+<td style="text-align: right;">8.97</td>
+<td style="text-align: right;">25.70</td>
+<td style="text-align: right;">579</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">快速C_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">6.84</td>
+<td style="text-align: right;">14.26</td>
+<td style="text-align: right;">2.91</td>
+<td style="text-align: right;">840</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">超敏C反应蛋白(hs_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">2.85</td>
+<td style="text-align: right;">4.61</td>
+<td style="text-align: right;">1.30</td>
+<td style="text-align: right;">660</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*丙氨酸氨基转移酶(ALT)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">15.22</td>
+<td style="text-align: right;">9.34</td>
+<td style="text-align: right;">12.00</td>
+<td style="text-align: right;">617</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">超声主动脉窦部_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">28.27</td>
+<td style="text-align: right;">3.69</td>
+<td style="text-align: right;">28.00</td>
+<td style="text-align: right;">720</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*天门冬氨酸氨基转移酶(AST)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">18.61</td>
+<td style="text-align: right;">7.14</td>
+<td style="text-align: right;">18.00</td>
+<td style="text-align: right;">611</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">*甘油三酯(TG)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">1.08</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">0.94</td>
+<td style="text-align: right;">661</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*总胆固醇(TC)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">4.12</td>
+<td style="text-align: right;">0.78</td>
+<td style="text-align: right;">4.06</td>
+<td style="text-align: right;">661</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">*高密度脂蛋白胆固醇(HDL_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">1.47</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">1.44</td>
+<td style="text-align: right;">661</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*低密度脂蛋白胆固醇(LDL_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">2.20</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">2.15</td>
+<td style="text-align: right;">661</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">超声左房_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">41.23</td>
+<td style="text-align: right;">15.00</td>
+<td style="text-align: right;">36.00</td>
+<td style="text-align: right;">719</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*尿素(Urea)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">3.31</td>
+<td style="text-align: right;">1.06</td>
+<td style="text-align: right;">3.15</td>
+<td style="text-align: right;">625</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">*肌酐(Cr)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">49.08</td>
+<td style="text-align: right;">10.49</td>
+<td style="text-align: right;">48.40</td>
+<td style="text-align: right;">671</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*尿酸(UA)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">249.56</td>
+<td style="text-align: right;">74.50</td>
+<td style="text-align: right;">240.50</td>
+<td style="text-align: right;">598</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">*葡萄糖(Glu)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">4.86</td>
+<td style="text-align: right;">0.73</td>
+<td style="text-align: right;">4.69</td>
+<td style="text-align: right;">626</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*糖化血红蛋白(HbA1C%) _孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">5.23</td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">5.10</td>
+<td style="text-align: right;">875</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">糖化血红蛋白(mMolHbA1C)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">NaN</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">878</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">糖化白蛋白(GA)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">13.17</td>
+<td style="text-align: right;">1.35</td>
+<td style="text-align: right;">13.20</td>
+<td style="text-align: right;">673</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">*糖化白蛋白_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">0.47</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">0.47</td>
+<td style="text-align: right;">803</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">同型半胱氨酸(Hcy)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">8.22</td>
+<td style="text-align: right;">3.80</td>
+<td style="text-align: right;">7.25</td>
+<td style="text-align: right;">674</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">*肌酸激酶(CK)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">51.60</td>
+<td style="text-align: right;">63.79</td>
+<td style="text-align: right;">44.00</td>
+<td style="text-align: right;">597</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">超声右房_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">51.91</td>
+<td style="text-align: right;">8.15</td>
+<td style="text-align: right;">52.00</td>
+<td style="text-align: right;">770</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">肌酸激酶_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">1.40</td>
+<td style="text-align: right;">8.00</td>
+<td style="text-align: right;">0.70</td>
+<td style="text-align: right;">607</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*乳酸脱氢酶(LDH)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">185.00</td>
+<td style="text-align: right;">67.56</td>
+<td style="text-align: right;">167.00</td>
+<td style="text-align: right;">606</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">肌钙蛋白Ⅰ(TnI)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">NaN</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">878</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">肌钙蛋白Ⅰ(hsTnI)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">740</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">肌红蛋白(Mb)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">11.03</td>
+<td style="text-align: right;">5.59</td>
+<td style="text-align: right;">10.00</td>
+<td style="text-align: right;">693</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*钠(Na)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">136.44</td>
+<td style="text-align: right;">2.22</td>
+<td style="text-align: right;">136.50</td>
+<td style="text-align: right;">733</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">*钾(K)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">4.07</td>
+<td style="text-align: right;">0.32</td>
+<td style="text-align: right;">4.10</td>
+<td style="text-align: right;">638</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*氯(Cl)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">102.97</td>
+<td style="text-align: right;">2.17</td>
+<td style="text-align: right;">102.90</td>
+<td style="text-align: right;">631</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">*总钙(Ca)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">2.37</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">2.36</td>
+<td style="text-align: right;">735</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*无机磷(P)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">1.24</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">1.25</td>
+<td style="text-align: right;">735</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">超声厚度_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">8.19</td>
+<td style="text-align: right;">1.36</td>
+<td style="text-align: right;">8.00</td>
+<td style="text-align: right;">720</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*镁(Mg)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">0.82</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">735</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">*总蛋白(TP)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">71.83</td>
+<td style="text-align: right;">4.69</td>
+<td style="text-align: right;">72.00</td>
+<td style="text-align: right;">661</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*白蛋白(Alb)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">43.30</td>
+<td style="text-align: right;">3.69</td>
+<td style="text-align: right;">43.60</td>
+<td style="text-align: right;">607</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">前白蛋白(PA)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">797</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">白蛋白比球蛋白_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">1.58</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">1.57</td>
+<td style="text-align: right;">661</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">*总胆红素(T_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">13.04</td>
+<td style="text-align: right;">6.99</td>
+<td style="text-align: right;">11.50</td>
+<td style="text-align: right;">661</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*直接胆红素(D_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">3.58</td>
+<td style="text-align: right;">1.98</td>
+<td style="text-align: right;">3.10</td>
+<td style="text-align: right;">661</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">*碱性磷酸酶(ALP)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">53.31</td>
+<td style="text-align: right;">14.17</td>
+<td style="text-align: right;">51.00</td>
+<td style="text-align: right;">661</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">*γ_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">18.95</td>
+<td style="text-align: right;">12.36</td>
+<td style="text-align: right;">15.00</td>
+<td style="text-align: right;">661</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">总胆汁酸(TBA)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">1.85</td>
+<td style="text-align: right;">2.22</td>
+<td style="text-align: right;">1.20</td>
+<td style="text-align: right;">661</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">超声运动幅度_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">6.50</td>
+<td style="text-align: right;">1.83</td>
+<td style="text-align: right;">7.00</td>
+<td style="text-align: right;">724</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">胆碱脂酶(ChE)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">6.79</td>
+<td style="text-align: right;">1.27</td>
+<td style="text-align: right;">6.70</td>
+<td style="text-align: right;">661</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">总二氧化碳(TCO2)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">22.20</td>
+<td style="text-align: right;">2.54</td>
+<td style="text-align: right;">22.30</td>
+<td style="text-align: right;">654</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">阴离子间隙_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">15.53</td>
+<td style="text-align: right;">2.96</td>
+<td style="text-align: right;">15.55</td>
+<td style="text-align: right;">654</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">eGFR(CKD_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">124.33</td>
+<td style="text-align: right;">12.90</td>
+<td style="text-align: right;">124.67</td>
+<td style="text-align: right;">750</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">游离脂肪酸(FFA)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">758</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">非高密度脂蛋白胆固醇(nonHDL)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">2.71</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">2.54</td>
+<td style="text-align: right;">800</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">小而密低密度脂蛋白(sdLDL)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">0.66</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">0.57</td>
+<td style="text-align: right;">758</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C1q测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">183.86</td>
+<td style="text-align: right;">32.54</td>
+<td style="text-align: right;">180.15</td>
+<td style="text-align: right;">758</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">脂蛋白a(LPa)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">23.54</td>
+<td style="text-align: right;">51.65</td>
+<td style="text-align: right;">3.30</td>
+<td style="text-align: right;">758</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B型钠酸肽_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">85.38</td>
+<td style="text-align: right;">106.26</td>
+<td style="text-align: right;">47.00</td>
+<td style="text-align: right;">629</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">超声舒末内径_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">43.12</td>
+<td style="text-align: right;">7.23</td>
+<td style="text-align: right;">42.00</td>
+<td style="text-align: right;">718</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N端_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">610.44</td>
+<td style="text-align: right;">713.09</td>
+<td style="text-align: right;">212.00</td>
+<td style="text-align: right;">869</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">血浆凝血酶原时间(PT)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">12.18</td>
+<td style="text-align: right;">2.51</td>
+<td style="text-align: right;">11.80</td>
+<td style="text-align: right;">649</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">凝血酶原活动度（PT%）_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">91.71</td>
+<td style="text-align: right;">14.58</td>
+<td style="text-align: right;">93.00</td>
+<td style="text-align: right;">649</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">活化部分凝血活酶时间(APTT)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">31.68</td>
+<td style="text-align: right;">5.75</td>
+<td style="text-align: right;">30.50</td>
+<td style="text-align: right;">659</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">国际标准化比值（INR） _孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">1.08</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">1.04</td>
+<td style="text-align: right;">649</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">纤维蛋白(原)降解产物(FDP)测定_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">1.47</td>
+<td style="text-align: right;">2.55</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">659</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">血浆纤维蛋白原测定（FBG）_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">3.26</td>
+<td style="text-align: right;">0.65</td>
+<td style="text-align: right;">3.30</td>
+<td style="text-align: right;">659</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">血浆D_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">167.23</td>
+<td style="text-align: right;">172.54</td>
+<td style="text-align: right;">125.00</td>
+<td style="text-align: right;">667</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">酸碱度_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">7.43</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">7.42</td>
+<td style="text-align: right;">719</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CO2分压_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">31.07</td>
+<td style="text-align: right;">3.81</td>
+<td style="text-align: right;">30.70</td>
+<td style="text-align: right;">719</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">超声收末内径1_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">45.14</td>
+<td style="text-align: right;">217.69</td>
+<td style="text-align: right;">27.00</td>
+<td style="text-align: right;">720</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">氧分压_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">101.34</td>
+<td style="text-align: right;">42.94</td>
+<td style="text-align: right;">103.00</td>
+<td style="text-align: right;">719</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">氧饱和度_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">95.68</td>
+<td style="text-align: right;">7.10</td>
+<td style="text-align: right;">97.90</td>
+<td style="text-align: right;">719</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">乳酸_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">1.10</td>
+<td style="text-align: right;">0.86</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">720</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">细胞外剩余碱_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">-3.96</td>
+<td style="text-align: right;">2.05</td>
+<td style="text-align: right;">-4.10</td>
+<td style="text-align: right;">634</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">肺泡内氧分压_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">113.33</td>
+<td style="text-align: right;">3.90</td>
+<td style="text-align: right;">113.60</td>
+<td style="text-align: right;">635</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">全血氧含量_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">18.53</td>
+<td style="text-align: right;">2.82</td>
+<td style="text-align: right;">18.20</td>
+<td style="text-align: right;">624</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">标准碳酸氢根浓度_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">22.26</td>
+<td style="text-align: right;">1.49</td>
+<td style="text-align: right;">22.10</td>
+<td style="text-align: right;">634</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">碳酸氢根浓度_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">20.25</td>
+<td style="text-align: right;">2.00</td>
+<td style="text-align: right;">20.00</td>
+<td style="text-align: right;">634</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">氧合指数_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">481.80</td>
+<td style="text-align: right;">248.27</td>
+<td style="text-align: right;">492.00</td>
+<td style="text-align: right;">756</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">葡萄糖_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">85.85</td>
+<td style="text-align: right;">38.65</td>
+<td style="text-align: right;">89.00</td>
+<td style="text-align: right;">625</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">超声后壁厚度_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">8.21</td>
+<td style="text-align: right;">2.38</td>
+<td style="text-align: right;">8.00</td>
+<td style="text-align: right;">721</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">钾（血气分析）_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">3.87</td>
+<td style="text-align: right;">0.34</td>
+<td style="text-align: right;">3.83</td>
+<td style="text-align: right;">710</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">钠（血气分析）_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">136.04</td>
+<td style="text-align: right;">2.77</td>
+<td style="text-align: right;">136.00</td>
+<td style="text-align: right;">623</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">钙（血气分析）_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">1.19</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">1.19</td>
+<td style="text-align: right;">623</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">氧合血红蛋白分数_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">94.18</td>
+<td style="text-align: right;">7.80</td>
+<td style="text-align: right;">96.50</td>
+<td style="text-align: right;">756</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">碳氧血红蛋白分数_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">0.36</td>
+<td style="text-align: right;">0.80</td>
+<td style="text-align: right;">756</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">高铁血红蛋白分数_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">0.70</td>
+<td style="text-align: right;">756</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">血红蛋白（血气分析）_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">13.86</td>
+<td style="text-align: right;">2.45</td>
+<td style="text-align: right;">13.20</td>
+<td style="text-align: right;">624</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">红细胞压积（血气分析）_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">42.00</td>
+<td style="text-align: right;">7.33</td>
+<td style="text-align: right;">40.00</td>
+<td style="text-align: right;">624</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">标准碱剩余_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">-2.51</td>
+<td style="text-align: right;">1.69</td>
+<td style="text-align: right;">-2.80</td>
+<td style="text-align: right;">711</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">尿素氮（血气）_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">9.90</td>
+<td style="text-align: right;">2.07</td>
+<td style="text-align: right;">10.00</td>
+<td style="text-align: right;">718</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">超声后壁运动幅度_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">9.69</td>
+<td style="text-align: right;">1.97</td>
+<td style="text-align: right;">10.00</td>
+<td style="text-align: right;">721</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">氯（血气分析）_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">107.02</td>
+<td style="text-align: right;">3.16</td>
+<td style="text-align: right;">107.00</td>
+<td style="text-align: right;">627</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">镁(血气分析)_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">736</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">超声前后径_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">25.26</td>
+<td style="text-align: right;">7.39</td>
+<td style="text-align: right;">23.00</td>
+<td style="text-align: right;">721</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">超声左右径_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">43.35</td>
+<td style="text-align: right;">7.29</td>
+<td style="text-align: right;">42.50</td>
+<td style="text-align: right;">806</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">超声升主动脉内径_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">28.02</td>
+<td style="text-align: right;">4.66</td>
+<td style="text-align: right;">27.00</td>
+<td style="text-align: right;">722</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">超声流出道_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">30.03</td>
+<td style="text-align: right;">7.62</td>
+<td style="text-align: right;">29.00</td>
+<td style="text-align: right;">721</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">超声射血分数_孕早期</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">63.77</td>
+<td style="text-align: right;">6.56</td>
+<td style="text-align: right;">65.00</td>
+<td style="text-align: right;">719</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="妊娠结局" class="level1">
+<h1>妊娠结局</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Show/Hide Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 妊娠结局</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df_outcome <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        V10,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        V12,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        V13,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        V14,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        V15,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        V16,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        V18,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        V17,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        V19,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        V44,</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        V46,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>        V101,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        V102,</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        V103,</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>        V104,</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>        V105,</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>        V107,</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>        V109,</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>        V110,</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>        V118,</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>        V123,</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>df_outcome_summary <span class="ot">&lt;-</span> df_outcome <span class="sc">|&gt;</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 转换为长数据</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(variable) <span class="sc">|&gt;</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 计算统计摘要</span></span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(value <span class="sc">==</span> <span class="st">"1"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '1', na.rm = TRUE)} ({round(mean(value == '1', na.rm = TRUE)*100, 2)}%)"</span></span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '0', na.rm = TRUE)} ({round(mean(value == '0', na.rm = TRUE)*100, 2)}%)"</span></span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">NA</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(value)),</span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(df_name, <span class="fu">join_by</span>(variable <span class="sc">==</span> Variable))  <span class="co"># 添加变量注解</span></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 展示表格</span></span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>        df_outcome_summary <span class="sc">|&gt;</span> <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">NA</span><span class="st">`</span>),</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="fu">glue</span>(<span class="st">"妊娠结局统计摘要 (n = {nrow(df_outcome)})"</span>)</span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -8031,7 +9179,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">流产</td>
+<td style="text-align: left;">人流雷穿自然流产</td>
 <td style="text-align: left;">838 (95.44%)</td>
 <td style="text-align: left;">40 (4.56%)</td>
 <td style="text-align: right;">0</td>
@@ -8130,51 +9278,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>妊娠结局</figcaption>
 </figure>
 </div>
+</section>
+<section id="不良事件" class="level1">
+<h1>不良事件</h1>
 <div class="cell">
 <details class="code-fold">
 <summary>Show/Hide Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 筛选不良事件</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df_bad <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>        V11,</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>        V2,</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        V3,</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        V4,</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        V5,</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        V6,</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        V7,</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        V8,</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        V10,</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        V119</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>df_bad_summary <span class="ot">&lt;-</span> df_bad <span class="sc">|&gt;</span></span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 转换为长数据</span></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(variable) <span class="sc">|&gt;</span></span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 计算统计摘要</span></span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(value <span class="sc">==</span> <span class="st">"1"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
-<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '1', na.rm = TRUE)} ({round(mean(value == '1', na.rm = TRUE)*100, 2)}%)"</span></span>
-<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
-<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '0', na.rm = TRUE)} ({round(mean(value == '0', na.rm = TRUE)*100, 2)}%)"</span></span>
-<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">NA</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(value)),</span>
-<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(df_name, <span class="fu">join_by</span>(variable <span class="sc">==</span> Variable)) <span class="co"># 添加变量注解</span></span>
-<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>    df_bad_summary <span class="sc">|&gt;</span> <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">NA</span><span class="st">`</span>),</span>
-<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">glue</span>(<span class="st">"不良事件统计摘要 (n = {nrow(df_bad)})"</span>)</span>
-<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 筛选不良事件</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df_bad <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        V11,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        V2,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        V3,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        V4,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        V5,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>        V6,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>        V7,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        V8,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        V10,</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>        V119</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>df_bad_summary <span class="ot">&lt;-</span> df_bad <span class="sc">|&gt;</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 转换为长数据</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(variable) <span class="sc">|&gt;</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 计算统计摘要</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(value <span class="sc">==</span> <span class="st">"1"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '1', na.rm = TRUE)} ({round(mean(value == '1', na.rm = TRUE)*100, 2)}%)"</span></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '0', na.rm = TRUE)} ({round(mean(value == '0', na.rm = TRUE)*100, 2)}%)"</span></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">NA</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(value)),</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(df_name, <span class="fu">join_by</span>(variable <span class="sc">==</span> Variable)) <span class="co"># 添加变量注解</span></span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>    df_bad_summary <span class="sc">|&gt;</span> <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">NA</span><span class="st">`</span>),</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">glue</span>(<span class="st">"不良事件统计摘要 (n = {nrow(df_bad)})"</span>)</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -8714,288 +9865,316 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb18" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># 基线资料</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 读取数据</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>df0 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"./data/没有中文字符的数据.csv"</span>) <span class="co"># 带有type0的数据</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>df_name <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"./data/新-变量注解.csv"</span>) <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Variable))</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df0 <span class="sc">|&gt;</span> <span class="fu">filter</span>(X1 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>)) <span class="co"># 有分娩结局</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>共有 **`r nrow(df0)`** 例样本(住院次数)，剔除了 **`r nrow(df0) - nrow(df)`** 例无分娩结局样本 (本院多次住院,则仅保留分娩当次, 剔除其它未分娩住院; 本院住院但最终未在本院分娩, 则剔除)，保留了 **`r nrow(df)`** 例样本。</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>最终有 **`r nrow(df)`** 例样本, **`r ncol(df)`** 个变量 (如果1个PAH产妇分娩2次,计做2例样本) 。</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>以下是最终的数据表(仅展示前6行):</span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 数据概览</span></span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df))</span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>**PAH 分度:** (0:NA; 1:轻度; 2:中度; 3:重度)</span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>V26)</span>
-<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a>**心功能分级:** (0:NA; 1:I级; 2:II级; 3:III级; 4:IV级)</span>
-<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>V21)</span>
-<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"年龄(随): "</span>)</span>
-<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(df<span class="sc">$</span>V114))</span>
-<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"孕周(周): "</span>)</span>
-<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(df<span class="sc">$</span>V20))</span>
-<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a>以下是基线资料统计摘要:</span>
-<span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a><span class="co"># 基线资料统计摘要</span></span>
-<span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a>df_general <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
-<span id="cb18-67"><a href="#cb18-67" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
-<span id="cb18-68"><a href="#cb18-68" aria-hidden="true" tabindex="-1"></a>        V22,</span>
-<span id="cb18-69"><a href="#cb18-69" aria-hidden="true" tabindex="-1"></a>        V23,</span>
-<span id="cb18-70"><a href="#cb18-70" aria-hidden="true" tabindex="-1"></a>        V24,</span>
-<span id="cb18-71"><a href="#cb18-71" aria-hidden="true" tabindex="-1"></a>        V25,</span>
-<span id="cb18-72"><a href="#cb18-72" aria-hidden="true" tabindex="-1"></a>        V27,</span>
-<span id="cb18-73"><a href="#cb18-73" aria-hidden="true" tabindex="-1"></a>        V28,</span>
-<span id="cb18-74"><a href="#cb18-74" aria-hidden="true" tabindex="-1"></a>        V29,</span>
-<span id="cb18-75"><a href="#cb18-75" aria-hidden="true" tabindex="-1"></a>        V30,</span>
-<span id="cb18-76"><a href="#cb18-76" aria-hidden="true" tabindex="-1"></a>        V31,</span>
-<span id="cb18-77"><a href="#cb18-77" aria-hidden="true" tabindex="-1"></a>        V32,</span>
-<span id="cb18-78"><a href="#cb18-78" aria-hidden="true" tabindex="-1"></a>        V33,</span>
-<span id="cb18-79"><a href="#cb18-79" aria-hidden="true" tabindex="-1"></a>        V35,</span>
-<span id="cb18-80"><a href="#cb18-80" aria-hidden="true" tabindex="-1"></a>        V36,</span>
-<span id="cb18-81"><a href="#cb18-81" aria-hidden="true" tabindex="-1"></a>        V37,</span>
-<span id="cb18-82"><a href="#cb18-82" aria-hidden="true" tabindex="-1"></a>        V38,</span>
-<span id="cb18-83"><a href="#cb18-83" aria-hidden="true" tabindex="-1"></a>        V39,</span>
-<span id="cb18-84"><a href="#cb18-84" aria-hidden="true" tabindex="-1"></a>        V40,</span>
-<span id="cb18-85"><a href="#cb18-85" aria-hidden="true" tabindex="-1"></a>        V41,</span>
-<span id="cb18-86"><a href="#cb18-86" aria-hidden="true" tabindex="-1"></a>        V42,</span>
-<span id="cb18-87"><a href="#cb18-87" aria-hidden="true" tabindex="-1"></a>        V43,</span>
-<span id="cb18-88"><a href="#cb18-88" aria-hidden="true" tabindex="-1"></a>        V45,</span>
-<span id="cb18-89"><a href="#cb18-89" aria-hidden="true" tabindex="-1"></a>        V47,</span>
-<span id="cb18-90"><a href="#cb18-90" aria-hidden="true" tabindex="-1"></a>        V48,</span>
-<span id="cb18-91"><a href="#cb18-91" aria-hidden="true" tabindex="-1"></a>        V49,</span>
-<span id="cb18-92"><a href="#cb18-92" aria-hidden="true" tabindex="-1"></a>        V50,</span>
-<span id="cb18-93"><a href="#cb18-93" aria-hidden="true" tabindex="-1"></a>        V51,</span>
-<span id="cb18-94"><a href="#cb18-94" aria-hidden="true" tabindex="-1"></a>        V52,</span>
-<span id="cb18-95"><a href="#cb18-95" aria-hidden="true" tabindex="-1"></a>        V53,</span>
-<span id="cb18-96"><a href="#cb18-96" aria-hidden="true" tabindex="-1"></a>        V54,</span>
-<span id="cb18-97"><a href="#cb18-97" aria-hidden="true" tabindex="-1"></a>        V55,</span>
-<span id="cb18-98"><a href="#cb18-98" aria-hidden="true" tabindex="-1"></a>        V56,</span>
-<span id="cb18-99"><a href="#cb18-99" aria-hidden="true" tabindex="-1"></a>        V57,</span>
-<span id="cb18-100"><a href="#cb18-100" aria-hidden="true" tabindex="-1"></a>        V58,</span>
-<span id="cb18-101"><a href="#cb18-101" aria-hidden="true" tabindex="-1"></a>        V59,</span>
-<span id="cb18-102"><a href="#cb18-102" aria-hidden="true" tabindex="-1"></a>        V60,</span>
-<span id="cb18-103"><a href="#cb18-103" aria-hidden="true" tabindex="-1"></a>        V61,</span>
-<span id="cb18-104"><a href="#cb18-104" aria-hidden="true" tabindex="-1"></a>        V62,</span>
-<span id="cb18-105"><a href="#cb18-105" aria-hidden="true" tabindex="-1"></a>        V63,</span>
-<span id="cb18-106"><a href="#cb18-106" aria-hidden="true" tabindex="-1"></a>        V64,</span>
-<span id="cb18-107"><a href="#cb18-107" aria-hidden="true" tabindex="-1"></a>        V65,</span>
-<span id="cb18-108"><a href="#cb18-108" aria-hidden="true" tabindex="-1"></a>        V66,</span>
-<span id="cb18-109"><a href="#cb18-109" aria-hidden="true" tabindex="-1"></a>        V67,</span>
-<span id="cb18-110"><a href="#cb18-110" aria-hidden="true" tabindex="-1"></a>        V68,</span>
-<span id="cb18-111"><a href="#cb18-111" aria-hidden="true" tabindex="-1"></a>        V69,</span>
-<span id="cb18-112"><a href="#cb18-112" aria-hidden="true" tabindex="-1"></a>        V70,</span>
-<span id="cb18-113"><a href="#cb18-113" aria-hidden="true" tabindex="-1"></a>        V71,</span>
-<span id="cb18-114"><a href="#cb18-114" aria-hidden="true" tabindex="-1"></a>        V72,</span>
-<span id="cb18-115"><a href="#cb18-115" aria-hidden="true" tabindex="-1"></a>        V73,</span>
-<span id="cb18-116"><a href="#cb18-116" aria-hidden="true" tabindex="-1"></a>        V74,</span>
-<span id="cb18-117"><a href="#cb18-117" aria-hidden="true" tabindex="-1"></a>        V75,</span>
-<span id="cb18-118"><a href="#cb18-118" aria-hidden="true" tabindex="-1"></a>        V76,</span>
-<span id="cb18-119"><a href="#cb18-119" aria-hidden="true" tabindex="-1"></a>        V77,</span>
-<span id="cb18-120"><a href="#cb18-120" aria-hidden="true" tabindex="-1"></a>        V78,</span>
-<span id="cb18-121"><a href="#cb18-121" aria-hidden="true" tabindex="-1"></a>        V79,</span>
-<span id="cb18-122"><a href="#cb18-122" aria-hidden="true" tabindex="-1"></a>        V80,</span>
-<span id="cb18-123"><a href="#cb18-123" aria-hidden="true" tabindex="-1"></a>        V81,</span>
-<span id="cb18-124"><a href="#cb18-124" aria-hidden="true" tabindex="-1"></a>        V82,</span>
-<span id="cb18-125"><a href="#cb18-125" aria-hidden="true" tabindex="-1"></a>        V83,</span>
-<span id="cb18-126"><a href="#cb18-126" aria-hidden="true" tabindex="-1"></a>        V84,</span>
-<span id="cb18-127"><a href="#cb18-127" aria-hidden="true" tabindex="-1"></a>        V85,</span>
-<span id="cb18-128"><a href="#cb18-128" aria-hidden="true" tabindex="-1"></a>        V86,</span>
-<span id="cb18-129"><a href="#cb18-129" aria-hidden="true" tabindex="-1"></a>        V87,</span>
-<span id="cb18-130"><a href="#cb18-130" aria-hidden="true" tabindex="-1"></a>        V88,</span>
-<span id="cb18-131"><a href="#cb18-131" aria-hidden="true" tabindex="-1"></a>        V89,</span>
-<span id="cb18-132"><a href="#cb18-132" aria-hidden="true" tabindex="-1"></a>        V90,</span>
-<span id="cb18-133"><a href="#cb18-133" aria-hidden="true" tabindex="-1"></a>        V91,</span>
-<span id="cb18-134"><a href="#cb18-134" aria-hidden="true" tabindex="-1"></a>        V92,</span>
-<span id="cb18-135"><a href="#cb18-135" aria-hidden="true" tabindex="-1"></a>        V93,</span>
-<span id="cb18-136"><a href="#cb18-136" aria-hidden="true" tabindex="-1"></a>        V94,</span>
-<span id="cb18-137"><a href="#cb18-137" aria-hidden="true" tabindex="-1"></a>        V95,</span>
-<span id="cb18-138"><a href="#cb18-138" aria-hidden="true" tabindex="-1"></a>        V96,</span>
-<span id="cb18-139"><a href="#cb18-139" aria-hidden="true" tabindex="-1"></a>        V97,</span>
-<span id="cb18-140"><a href="#cb18-140" aria-hidden="true" tabindex="-1"></a>        V98,</span>
-<span id="cb18-141"><a href="#cb18-141" aria-hidden="true" tabindex="-1"></a>        V99,</span>
-<span id="cb18-142"><a href="#cb18-142" aria-hidden="true" tabindex="-1"></a>        V100,</span>
-<span id="cb18-143"><a href="#cb18-143" aria-hidden="true" tabindex="-1"></a>        V111,</span>
-<span id="cb18-144"><a href="#cb18-144" aria-hidden="true" tabindex="-1"></a>        V112,</span>
-<span id="cb18-145"><a href="#cb18-145" aria-hidden="true" tabindex="-1"></a>        V113,</span>
-<span id="cb18-146"><a href="#cb18-146" aria-hidden="true" tabindex="-1"></a>        V121,</span>
-<span id="cb18-147"><a href="#cb18-147" aria-hidden="true" tabindex="-1"></a>        V122,</span>
-<span id="cb18-148"><a href="#cb18-148" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb18-149"><a href="#cb18-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-150"><a href="#cb18-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-151"><a href="#cb18-151" aria-hidden="true" tabindex="-1"></a>df_general_summary <span class="ot">&lt;-</span> df_general <span class="sc">|&gt;</span></span>
-<span id="cb18-152"><a href="#cb18-152" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 转换为长数据</span></span>
-<span id="cb18-153"><a href="#cb18-153" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
-<span id="cb18-154"><a href="#cb18-154" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
-<span id="cb18-155"><a href="#cb18-155" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
-<span id="cb18-156"><a href="#cb18-156" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
-<span id="cb18-157"><a href="#cb18-157" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb18-158"><a href="#cb18-158" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(variable) <span class="sc">|&gt;</span></span>
-<span id="cb18-159"><a href="#cb18-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-160"><a href="#cb18-160" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 计算统计摘要</span></span>
-<span id="cb18-161"><a href="#cb18-161" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb18-162"><a href="#cb18-162" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb18-163"><a href="#cb18-163" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(value <span class="sc">==</span> <span class="st">"1"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb18-164"><a href="#cb18-164" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
-<span id="cb18-165"><a href="#cb18-165" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '1', na.rm = TRUE)} ({round(mean(value == '1', na.rm = TRUE)*100, 2)}%)"</span></span>
-<span id="cb18-166"><a href="#cb18-166" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb18-167"><a href="#cb18-167" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
-<span id="cb18-168"><a href="#cb18-168" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '0', na.rm = TRUE)} ({round(mean(value == '0', na.rm = TRUE)*100, 2)}%)"</span></span>
-<span id="cb18-169"><a href="#cb18-169" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb18-170"><a href="#cb18-170" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">NA</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(value)),</span>
-<span id="cb18-171"><a href="#cb18-171" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb18-172"><a href="#cb18-172" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(df_name, <span class="fu">join_by</span>(variable <span class="sc">==</span> Variable)) <span class="co"># 添加变量注解</span></span>
-<span id="cb18-173"><a href="#cb18-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-174"><a href="#cb18-174" aria-hidden="true" tabindex="-1"></a><span class="co"># 展示表格</span></span>
-<span id="cb18-175"><a href="#cb18-175" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb18-176"><a href="#cb18-176" aria-hidden="true" tabindex="-1"></a>    df_general_summary <span class="sc">|&gt;</span> <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">NA</span><span class="st">`</span>),</span>
-<span id="cb18-177"><a href="#cb18-177" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">glue</span>(<span class="st">"基线资料统计摘要 (n = {nrow(df_general)})"</span>)</span>
-<span id="cb18-178"><a href="#cb18-178" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-179"><a href="#cb18-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-180"><a href="#cb18-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-181"><a href="#cb18-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-182"><a href="#cb18-182" aria-hidden="true" tabindex="-1"></a><span class="fu"># 妊娠结局</span></span>
-<span id="cb18-183"><a href="#cb18-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-184"><a href="#cb18-184" aria-hidden="true" tabindex="-1"></a>终止妊娠的有 **`r table(df$X1)[[2]]`** 例，分娩的有 **`r table(df$X1)[[1]]`** 例。</span>
-<span id="cb18-185"><a href="#cb18-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-188"><a href="#cb18-188" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-189"><a href="#cb18-189" aria-hidden="true" tabindex="-1"></a><span class="co"># 妊娠结局</span></span>
-<span id="cb18-190"><a href="#cb18-190" aria-hidden="true" tabindex="-1"></a>df_outcome <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
-<span id="cb18-191"><a href="#cb18-191" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
-<span id="cb18-192"><a href="#cb18-192" aria-hidden="true" tabindex="-1"></a>        V10,</span>
-<span id="cb18-193"><a href="#cb18-193" aria-hidden="true" tabindex="-1"></a>        V12,</span>
-<span id="cb18-194"><a href="#cb18-194" aria-hidden="true" tabindex="-1"></a>        V13,</span>
-<span id="cb18-195"><a href="#cb18-195" aria-hidden="true" tabindex="-1"></a>        V14,</span>
-<span id="cb18-196"><a href="#cb18-196" aria-hidden="true" tabindex="-1"></a>        V15,</span>
-<span id="cb18-197"><a href="#cb18-197" aria-hidden="true" tabindex="-1"></a>        V16,</span>
-<span id="cb18-198"><a href="#cb18-198" aria-hidden="true" tabindex="-1"></a>        V18,</span>
-<span id="cb18-199"><a href="#cb18-199" aria-hidden="true" tabindex="-1"></a>        V17,</span>
-<span id="cb18-200"><a href="#cb18-200" aria-hidden="true" tabindex="-1"></a>        V19,</span>
-<span id="cb18-201"><a href="#cb18-201" aria-hidden="true" tabindex="-1"></a>        V44,</span>
-<span id="cb18-202"><a href="#cb18-202" aria-hidden="true" tabindex="-1"></a>        V46,</span>
-<span id="cb18-203"><a href="#cb18-203" aria-hidden="true" tabindex="-1"></a>        V101,</span>
-<span id="cb18-204"><a href="#cb18-204" aria-hidden="true" tabindex="-1"></a>        V102,</span>
-<span id="cb18-205"><a href="#cb18-205" aria-hidden="true" tabindex="-1"></a>        V103,</span>
-<span id="cb18-206"><a href="#cb18-206" aria-hidden="true" tabindex="-1"></a>        V104,</span>
-<span id="cb18-207"><a href="#cb18-207" aria-hidden="true" tabindex="-1"></a>        V105,</span>
-<span id="cb18-208"><a href="#cb18-208" aria-hidden="true" tabindex="-1"></a>        V107,</span>
-<span id="cb18-209"><a href="#cb18-209" aria-hidden="true" tabindex="-1"></a>        V109,</span>
-<span id="cb18-210"><a href="#cb18-210" aria-hidden="true" tabindex="-1"></a>        V110,</span>
-<span id="cb18-211"><a href="#cb18-211" aria-hidden="true" tabindex="-1"></a>        V118,</span>
-<span id="cb18-212"><a href="#cb18-212" aria-hidden="true" tabindex="-1"></a>        V123,</span>
-<span id="cb18-213"><a href="#cb18-213" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb18-214"><a href="#cb18-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-215"><a href="#cb18-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-216"><a href="#cb18-216" aria-hidden="true" tabindex="-1"></a>df_outcome_summary <span class="ot">&lt;-</span> df_outcome <span class="sc">|&gt;</span></span>
-<span id="cb18-217"><a href="#cb18-217" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 转换为长数据</span></span>
-<span id="cb18-218"><a href="#cb18-218" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
-<span id="cb18-219"><a href="#cb18-219" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
-<span id="cb18-220"><a href="#cb18-220" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
-<span id="cb18-221"><a href="#cb18-221" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
-<span id="cb18-222"><a href="#cb18-222" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb18-223"><a href="#cb18-223" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(variable) <span class="sc">|&gt;</span></span>
-<span id="cb18-224"><a href="#cb18-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-225"><a href="#cb18-225" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 计算统计摘要</span></span>
-<span id="cb18-226"><a href="#cb18-226" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb18-227"><a href="#cb18-227" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb18-228"><a href="#cb18-228" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(value <span class="sc">==</span> <span class="st">"1"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb18-229"><a href="#cb18-229" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
-<span id="cb18-230"><a href="#cb18-230" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '1', na.rm = TRUE)} ({round(mean(value == '1', na.rm = TRUE)*100, 2)}%)"</span></span>
-<span id="cb18-231"><a href="#cb18-231" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb18-232"><a href="#cb18-232" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
-<span id="cb18-233"><a href="#cb18-233" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '0', na.rm = TRUE)} ({round(mean(value == '0', na.rm = TRUE)*100, 2)}%)"</span></span>
-<span id="cb18-234"><a href="#cb18-234" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb18-235"><a href="#cb18-235" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">NA</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(value)),</span>
-<span id="cb18-236"><a href="#cb18-236" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb18-237"><a href="#cb18-237" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(df_name, <span class="fu">join_by</span>(variable <span class="sc">==</span> Variable))  <span class="co"># 添加变量注解</span></span>
-<span id="cb18-238"><a href="#cb18-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-239"><a href="#cb18-239" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 展示表格</span></span>
-<span id="cb18-240"><a href="#cb18-240" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb18-241"><a href="#cb18-241" aria-hidden="true" tabindex="-1"></a>        df_outcome_summary <span class="sc">|&gt;</span> <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">NA</span><span class="st">`</span>),</span>
-<span id="cb18-242"><a href="#cb18-242" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="fu">glue</span>(<span class="st">"妊娠结局统计摘要 (n = {nrow(df_outcome)})"</span>)</span>
-<span id="cb18-243"><a href="#cb18-243" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb18-244"><a href="#cb18-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-245"><a href="#cb18-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-246"><a href="#cb18-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-247"><a href="#cb18-247" aria-hidden="true" tabindex="-1"></a><span class="al">![妊娠结局](./output/outcome.png)</span></span>
-<span id="cb18-248"><a href="#cb18-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-249"><a href="#cb18-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-252"><a href="#cb18-252" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-253"><a href="#cb18-253" aria-hidden="true" tabindex="-1"></a><span class="co"># 筛选不良事件</span></span>
-<span id="cb18-254"><a href="#cb18-254" aria-hidden="true" tabindex="-1"></a>df_bad <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
-<span id="cb18-255"><a href="#cb18-255" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
-<span id="cb18-256"><a href="#cb18-256" aria-hidden="true" tabindex="-1"></a>        V11,</span>
-<span id="cb18-257"><a href="#cb18-257" aria-hidden="true" tabindex="-1"></a>        V2,</span>
-<span id="cb18-258"><a href="#cb18-258" aria-hidden="true" tabindex="-1"></a>        V3,</span>
-<span id="cb18-259"><a href="#cb18-259" aria-hidden="true" tabindex="-1"></a>        V4,</span>
-<span id="cb18-260"><a href="#cb18-260" aria-hidden="true" tabindex="-1"></a>        V5,</span>
-<span id="cb18-261"><a href="#cb18-261" aria-hidden="true" tabindex="-1"></a>        V6,</span>
-<span id="cb18-262"><a href="#cb18-262" aria-hidden="true" tabindex="-1"></a>        V7,</span>
-<span id="cb18-263"><a href="#cb18-263" aria-hidden="true" tabindex="-1"></a>        V8,</span>
-<span id="cb18-264"><a href="#cb18-264" aria-hidden="true" tabindex="-1"></a>        V10,</span>
-<span id="cb18-265"><a href="#cb18-265" aria-hidden="true" tabindex="-1"></a>        V119</span>
-<span id="cb18-266"><a href="#cb18-266" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb18-267"><a href="#cb18-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-268"><a href="#cb18-268" aria-hidden="true" tabindex="-1"></a>df_bad_summary <span class="ot">&lt;-</span> df_bad <span class="sc">|&gt;</span></span>
-<span id="cb18-269"><a href="#cb18-269" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 转换为长数据</span></span>
-<span id="cb18-270"><a href="#cb18-270" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
-<span id="cb18-271"><a href="#cb18-271" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
-<span id="cb18-272"><a href="#cb18-272" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
-<span id="cb18-273"><a href="#cb18-273" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
-<span id="cb18-274"><a href="#cb18-274" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb18-275"><a href="#cb18-275" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(variable) <span class="sc">|&gt;</span></span>
-<span id="cb18-276"><a href="#cb18-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-277"><a href="#cb18-277" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 计算统计摘要</span></span>
-<span id="cb18-278"><a href="#cb18-278" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb18-279"><a href="#cb18-279" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb18-280"><a href="#cb18-280" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(value <span class="sc">==</span> <span class="st">"1"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb18-281"><a href="#cb18-281" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
-<span id="cb18-282"><a href="#cb18-282" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '1', na.rm = TRUE)} ({round(mean(value == '1', na.rm = TRUE)*100, 2)}%)"</span></span>
-<span id="cb18-283"><a href="#cb18-283" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb18-284"><a href="#cb18-284" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
-<span id="cb18-285"><a href="#cb18-285" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '0', na.rm = TRUE)} ({round(mean(value == '0', na.rm = TRUE)*100, 2)}%)"</span></span>
-<span id="cb18-286"><a href="#cb18-286" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb18-287"><a href="#cb18-287" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">NA</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(value)),</span>
-<span id="cb18-288"><a href="#cb18-288" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb18-289"><a href="#cb18-289" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(df_name, <span class="fu">join_by</span>(variable <span class="sc">==</span> Variable)) <span class="co"># 添加变量注解</span></span>
-<span id="cb18-290"><a href="#cb18-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-291"><a href="#cb18-291" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb18-292"><a href="#cb18-292" aria-hidden="true" tabindex="-1"></a>    df_bad_summary <span class="sc">|&gt;</span> <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">NA</span><span class="st">`</span>),</span>
-<span id="cb18-293"><a href="#cb18-293" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">glue</span>(<span class="st">"不良事件统计摘要 (n = {nrow(df_bad)})"</span>)</span>
-<span id="cb18-294"><a href="#cb18-294" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-295"><a href="#cb18-295" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-296"><a href="#cb18-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-297"><a href="#cb18-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-298"><a href="#cb18-298" aria-hidden="true" tabindex="-1"></a><span class="al">![不良事件](./output/bad.png)</span></span>
+<div class="sourceCode" id="cb17" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># 基线资料</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">## 基础情况</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 读取数据</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>df0 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"./data/没有中文字符的数据.csv"</span>) <span class="co"># 带有type0的数据</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>df_name <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"./data/新-变量注解.csv"</span>) <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Variable))</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df0 <span class="sc">|&gt;</span> <span class="fu">filter</span>(X1 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>)) <span class="co"># 有分娩结局</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>共有 **`r nrow(df0)`** 例样本(住院次数)，剔除了 **`r nrow(df0) - nrow(df)`** 例无分娩结局样本:</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>本院多次住院,则仅保留分娩当次, 剔除其它未分娩住院; </span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>本院住院但最终未在本院分娩, 则剔除;</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>最终有 **`r nrow(df)`** 例样本, **`r ncol(df)`** 个变量 (如果1个PAH产妇分娩2次,计做2例样本) 。</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>以下是最终的数据表(仅展示前6行):</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 数据概览</span></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(df))</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>V26) <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"PAH分度 (0:NA; 1:轻度; 2:中度; 3:重度)"</span>)</span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>V21) <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"心功能分级 (0:NA; 1:I级; 2:II级; 3:III级; 4:IV级)"</span>)</span>
+<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"年龄(岁): "</span>)</span>
+<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df<span class="sc">$</span>V114)</span>
+<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"孕周(周): "</span>)</span>
+<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df<span class="sc">$</span>V20)</span>
+<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a><span class="fu">## 临床资料</span></span>
+<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a><span class="co"># 临床基线资料统计摘要</span></span>
+<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a>df_general <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
+<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a>        V22,</span>
+<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a>        V23,</span>
+<span id="cb17-68"><a href="#cb17-68" aria-hidden="true" tabindex="-1"></a>        V24,</span>
+<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a>        V25,</span>
+<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a>        V27,</span>
+<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a>        V28,</span>
+<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a>        V29,</span>
+<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a>        V30,</span>
+<span id="cb17-74"><a href="#cb17-74" aria-hidden="true" tabindex="-1"></a>        V31,</span>
+<span id="cb17-75"><a href="#cb17-75" aria-hidden="true" tabindex="-1"></a>        V32,</span>
+<span id="cb17-76"><a href="#cb17-76" aria-hidden="true" tabindex="-1"></a>        V33,</span>
+<span id="cb17-77"><a href="#cb17-77" aria-hidden="true" tabindex="-1"></a>        V35,</span>
+<span id="cb17-78"><a href="#cb17-78" aria-hidden="true" tabindex="-1"></a>        V36,</span>
+<span id="cb17-79"><a href="#cb17-79" aria-hidden="true" tabindex="-1"></a>        V37,</span>
+<span id="cb17-80"><a href="#cb17-80" aria-hidden="true" tabindex="-1"></a>        V38,</span>
+<span id="cb17-81"><a href="#cb17-81" aria-hidden="true" tabindex="-1"></a>        V39,</span>
+<span id="cb17-82"><a href="#cb17-82" aria-hidden="true" tabindex="-1"></a>        V40,</span>
+<span id="cb17-83"><a href="#cb17-83" aria-hidden="true" tabindex="-1"></a>        V41,</span>
+<span id="cb17-84"><a href="#cb17-84" aria-hidden="true" tabindex="-1"></a>        V42,</span>
+<span id="cb17-85"><a href="#cb17-85" aria-hidden="true" tabindex="-1"></a>        V43,</span>
+<span id="cb17-86"><a href="#cb17-86" aria-hidden="true" tabindex="-1"></a>        V45,</span>
+<span id="cb17-87"><a href="#cb17-87" aria-hidden="true" tabindex="-1"></a>        V47,</span>
+<span id="cb17-88"><a href="#cb17-88" aria-hidden="true" tabindex="-1"></a>        V48,</span>
+<span id="cb17-89"><a href="#cb17-89" aria-hidden="true" tabindex="-1"></a>        V49,</span>
+<span id="cb17-90"><a href="#cb17-90" aria-hidden="true" tabindex="-1"></a>        V50,</span>
+<span id="cb17-91"><a href="#cb17-91" aria-hidden="true" tabindex="-1"></a>        V51,</span>
+<span id="cb17-92"><a href="#cb17-92" aria-hidden="true" tabindex="-1"></a>        V52,</span>
+<span id="cb17-93"><a href="#cb17-93" aria-hidden="true" tabindex="-1"></a>        V53,</span>
+<span id="cb17-94"><a href="#cb17-94" aria-hidden="true" tabindex="-1"></a>        V54,</span>
+<span id="cb17-95"><a href="#cb17-95" aria-hidden="true" tabindex="-1"></a>        V55,</span>
+<span id="cb17-96"><a href="#cb17-96" aria-hidden="true" tabindex="-1"></a>        V56,</span>
+<span id="cb17-97"><a href="#cb17-97" aria-hidden="true" tabindex="-1"></a>        V57,</span>
+<span id="cb17-98"><a href="#cb17-98" aria-hidden="true" tabindex="-1"></a>        V58,</span>
+<span id="cb17-99"><a href="#cb17-99" aria-hidden="true" tabindex="-1"></a>        V59,</span>
+<span id="cb17-100"><a href="#cb17-100" aria-hidden="true" tabindex="-1"></a>        V60,</span>
+<span id="cb17-101"><a href="#cb17-101" aria-hidden="true" tabindex="-1"></a>        V61,</span>
+<span id="cb17-102"><a href="#cb17-102" aria-hidden="true" tabindex="-1"></a>        V62,</span>
+<span id="cb17-103"><a href="#cb17-103" aria-hidden="true" tabindex="-1"></a>        V63,</span>
+<span id="cb17-104"><a href="#cb17-104" aria-hidden="true" tabindex="-1"></a>        V64,</span>
+<span id="cb17-105"><a href="#cb17-105" aria-hidden="true" tabindex="-1"></a>        V65,</span>
+<span id="cb17-106"><a href="#cb17-106" aria-hidden="true" tabindex="-1"></a>        V66,</span>
+<span id="cb17-107"><a href="#cb17-107" aria-hidden="true" tabindex="-1"></a>        V67,</span>
+<span id="cb17-108"><a href="#cb17-108" aria-hidden="true" tabindex="-1"></a>        V68,</span>
+<span id="cb17-109"><a href="#cb17-109" aria-hidden="true" tabindex="-1"></a>        V69,</span>
+<span id="cb17-110"><a href="#cb17-110" aria-hidden="true" tabindex="-1"></a>        V70,</span>
+<span id="cb17-111"><a href="#cb17-111" aria-hidden="true" tabindex="-1"></a>        V71,</span>
+<span id="cb17-112"><a href="#cb17-112" aria-hidden="true" tabindex="-1"></a>        V72,</span>
+<span id="cb17-113"><a href="#cb17-113" aria-hidden="true" tabindex="-1"></a>        V73,</span>
+<span id="cb17-114"><a href="#cb17-114" aria-hidden="true" tabindex="-1"></a>        V74,</span>
+<span id="cb17-115"><a href="#cb17-115" aria-hidden="true" tabindex="-1"></a>        V75,</span>
+<span id="cb17-116"><a href="#cb17-116" aria-hidden="true" tabindex="-1"></a>        V76,</span>
+<span id="cb17-117"><a href="#cb17-117" aria-hidden="true" tabindex="-1"></a>        V77,</span>
+<span id="cb17-118"><a href="#cb17-118" aria-hidden="true" tabindex="-1"></a>        V78,</span>
+<span id="cb17-119"><a href="#cb17-119" aria-hidden="true" tabindex="-1"></a>        V79,</span>
+<span id="cb17-120"><a href="#cb17-120" aria-hidden="true" tabindex="-1"></a>        V80,</span>
+<span id="cb17-121"><a href="#cb17-121" aria-hidden="true" tabindex="-1"></a>        V81,</span>
+<span id="cb17-122"><a href="#cb17-122" aria-hidden="true" tabindex="-1"></a>        V82,</span>
+<span id="cb17-123"><a href="#cb17-123" aria-hidden="true" tabindex="-1"></a>        V83,</span>
+<span id="cb17-124"><a href="#cb17-124" aria-hidden="true" tabindex="-1"></a>        V84,</span>
+<span id="cb17-125"><a href="#cb17-125" aria-hidden="true" tabindex="-1"></a>        V85,</span>
+<span id="cb17-126"><a href="#cb17-126" aria-hidden="true" tabindex="-1"></a>        V86,</span>
+<span id="cb17-127"><a href="#cb17-127" aria-hidden="true" tabindex="-1"></a>        V87,</span>
+<span id="cb17-128"><a href="#cb17-128" aria-hidden="true" tabindex="-1"></a>        V88,</span>
+<span id="cb17-129"><a href="#cb17-129" aria-hidden="true" tabindex="-1"></a>        V89,</span>
+<span id="cb17-130"><a href="#cb17-130" aria-hidden="true" tabindex="-1"></a>        V90,</span>
+<span id="cb17-131"><a href="#cb17-131" aria-hidden="true" tabindex="-1"></a>        V91,</span>
+<span id="cb17-132"><a href="#cb17-132" aria-hidden="true" tabindex="-1"></a>        V92,</span>
+<span id="cb17-133"><a href="#cb17-133" aria-hidden="true" tabindex="-1"></a>        V93,</span>
+<span id="cb17-134"><a href="#cb17-134" aria-hidden="true" tabindex="-1"></a>        V94,</span>
+<span id="cb17-135"><a href="#cb17-135" aria-hidden="true" tabindex="-1"></a>        V95,</span>
+<span id="cb17-136"><a href="#cb17-136" aria-hidden="true" tabindex="-1"></a>        V96,</span>
+<span id="cb17-137"><a href="#cb17-137" aria-hidden="true" tabindex="-1"></a>        V97,</span>
+<span id="cb17-138"><a href="#cb17-138" aria-hidden="true" tabindex="-1"></a>        V98,</span>
+<span id="cb17-139"><a href="#cb17-139" aria-hidden="true" tabindex="-1"></a>        V99,</span>
+<span id="cb17-140"><a href="#cb17-140" aria-hidden="true" tabindex="-1"></a>        V100,</span>
+<span id="cb17-141"><a href="#cb17-141" aria-hidden="true" tabindex="-1"></a>        V111,</span>
+<span id="cb17-142"><a href="#cb17-142" aria-hidden="true" tabindex="-1"></a>        V112,</span>
+<span id="cb17-143"><a href="#cb17-143" aria-hidden="true" tabindex="-1"></a>        V113,</span>
+<span id="cb17-144"><a href="#cb17-144" aria-hidden="true" tabindex="-1"></a>        V121,</span>
+<span id="cb17-145"><a href="#cb17-145" aria-hidden="true" tabindex="-1"></a>        V122,</span>
+<span id="cb17-146"><a href="#cb17-146" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-147"><a href="#cb17-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-148"><a href="#cb17-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-149"><a href="#cb17-149" aria-hidden="true" tabindex="-1"></a>df_general_summary <span class="ot">&lt;-</span> df_general <span class="sc">|&gt;</span></span>
+<span id="cb17-150"><a href="#cb17-150" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 转换为长数据</span></span>
+<span id="cb17-151"><a href="#cb17-151" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb17-152"><a href="#cb17-152" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb17-153"><a href="#cb17-153" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
+<span id="cb17-154"><a href="#cb17-154" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb17-155"><a href="#cb17-155" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb17-156"><a href="#cb17-156" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(variable) <span class="sc">|&gt;</span></span>
+<span id="cb17-157"><a href="#cb17-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-158"><a href="#cb17-158" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 计算统计摘要</span></span>
+<span id="cb17-159"><a href="#cb17-159" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb17-160"><a href="#cb17-160" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb17-161"><a href="#cb17-161" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(value <span class="sc">==</span> <span class="st">"1"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb17-162"><a href="#cb17-162" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
+<span id="cb17-163"><a href="#cb17-163" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '1', na.rm = TRUE)} ({round(mean(value == '1', na.rm = TRUE)*100, 2)}%)"</span></span>
+<span id="cb17-164"><a href="#cb17-164" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb17-165"><a href="#cb17-165" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
+<span id="cb17-166"><a href="#cb17-166" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '0', na.rm = TRUE)} ({round(mean(value == '0', na.rm = TRUE)*100, 2)}%)"</span></span>
+<span id="cb17-167"><a href="#cb17-167" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb17-168"><a href="#cb17-168" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">NA</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(value)),</span>
+<span id="cb17-169"><a href="#cb17-169" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb17-170"><a href="#cb17-170" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(df_name, <span class="fu">join_by</span>(variable <span class="sc">==</span> Variable)) <span class="co"># 添加变量注解</span></span>
+<span id="cb17-171"><a href="#cb17-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-172"><a href="#cb17-172" aria-hidden="true" tabindex="-1"></a><span class="co"># 展示表格</span></span>
+<span id="cb17-173"><a href="#cb17-173" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb17-174"><a href="#cb17-174" aria-hidden="true" tabindex="-1"></a>    df_general_summary <span class="sc">|&gt;</span> <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">NA</span><span class="st">`</span>),</span>
+<span id="cb17-175"><a href="#cb17-175" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">glue</span>(<span class="st">"临床基线资料统计摘要 (n = {nrow(df_general)})"</span>)</span>
+<span id="cb17-176"><a href="#cb17-176" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-177"><a href="#cb17-177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-178"><a href="#cb17-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-179"><a href="#cb17-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-180"><a href="#cb17-180" aria-hidden="true" tabindex="-1"></a><span class="fu">## 超声及化验</span></span>
+<span id="cb17-181"><a href="#cb17-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-184"><a href="#cb17-184" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-185"><a href="#cb17-185" aria-hidden="true" tabindex="-1"></a><span class="co"># 超声及化验基线资料统计摘要</span></span>
+<span id="cb17-186"><a href="#cb17-186" aria-hidden="true" tabindex="-1"></a>cols_to_select <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"X"</span>, <span class="fu">seq</span>(<span class="dv">3</span>, <span class="dv">763</span>, <span class="at">by =</span> <span class="dv">6</span>))</span>
+<span id="cb17-187"><a href="#cb17-187" aria-hidden="true" tabindex="-1"></a>df_test <span class="ot">&lt;-</span> df[, cols_to_select]</span>
+<span id="cb17-188"><a href="#cb17-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-189"><a href="#cb17-189" aria-hidden="true" tabindex="-1"></a>df_test <span class="sc">|&gt;</span></span>
+<span id="cb17-190"><a href="#cb17-190" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb17-191"><a href="#cb17-191" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb17-192"><a href="#cb17-192" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
+<span id="cb17-193"><a href="#cb17-193" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb17-194"><a href="#cb17-194" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb17-195"><a href="#cb17-195" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(variable) <span class="sc">|&gt;</span></span>
+<span id="cb17-196"><a href="#cb17-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-197"><a href="#cb17-197" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 计算统计摘要</span></span>
+<span id="cb17-198"><a href="#cb17-198" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb17-199"><a href="#cb17-199" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb17-200"><a href="#cb17-200" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean =</span> <span class="fu">round</span>(<span class="fu">mean</span>(value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
+<span id="cb17-201"><a href="#cb17-201" aria-hidden="true" tabindex="-1"></a>        <span class="at">median =</span> <span class="fu">round</span>(<span class="fu">median</span>(value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
+<span id="cb17-202"><a href="#cb17-202" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd =</span> <span class="fu">round</span>(<span class="fu">sd</span>(value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
+<span id="cb17-203"><a href="#cb17-203" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">NA</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(value))</span>
+<span id="cb17-204"><a href="#cb17-204" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb17-205"><a href="#cb17-205" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(df_name, <span class="fu">join_by</span>(variable <span class="sc">==</span> Variable)) <span class="sc">|&gt;</span> <span class="co"># 添加变量注解</span></span>
+<span id="cb17-206"><a href="#cb17-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-207"><a href="#cb17-207" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 展示表格</span></span>
+<span id="cb17-208"><a href="#cb17-208" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Label, n, mean, sd, median,  <span class="st">`</span><span class="at">NA</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-209"><a href="#cb17-209" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">caption =</span> <span class="fu">glue</span>(<span class="st">"超声及化验基线资料统计摘要 (n = {nrow(df)})"</span>))</span>
+<span id="cb17-210"><a href="#cb17-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-211"><a href="#cb17-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-212"><a href="#cb17-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-213"><a href="#cb17-213" aria-hidden="true" tabindex="-1"></a><span class="fu"># 妊娠结局</span></span>
+<span id="cb17-214"><a href="#cb17-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-217"><a href="#cb17-217" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-218"><a href="#cb17-218" aria-hidden="true" tabindex="-1"></a><span class="co"># 妊娠结局</span></span>
+<span id="cb17-219"><a href="#cb17-219" aria-hidden="true" tabindex="-1"></a>df_outcome <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb17-220"><a href="#cb17-220" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
+<span id="cb17-221"><a href="#cb17-221" aria-hidden="true" tabindex="-1"></a>        V10,</span>
+<span id="cb17-222"><a href="#cb17-222" aria-hidden="true" tabindex="-1"></a>        V12,</span>
+<span id="cb17-223"><a href="#cb17-223" aria-hidden="true" tabindex="-1"></a>        V13,</span>
+<span id="cb17-224"><a href="#cb17-224" aria-hidden="true" tabindex="-1"></a>        V14,</span>
+<span id="cb17-225"><a href="#cb17-225" aria-hidden="true" tabindex="-1"></a>        V15,</span>
+<span id="cb17-226"><a href="#cb17-226" aria-hidden="true" tabindex="-1"></a>        V16,</span>
+<span id="cb17-227"><a href="#cb17-227" aria-hidden="true" tabindex="-1"></a>        V18,</span>
+<span id="cb17-228"><a href="#cb17-228" aria-hidden="true" tabindex="-1"></a>        V17,</span>
+<span id="cb17-229"><a href="#cb17-229" aria-hidden="true" tabindex="-1"></a>        V19,</span>
+<span id="cb17-230"><a href="#cb17-230" aria-hidden="true" tabindex="-1"></a>        V44,</span>
+<span id="cb17-231"><a href="#cb17-231" aria-hidden="true" tabindex="-1"></a>        V46,</span>
+<span id="cb17-232"><a href="#cb17-232" aria-hidden="true" tabindex="-1"></a>        V101,</span>
+<span id="cb17-233"><a href="#cb17-233" aria-hidden="true" tabindex="-1"></a>        V102,</span>
+<span id="cb17-234"><a href="#cb17-234" aria-hidden="true" tabindex="-1"></a>        V103,</span>
+<span id="cb17-235"><a href="#cb17-235" aria-hidden="true" tabindex="-1"></a>        V104,</span>
+<span id="cb17-236"><a href="#cb17-236" aria-hidden="true" tabindex="-1"></a>        V105,</span>
+<span id="cb17-237"><a href="#cb17-237" aria-hidden="true" tabindex="-1"></a>        V107,</span>
+<span id="cb17-238"><a href="#cb17-238" aria-hidden="true" tabindex="-1"></a>        V109,</span>
+<span id="cb17-239"><a href="#cb17-239" aria-hidden="true" tabindex="-1"></a>        V110,</span>
+<span id="cb17-240"><a href="#cb17-240" aria-hidden="true" tabindex="-1"></a>        V118,</span>
+<span id="cb17-241"><a href="#cb17-241" aria-hidden="true" tabindex="-1"></a>        V123,</span>
+<span id="cb17-242"><a href="#cb17-242" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-243"><a href="#cb17-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-244"><a href="#cb17-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-245"><a href="#cb17-245" aria-hidden="true" tabindex="-1"></a>df_outcome_summary <span class="ot">&lt;-</span> df_outcome <span class="sc">|&gt;</span></span>
+<span id="cb17-246"><a href="#cb17-246" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 转换为长数据</span></span>
+<span id="cb17-247"><a href="#cb17-247" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb17-248"><a href="#cb17-248" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb17-249"><a href="#cb17-249" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
+<span id="cb17-250"><a href="#cb17-250" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb17-251"><a href="#cb17-251" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb17-252"><a href="#cb17-252" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(variable) <span class="sc">|&gt;</span></span>
+<span id="cb17-253"><a href="#cb17-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-254"><a href="#cb17-254" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 计算统计摘要</span></span>
+<span id="cb17-255"><a href="#cb17-255" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb17-256"><a href="#cb17-256" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb17-257"><a href="#cb17-257" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(value <span class="sc">==</span> <span class="st">"1"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb17-258"><a href="#cb17-258" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
+<span id="cb17-259"><a href="#cb17-259" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '1', na.rm = TRUE)} ({round(mean(value == '1', na.rm = TRUE)*100, 2)}%)"</span></span>
+<span id="cb17-260"><a href="#cb17-260" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb17-261"><a href="#cb17-261" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
+<span id="cb17-262"><a href="#cb17-262" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '0', na.rm = TRUE)} ({round(mean(value == '0', na.rm = TRUE)*100, 2)}%)"</span></span>
+<span id="cb17-263"><a href="#cb17-263" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb17-264"><a href="#cb17-264" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">NA</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(value)),</span>
+<span id="cb17-265"><a href="#cb17-265" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb17-266"><a href="#cb17-266" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(df_name, <span class="fu">join_by</span>(variable <span class="sc">==</span> Variable))  <span class="co"># 添加变量注解</span></span>
+<span id="cb17-267"><a href="#cb17-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-268"><a href="#cb17-268" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 展示表格</span></span>
+<span id="cb17-269"><a href="#cb17-269" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb17-270"><a href="#cb17-270" aria-hidden="true" tabindex="-1"></a>        df_outcome_summary <span class="sc">|&gt;</span> <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">NA</span><span class="st">`</span>),</span>
+<span id="cb17-271"><a href="#cb17-271" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="fu">glue</span>(<span class="st">"妊娠结局统计摘要 (n = {nrow(df_outcome)})"</span>)</span>
+<span id="cb17-272"><a href="#cb17-272" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-273"><a href="#cb17-273" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-274"><a href="#cb17-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-275"><a href="#cb17-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-276"><a href="#cb17-276" aria-hidden="true" tabindex="-1"></a><span class="al">![妊娠结局](./output/outcome.png)</span></span>
+<span id="cb17-277"><a href="#cb17-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-278"><a href="#cb17-278" aria-hidden="true" tabindex="-1"></a><span class="fu"># 不良事件</span></span>
+<span id="cb17-279"><a href="#cb17-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-282"><a href="#cb17-282" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-283"><a href="#cb17-283" aria-hidden="true" tabindex="-1"></a><span class="co"># 筛选不良事件</span></span>
+<span id="cb17-284"><a href="#cb17-284" aria-hidden="true" tabindex="-1"></a>df_bad <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb17-285"><a href="#cb17-285" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(</span>
+<span id="cb17-286"><a href="#cb17-286" aria-hidden="true" tabindex="-1"></a>        V11,</span>
+<span id="cb17-287"><a href="#cb17-287" aria-hidden="true" tabindex="-1"></a>        V2,</span>
+<span id="cb17-288"><a href="#cb17-288" aria-hidden="true" tabindex="-1"></a>        V3,</span>
+<span id="cb17-289"><a href="#cb17-289" aria-hidden="true" tabindex="-1"></a>        V4,</span>
+<span id="cb17-290"><a href="#cb17-290" aria-hidden="true" tabindex="-1"></a>        V5,</span>
+<span id="cb17-291"><a href="#cb17-291" aria-hidden="true" tabindex="-1"></a>        V6,</span>
+<span id="cb17-292"><a href="#cb17-292" aria-hidden="true" tabindex="-1"></a>        V7,</span>
+<span id="cb17-293"><a href="#cb17-293" aria-hidden="true" tabindex="-1"></a>        V8,</span>
+<span id="cb17-294"><a href="#cb17-294" aria-hidden="true" tabindex="-1"></a>        V10,</span>
+<span id="cb17-295"><a href="#cb17-295" aria-hidden="true" tabindex="-1"></a>        V119</span>
+<span id="cb17-296"><a href="#cb17-296" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-297"><a href="#cb17-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-298"><a href="#cb17-298" aria-hidden="true" tabindex="-1"></a>df_bad_summary <span class="ot">&lt;-</span> df_bad <span class="sc">|&gt;</span></span>
+<span id="cb17-299"><a href="#cb17-299" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 转换为长数据</span></span>
+<span id="cb17-300"><a href="#cb17-300" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb17-301"><a href="#cb17-301" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb17-302"><a href="#cb17-302" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
+<span id="cb17-303"><a href="#cb17-303" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb17-304"><a href="#cb17-304" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb17-305"><a href="#cb17-305" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(variable) <span class="sc">|&gt;</span></span>
+<span id="cb17-306"><a href="#cb17-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-307"><a href="#cb17-307" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 计算统计摘要</span></span>
+<span id="cb17-308"><a href="#cb17-308" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb17-309"><a href="#cb17-309" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb17-310"><a href="#cb17-310" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(value <span class="sc">==</span> <span class="st">"1"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb17-311"><a href="#cb17-311" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
+<span id="cb17-312"><a href="#cb17-312" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '1', na.rm = TRUE)} ({round(mean(value == '1', na.rm = TRUE)*100, 2)}%)"</span></span>
+<span id="cb17-313"><a href="#cb17-313" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb17-314"><a href="#cb17-314" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">glue</span>(</span>
+<span id="cb17-315"><a href="#cb17-315" aria-hidden="true" tabindex="-1"></a>            <span class="st">" {sum(value == '0', na.rm = TRUE)} ({round(mean(value == '0', na.rm = TRUE)*100, 2)}%)"</span></span>
+<span id="cb17-316"><a href="#cb17-316" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb17-317"><a href="#cb17-317" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">NA</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(value)),</span>
+<span id="cb17-318"><a href="#cb17-318" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb17-319"><a href="#cb17-319" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(df_name, <span class="fu">join_by</span>(variable <span class="sc">==</span> Variable)) <span class="co"># 添加变量注解</span></span>
+<span id="cb17-320"><a href="#cb17-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-321"><a href="#cb17-321" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb17-322"><a href="#cb17-322" aria-hidden="true" tabindex="-1"></a>    df_bad_summary <span class="sc">|&gt;</span> <span class="fu">select</span>(Label, <span class="st">`</span><span class="at">0(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">1(%)</span><span class="st">`</span>, <span class="st">`</span><span class="at">NA</span><span class="st">`</span>),</span>
+<span id="cb17-323"><a href="#cb17-323" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">glue</span>(<span class="st">"不良事件统计摘要 (n = {nrow(df_bad)})"</span>)</span>
+<span id="cb17-324"><a href="#cb17-324" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-325"><a href="#cb17-325" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-326"><a href="#cb17-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-327"><a href="#cb17-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-328"><a href="#cb17-328" aria-hidden="true" tabindex="-1"></a><span class="al">![不良事件](./output/bad.png)</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
