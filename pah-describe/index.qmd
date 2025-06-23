@@ -1,0 +1,294 @@
+
+# 基线资料
+
+```{r}
+# 读取数据
+library(tidyverse)
+library(glue)
+
+df0 <- read_csv("./data/没有中文字符的数据.csv") # 带有type0的数据
+df_name <- read_csv("./data/新-变量注解.csv") |> filter(!is.na(Variable))
+df <- df0 |> filter(X1 %in% c("1", "2")) # 有分娩结局
+```
+
+共有 **`r nrow(df0)`** 例样本(住院次数)，剔除了 **`r nrow(df0) - nrow(df)`** 例无分娩结局样本，保留了 **`r nrow(df)`** 例样本。
+
+最终有 **`r nrow(df)`** 例样本, **`r ncol(df)`** 个变量 (如果1个PAH产妇分娩2次,计做2例样本) 。
+
+
+以下是最终的数据表(仅展示前6行):
+
+```{r}
+# 数据概览
+knitr::kable(head(df))
+```
+
+
+::: {.columns}
+
+::: {.column}
+
+**PAH 分度:**
+
+- 1度: **`r sum(df$V1 == 1)`** 例
+- 2度: **`r sum(df$V1 == 2)`** 例
+- 3度: **`r sum(df$V1 == 3)`** 例
+- NA: **`r sum(df$V1 == 0)`** 例
+
+:::
+
+::: {.column}
+
+**心功能分级:**
+
+- I度: **`r sum(df$V21 == 1)`** 例
+- II度: **`r sum(df$V21 == 2)`** 例
+- III度: **`r sum(df$V21 == 3)`** 例
+- IV度: **`r sum(df$V21 == 4)`** 例
+- NA: **`r sum(df$V21 == 0)`** 例
+:::
+
+:::
+
+```{r}
+
+print("年龄: ")
+print(summary(df$V114))
+
+print("孕周: ")
+print(summary(df$V20))
+```
+
+以下是基线资料统计摘要:
+
+```{r}
+# 基线资料统计摘要
+df_general <- df |>
+    select(
+        V22,
+        V23,
+        V24,
+        V25,
+        V27,
+        V28,
+        V29,
+        V30,
+        V31,
+        V32,
+        V33,
+        V35,
+        V36,
+        V37,
+        V38,
+        V39,
+        V40,
+        V41,
+        V42,
+        V43,
+        V45,
+        V47,
+        V48,
+        V49,
+        V50,
+        V51,
+        V52,
+        V53,
+        V54,
+        V55,
+        V56,
+        V57,
+        V58,
+        V59,
+        V60,
+        V61,
+        V62,
+        V63,
+        V64,
+        V65,
+        V66,
+        V67,
+        V68,
+        V69,
+        V70,
+        V71,
+        V72,
+        V73,
+        V74,
+        V75,
+        V76,
+        V77,
+        V78,
+        V79,
+        V80,
+        V81,
+        V82,
+        V83,
+        V84,
+        V85,
+        V86,
+        V87,
+        V88,
+        V89,
+        V90,
+        V91,
+        V92,
+        V93,
+        V94,
+        V95,
+        V96,
+        V97,
+        V98,
+        V99,
+        V100,
+        V111,
+        V112,
+        V113,
+        V121,
+        V122,
+    )
+
+
+df_general_summary <- df_general |>
+    # 转换为长数据
+    pivot_longer(
+        cols = everything(),
+        names_to = "variable",
+        values_to = "value"
+    ) |>
+    group_by(variable) |>
+
+    # 计算统计摘要
+    summarise(
+        n = n(),
+        `1` = mean(value == "1", na.rm = TRUE),
+        `1(%)` = glue(
+            " {sum(value == '1', na.rm = TRUE)} ({round(mean(value == '1', na.rm = TRUE)*100, 2)}%)"
+        ),
+        `0(%)` = glue(
+            " {sum(value == '0', na.rm = TRUE)} ({round(mean(value == '0', na.rm = TRUE)*100, 2)}%)"
+        ),
+        `NA` = sum(is.na(value)),
+    ) |>
+    left_join(df_name, join_by(variable == Variable)) # 添加变量注解
+
+# 展示表格
+knitr::kable(
+    df_general_summary |> select(Label, `0(%)`, `1(%)`, `NA`),
+    caption = glue("基线资料统计摘要 (n = {nrow(df_general)})")
+)
+```
+
+
+# 妊娠结局
+
+终止妊娠的有 **`r table(df$X1)[[2]]`** 例，分娩的有 **`r table(df$X1)[[1]]`** 例。
+
+```{r}
+# 妊娠结局
+df_outcome <- df |>
+    select(
+        V10,
+        V12,
+        V13,
+        V14,
+        V15,
+        V16,
+        V18,
+        V17,
+        V19,
+        V44,
+        V46,
+        V101,
+        V102,
+        V103,
+        V104,
+        V105,
+        V107,
+        V109,
+        V110,
+        V118,
+        V123,
+    )
+
+
+df_outcome_summary <- df_outcome |>
+    # 转换为长数据
+    pivot_longer(
+        cols = everything(),
+        names_to = "variable",
+        values_to = "value"
+    ) |>
+    group_by(variable) |>
+
+    # 计算统计摘要
+    summarise(
+        n = n(),
+        `1` = mean(value == "1", na.rm = TRUE),
+        `1(%)` = glue(
+            " {sum(value == '1', na.rm = TRUE)} ({round(mean(value == '1', na.rm = TRUE)*100, 2)}%)"
+        ),
+        `0(%)` = glue(
+            " {sum(value == '0', na.rm = TRUE)} ({round(mean(value == '0', na.rm = TRUE)*100, 2)}%)"
+        ),
+        `NA` = sum(is.na(value)),
+    ) |>
+    left_join(df_name, join_by(variable == Variable))  # 添加变量注解
+
+    # 展示表格
+    knitr::kable(
+        df_outcome_summary |> select(Label, `0(%)`, `1(%)`, `NA`),
+        caption = glue("妊娠结局统计摘要 (n = {nrow(df_outcome)})")
+    )
+```
+
+
+![妊娠结局](./output/outcome.png)
+
+
+```{r}
+# 筛选不良事件
+df_bad <- df |>
+    select(
+        V11,
+        V2,
+        V3,
+        V4,
+        V5,
+        V6,
+        V7,
+        V8,
+        V10,
+        V119
+    )
+
+df_bad_summary <- df_bad |>
+    # 转换为长数据
+    pivot_longer(
+        cols = everything(),
+        names_to = "variable",
+        values_to = "value"
+    ) |>
+    group_by(variable) |>
+
+    # 计算统计摘要
+    summarise(
+        n = n(),
+        `1` = mean(value == "1", na.rm = TRUE),
+        `1(%)` = glue(
+            " {sum(value == '1', na.rm = TRUE)} ({round(mean(value == '1', na.rm = TRUE)*100, 2)}%)"
+        ),
+        `0(%)` = glue(
+            " {sum(value == '0', na.rm = TRUE)} ({round(mean(value == '0', na.rm = TRUE)*100, 2)}%)"
+        ),
+        `NA` = sum(is.na(value)),
+    ) |>
+    left_join(df_name, join_by(variable == Variable)) # 添加变量注解
+
+knitr::kable(
+    df_bad_summary |> select(Label, `0(%)`, `1(%)`, `NA`),
+    caption = glue("不良事件统计摘要 (n = {nrow(df_bad)})")
+)
+```
+
+
+![不良事件](./output/bad.png)
