@@ -6,10 +6,13 @@
 library(tidyverse)
 library(glue)
 library(knitr)
+library(gridExtra)
+library(gt)
 
-df0 <- read_csv("./data/没有中文字符的数据.csv") # 带有type0的数据
-df_name <- read_csv("./data/新-变量注解.csv") |> filter(!is.na(Variable))
-df <- df0 |> filter(X1 %in% c("1", "2")) # 有分娩结局
+df_name <- read_csv("./data/新-变量注解.csv") |> filter(!is.na(Variable)) # 变量注解文件
+df0 <- read_csv("./data/没有中文字符的数据-有变量名.csv") # 带有type0的数据
+df <- df0 |> filter(type %in% c("1", "2")) # 有分娩结局
+
 ```
 
 共有 **`r nrow(df0)`** 例样本(住院次数)，剔除了 **`r nrow(df0) - nrow(df)`** 例无分娩结局样本:
@@ -19,33 +22,39 @@ df <- df0 |> filter(X1 %in% c("1", "2")) # 有分娩结局
 
 最终有 **`r nrow(df)`** 例样本, **`r ncol(df)`** 个变量 (如果1个PAH产妇分娩2次,计做2例样本) 。
 
-
 以下是最终的数据表(仅展示前6行):
 
-```{r}
+```{r} 
+
 # 数据概览
-kable(head(df))
+read_csv("./data/没有中文字符的数据.csv") |> 
+    head() |> 
+    kable(caption = "数据概览") 
 ```
 
 
+**PAH分度** (0:NA; 1:轻度; 2:中度; 3:重度):
+
 ```{r}
-table(df$V26) |> kable(caption = "PAH分度 (0:NA; 1:轻度; 2:中度; 3:重度)")
+table(df$V26)
+```
+
+**心功能分级** (0:NA; 1:I级; 2:II级; 3:III级; 4:IV级)
+```{r}
+table(df$V21)
 ```
 
 
+**年龄(岁)**: 
 ```{r}
-table(df$V21) |> kable(caption = "心功能分级 (0:NA; 1:I级; 2:II级; 3:III级; 4:IV级)")
-```
-
-
-```{r}
-
-print("年龄(岁): ")
 summary(df$V114)
+```
 
-print("孕周(周): ")
+**孕周(周)**:
+```{r}
 summary(df$V20)
 ```
+
 
 ## 临床资料
 
@@ -136,7 +145,7 @@ df_general <- df |>
     )
 
 
-df_general_summary <- df_general |>
+df_general |>
     # 转换为长数据
     pivot_longer(
         cols = everything(),
@@ -157,13 +166,11 @@ df_general_summary <- df_general |>
         ),
         `NA` = sum(is.na(value)),
     ) |>
-    left_join(df_name, join_by(variable == Variable)) # 添加变量注解
+    left_join(df_name, join_by(variable == Variable)) |>  # 添加变量注解
 
-# 展示表格
-kable(
-    df_general_summary |> select(Label, `0(%)`, `1(%)`, `NA`),
-    caption = glue("临床基线资料统计摘要 (n = {nrow(df_general)})")
-)
+    # 展示表格
+    select(Label, `0(%)`, `1(%)`, `NA`) |> 
+    kable(caption = glue("临床基线资料统计摘要 (n = {nrow(df_general)})"))
 ```
 
 
@@ -171,10 +178,9 @@ kable(
 
 ```{r}
 # 超声及化验基线资料统计摘要
-cols_to_select <- paste0("X", seq(3, 763, by = 6))
-df_test <- df[, cols_to_select]
 
-df_test |>
+df |>
+    select(ends_with("_孕早期")) |> 
     pivot_longer(
         cols = everything(),
         names_to = "variable",
@@ -190,10 +196,9 @@ df_test |>
         sd = round(sd(value, na.rm = TRUE), 2),
         `NA` = sum(is.na(value))
     ) |>
-    left_join(df_name, join_by(variable == Variable)) |> # 添加变量注解
-
+    
     # 展示表格
-    select(Label, n, mean, sd, median,  `NA`) |>
+    select(variable, n, mean, sd, median,  `NA`) |>
     kable(caption = glue("超声及化验基线资料统计摘要 (n = {nrow(df)})"))
 ```
 
@@ -228,7 +233,7 @@ df_outcome <- df |>
     )
 
 
-df_outcome_summary <- df_outcome |>
+df_outcome |>
     # 转换为长数据
     pivot_longer(
         cols = everything(),
@@ -249,22 +254,20 @@ df_outcome_summary <- df_outcome |>
         ),
         `NA` = sum(is.na(value)),
     ) |>
-    left_join(df_name, join_by(variable == Variable))  # 添加变量注解
+    left_join(df_name, join_by(variable == Variable))|> # 添加变量注解
 
     # 展示表格
-kable(
-        df_outcome_summary |> select(Label, `0(%)`, `1(%)`, `NA`),
-        caption = glue("妊娠结局统计摘要 (n = {nrow(df_outcome)})")
-    )
+    select(Label, `0(%)`, `1(%)`, `NA`) |>
+    kable(caption = glue("妊娠结局统计摘要 (n = {nrow(df_outcome)})"))
 ```
 
 
-![妊娠结局](./output/outcome.png)
+![妊娠结局](./image/outcome.png)
 
 # 不良事件
 
 ```{r}
-# 筛选不良事件
+# 不良事件
 df_bad <- df |>
     select(
         V11,
@@ -279,7 +282,7 @@ df_bad <- df |>
         V119
     )
 
-df_bad_summary <- df_bad |>
+df_bad |>
     # 转换为长数据
     pivot_longer(
         cols = everything(),
@@ -300,13 +303,218 @@ df_bad_summary <- df_bad |>
         ),
         `NA` = sum(is.na(value)),
     ) |>
-    left_join(df_name, join_by(variable == Variable)) # 添加变量注解
+    left_join(df_name, join_by(variable == Variable)) |>  # 添加变量注解
 
-kable(
-    df_bad_summary |> select(Label, `0(%)`, `1(%)`, `NA`),
-    caption = glue("不良事件统计摘要 (n = {nrow(df_bad)})")
-)
+    # 展示表格
+    select(Label, `0(%)`, `1(%)`, `NA`) |> 
+    kable(caption = glue("不良事件统计摘要 (n = {nrow(df_bad)})"))
 ```
 
 
-![不良事件](./output/bad.png)
+![不良事件](./image/bad.png)
+
+# 先心病右心(术前)
+
+```{r}
+# 术前右心数据
+df_surgery0 <- df |>
+    filter(
+        (V48 == 1 | V49 == 1 | V50 == 1), # 先心病
+        V70 == 0,
+        V71 == 0,
+        V72 == 0,
+    )
+```
+
+简单分流型先心病(房缺/室缺/PDA)术前, 共有 **`r nrow(df_surgery0)`** 例样本, 其中(注意: 1个产妇可能有**多种**先心病):
+
+- 房间隔缺损:   **`r sum(df_surgery0$V48 == 1)`** 例;
+- 室间隔缺损:   **`r sum(df_surgery0$V49 == 1)`** 例;
+- 动脉导管未闭: **`r sum(df_surgery0$V50 == 1)`** 例;
+
+```{r}
+
+#| fig-cap: 先心病术前右心功能分析(n = 414)
+
+# 转化为长数据,即抽离出week
+df_surgery0_long <- df_surgery0 |>
+    pivot_longer(
+        cols = matches("_(孕前|孕早期|孕中期|孕晚期|产后10天内|产后8周内)$"),
+        names_to = c(".value", "week"),
+        names_pattern = "(.+)_(.+)",
+        values_drop_na = FALSE
+    ) |>
+
+    # 选择需要的列
+    mutate(
+        `week` = factor(week,
+            levels = c("孕前", "孕早期", "孕中期", "孕晚期", "产后10天内", "产后8周内")
+        ),
+        `SPAP` = SPAP,
+        `TRV` = TRV,
+        `TAPSE` = TAPSE,
+        `ln(BNP)` = log(B型钠酸肽),
+        `右室前后径` = 超声前后径,
+        `右室流出道` = 超声流出道,
+        `左室舒末内径` = 超声舒末内径,
+        `肺动脉主干径` = 超声主干径,
+        `右房面积` = 超声右房,
+        `右室面积` = 超声前后径 * 超声流出道,
+        .keep = 'none'
+    )
+
+
+# 封装绘图函数
+violin_box <- function(data, y) {
+    ggplot(data, aes(x = week, y = {{ y }})) +
+        geom_violin(aes(fill = week), alpha = 0.8) +
+        geom_boxplot(width = 0.2, outlier.shape = NA) +
+        geom_point(
+            size = 0.5,
+            alpha = 0.5,
+            position = position_jitter(width = 0.15)
+        ) +
+        stat_summary(
+            fun = median,
+            geom = "line",
+            aes(group = 1),
+            color = "red",
+            linewidth = 0.5,
+            linetype = 5
+        ) +
+        theme_classic() +
+        theme(legend.position = "none")
+}
+
+# # 绘制各个指标的图形
+# p0_SPAP <- violin_box(df_surgery0_long, SPAP)
+# p0_TRV <- violin_box(df_surgery0_long, TRV)
+# p0_TAPSE <- violin_box(df_surgery0_long, TAPSE)
+# p0_ln_BNP <- violin_box(df_surgery0_long, `ln(BNP)`)
+# p0_右室前后径 <- violin_box(df_surgery0_long, `右室前后径`)
+# p0_右室流出道 <- violin_box(df_surgery0_long, `右室流出道`)
+# p0_左室舒末内径 <- violin_box(df_surgery0_long, `左室舒末内径`)
+# p0_肺动脉主干径 <- violin_box(df_surgery0_long, `肺动脉主干径`)
+# p0_右房面积 <- violin_box(df_surgery0_long, `右房面积`)
+# p0_右室面积 <- violin_box(df_surgery0_long, `右室面积`)
+
+# # 将所有图形组合成2列5行的布局
+# combined_plot <- grid.arrange(
+#     p0_SPAP,
+#     p0_TRV,
+#     p0_TAPSE,
+#     p0_ln_BNP,
+#     p0_右室前后径,
+#     p0_右室流出道,
+#     p0_左室舒末内径,
+#     p0_肺动脉主干径,
+#     p0_右房面积,
+#     p0_右室面积,
+#     ncol = 2, # 设置为2列
+#     nrow = 5 # 设置为5行
+# )
+
+# # 保存图形
+# ggsave("./image/小提琴-术前414.png", combined_plot, width = 10, height = 20)
+```
+
+![先心病术前右心功能分析 (n = 414)](./image/小提琴-术前414.png)
+
+::: {.callout-note}
+对于未手术的简单分流型先心病（房缺/室缺/PDA）患者，妊娠是对其心脏的严峻考验。
+
+这类患者因心脏存在持续分流，其右心在孕前已长期承受容量负荷，常有心腔扩大和肺动脉压力偏高。妊娠期急剧增加的血容量使此负荷雪上加霜。
+
+图表显示，孕期其右心腔室进一步扩张，肺动脉压显著升高，而右心收缩功能指标（如TAPSE）则明确下降，所有变化均在孕晚期达到极值，这表明心脏的功能储备被大量消耗。
+
+**结论： 这类患者在孕期发生心力衰竭的风险较高，因此必须进行审慎的孕前风险评估，并在孕期全程接受严密的心脏功能监护。**
+:::
+
+# 先心病右心(术后)
+
+```{r}
+# 术后右心数据
+df_surgery1 <- df |>
+    filter(
+        V70 == 1 | V71 == 1 | V72 == 1
+    )
+```
+
+简单分流型先心病(房缺/室缺/PDA)术后, 共有 **`r nrow(df_surgery1)`** 例样本, 其中(注意: 1个产妇可能有**多种**先心病):
+
+- 房间隔缺损:   **`r sum(df_surgery1$V70 == 1)`** 例;
+- 室间隔缺损:   **`r sum(df_surgery1$V71 == 1)`** 例;
+- 动脉导管未闭: **`r sum(df_surgery1$V72 == 1)`** 例;
+
+```{r}
+#| fig-cap: 先心病术后右心功能分析(n = 82)
+
+# 转化为长数据,即抽离出week
+df_surgery1_long <- df_surgery1 |>
+    pivot_longer(
+        cols = matches("_(孕前|孕早期|孕中期|孕晚期|产后10天内|产后8周内)$"),
+        names_to = c(".value", "week"),
+        names_pattern = "(.+)_(.+)",
+        values_drop_na = FALSE
+    ) |>
+
+    # 选择需要的列
+    mutate(
+        `week` = factor(week,
+            levels = c("孕前", "孕早期", "孕中期", "孕晚期", "产后10天内", "产后8周内")
+        ),
+        `SPAP` = SPAP,
+        `TRV` = TRV,
+        `TAPSE` = TAPSE,
+        `ln(BNP)` = log(B型钠酸肽),
+        `右室前后径` = 超声前后径,
+        `右室流出道` = 超声流出道,
+        `左室舒末内径` = 超声舒末内径,
+        `肺动脉主干径` = 超声主干径,
+        `右房面积` = 超声右房,
+        `右室面积` = 超声前后径 * 超声流出道,
+        .keep = 'none'
+    )
+
+# 这里直接使用之前定义的violin_box函数
+# 绘制各个指标的图形
+p1_SPAP <- violin_box(df_surgery1_long, SPAP)
+p1_TRV <- violin_box(df_surgery1_long, TRV)
+p1_TAPSE <- violin_box(df_surgery1_long, TAPSE)
+p1_ln_BNP <- violin_box(df_surgery1_long, `ln(BNP)`)
+p1_右室前后径 <- violin_box(df_surgery1_long, `右室前后径`)
+p1_右室流出道 <- violin_box(df_surgery1_long, `右室流出道`)
+p1_左室舒末内径 <- violin_box(df_surgery1_long, `左室舒末内径`)
+p1_肺动脉主干径 <- violin_box(df_surgery1_long, `肺动脉主干径`)
+p1_右房面积 <- violin_box(df_surgery1_long, `右房面积`)
+p1_右室面积 <- violin_box(df_surgery1_long, `右室面积`)
+
+# # 将所有图形组合成2列5行的布局
+# combined_plot <- grid.arrange(
+#     p1_SPAP,
+#     p1_TRV,
+#     p1_TAPSE,
+#     p1_ln_BNP,
+#     p1_右室前后径,
+#     p1_右室流出道,
+#     p1_左室舒末内径,
+#     p1_肺动脉主干径,
+#     p1_右房面积,
+#     p1_右室面积,
+#     ncol = 2, # 设置为2列
+#     nrow = 5 # 设置为5行
+# )
+
+# # 保存图形
+# ggsave("./image/小提琴-术后82.png", combined_plot, width = 10, height = 20)
+```
+
+![先心病术后右心功能分析 (n = 82)](./image/小提琴-术后82.png)
+
+::: {.callout-note}
+针对术后简单先心病（房缺/室缺/PDA）孕妇的右心功能研究显示，妊娠对其心脏产生了显著但多为**可逆**的影响。
+
+核心发现为：在孕期，为适应增加的循环血量，右心房和右心室出现进行性扩张，肺动脉收缩压（SPAP）也随之升高，两者均在孕晚期达到峰值。此时，反映右心收缩功能的指标（如TAPSE）有轻微下降，提示心脏的功能储备在负荷高峰期受到了挑战。分娩后，所有指标均开始向孕前水平恢复。
+
+**结论： 这类患者虽多数能安全度过孕期，但数据强调了在孕期及产后进行严密、连续的右心功能监测至关重要，以便及时发现并管理潜在的心功能不全风险。**
+:::
