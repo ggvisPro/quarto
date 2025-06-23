@@ -11,7 +11,7 @@ df_name <- read_csv("./data/新-变量注解.csv") |> filter(!is.na(Variable))
 df <- df0 |> filter(X1 %in% c("1", "2")) # 有分娩结局
 ```
 
-共有 **`r nrow(df0)`** 例样本(住院次数)，剔除了 **`r nrow(df0) - nrow(df)`** 例无分娩结局样本，保留了 **`r nrow(df)`** 例样本。
+共有 **`r nrow(df0)`** 例样本(住院次数)，剔除了 **`r nrow(df0) - nrow(df)`** 例无分娩结局样本 (本院多次住院,则仅保留分娩当次, 剔除其它未分娩住院; 本院住院但最终未在本院分娩, 则剔除)，保留了 **`r nrow(df)`** 例样本。
 
 最终有 **`r nrow(df)`** 例样本, **`r ncol(df)`** 个变量 (如果1个PAH产妇分娩2次,计做2例样本) 。
 
@@ -24,38 +24,28 @@ knitr::kable(head(df))
 ```
 
 
-::: {.columns}
 
-::: {.column}
+**PAH 分度:** (0:NA; 1:轻度; 2:中度; 3:重度)
 
-**PAH 分度:**
+```{r}
+table(df$V26)
+```
 
-- 1度: **`r sum(df$V1 == 1)`** 例
-- 2度: **`r sum(df$V1 == 2)`** 例
-- 3度: **`r sum(df$V1 == 3)`** 例
-- NA: **`r sum(df$V1 == 0)`** 例
 
-:::
 
-::: {.column}
+**心功能分级:** (0:NA; 1:I级; 2:II级; 3:III级; 4:IV级)
 
-**心功能分级:**
+```{r}
+table(df$V21)
+```
 
-- I度: **`r sum(df$V21 == 1)`** 例
-- II度: **`r sum(df$V21 == 2)`** 例
-- III度: **`r sum(df$V21 == 3)`** 例
-- IV度: **`r sum(df$V21 == 4)`** 例
-- NA: **`r sum(df$V21 == 0)`** 例
-:::
-
-:::
 
 ```{r}
 
-print("年龄: ")
+print("年龄(随): ")
 print(summary(df$V114))
 
-print("孕周: ")
+print("孕周(周): ")
 print(summary(df$V20))
 ```
 
