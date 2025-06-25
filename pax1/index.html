@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>技术项目简介：宫颈癌PAX1基因甲基化检测</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: "Calm Harmony" - A professional and trustworthy medical theme using warm neutrals, deep teals, and soft accents. -->
+    <!-- Application Structure Plan: The SPA follows a narrative journey: 1. The Challenge (current screening issues), 2. The Breakthrough (PAX1 methylation explained), 3. The Evidence (interactive data comparison), 4. The Impact (key benefits), 5. The Technology (methodology advantages). This storytelling approach guides the user from the problem to the solution's value, making complex information more digestible and persuasive than the original report's linear structure. A sticky navigation bar enables easy access to each thematic section. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: "Three-Step" screening bottleneck. Goal: Organize & Inform. Viz/Method: HTML/CSS flexbox diagram. Interaction: Highlight steps on hover. Justification: Visually clarifies the core problem. Method: HTML/CSS.
+        - Report Info: PAX1 methylation mechanism. Goal: Explain. Viz/Method: Simplified HTML/CSS flowchart. Interaction: None, focus on clarity. Justification: Demystifies the underlying science. Method: HTML/CSS.
+        - Report Info: Performance data (Sensitivity/Specificity). Goal: Compare. Viz/Method: Two side-by-side Bar Charts. Interaction: Tooltips on hover for precise values. Justification: Directly showcases the new tech's superiority over TCT, especially in specificity, which is the key selling point. Library: Chart.js (Canvas).
+        - Report Info: Key benefits (for patients, clinicians, hospital). Goal: Summarize & Persuade. Viz/Method: Grid of "Value Cards" with icons. Interaction: Subtle hover effects. Justification: Breaks down benefits into easily scannable, impactful points. Method: HTML/CSS with Unicode icons.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f8f7f4;
+            color: #333;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 380px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #E29578;
+            border-bottom-color: #E29578;
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            color: #83C5BE;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header / Navigation -->
+    <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold text-[#006D77]">PAX1基因检测</h1>
+                </div>
+                <nav class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#challenge" class="nav-link text-gray-600 px-3 py-2 text-sm font-medium border-b-2 border-transparent">当前挑战</a>
+                        <a href="#solution" class="nav-link text-gray-600 px-3 py-2 text-sm font-medium border-b-2 border-transparent">技术突破</a>
+                        <a href="#evidence" class="nav-link text-gray-600 px-3 py-2 text-sm font-medium border-b-2 border-transparent">临床证据</a>
+                        <a href="#impact" class="nav-link text-gray-600 px-3 py-2 text-sm font-medium border-b-2 border-transparent">核心价值</a>
+                        <a href="#tech" class="nav-link text-gray-600 px-3 py-2 text-sm font-medium border-b-2 border-transparent">方法学</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="bg-white pt-20 pb-16">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-5xl font-bold text-[#006D77] tracking-tight">宫颈癌筛查的精准革命</h2>
+                <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">引入PAX1基因甲基化检测，从根本上解决当前筛查流程中的分流困境，精准识别高风险患者，避免过度医疗。</p>
+            </div>
+        </section>
+
+        <!-- The Challenge -->
+        <section id="challenge" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-gray-800">当前筛查策略的挑战</h3>
+                    <p class="mt-2 text-lg text-gray-500">现行“三阶梯”方案虽有效，但在分流环节存在明显瓶颈。</p>
+                </div>
+                <div class="max-w-4xl mx-auto">
+                     <p class="text-center mb-8 text-gray-700">当前流程主要依赖HPV检测进行初筛。然而，HPV检测灵敏度虽高，特异性却不足。超过80%的HPV感染为一过性，并不会发展为癌症，但这导致了大量假阳性结果，给后续分流和患者心理带来巨大压力。</p>
+                    <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
+                        <!-- Step 1 -->
+                        <div class="text-center p-6 bg-white rounded-lg shadow-md w-full md:w-1/3">
+                            <div class="text-3xl font-bold text-[#006D77]">第1步</div>
+                            <h4 class="mt-2 text-lg font-semibold">HPV初筛</h4>
+                            <p class="mt-1 text-sm text-gray-600">灵敏度高，但特异性低，产生大量阳性结果。</p>
+                        </div>
+                        <div class="flow-arrow hidden md:block">&rarr;</div>
+                        <div class="flow-arrow block md:hidden">&darr;</div>
+                        <!-- Step 2 -->
+                        <div class="text-center p-6 bg-white rounded-lg shadow-md w-full md:w-1/3">
+                            <div class="text-3xl font-bold text-[#83C5BE]">第2步</div>
+                            <h4 class="mt-2 text-lg font-semibold">TCT细胞学分流</h4>
+                            <p class="mt-1 text-sm text-gray-600">结果依赖主观判断，重复性差，分流效率不高。</p>
+                        </div>
+                        <div class="flow-arrow hidden md:block">&rarr;</div>
+                        <div class="flow-arrow block md:hidden">&darr;</div>
+                        <!-- Step 3 -->
+                        <div class="text-center p-6 bg-rose-50 border-2 border-rose-200 rounded-lg shadow-md w-full md:w-1/3">
+                            <div class="text-3xl font-bold text-[#D9534F]">困境</div>
+                            <h4 class="mt-2 text-lg font-semibold">过度阴道镜转诊</h4>
+                            <p class="mt-1 text-sm text-gray-600">大量非病变女性被转诊，造成资源浪费和患者焦虑。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Breakthrough Solution -->
+        <section id="solution" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-gray-800">技术突破：从检测“病因”到锁定“病果”</h3>
+                    <p class="mt-2 text-lg text-gray-500">PAX1基因甲基化检测，直接反映细胞是否已发生癌变。</p>
+                </div>
+                <div class="max-w-5xl mx-auto">
+                    <p class="text-center mb-8 text-gray-700">HPV感染只是宫颈癌的“起因”，而PAX1抑癌基因的甲基化（即基因被“沉默”）才是细胞走向癌变的“结果”。本技术直接检测这一关键的表观遗传学变化，从而精准区分无害的病毒感染和真正危险的细胞病变。</p>
+                    <div class="flex flex-col md:flex-row items-stretch justify-center text-center space-y-6 md:space-y-0 md:space-x-6">
+                        <div class="p-6 bg-gray-50 rounded-xl flex-1">
+                            <div class="text-5xl mb-4">🦠</div>
+                            <h4 class="text-xl font-semibold text-[#006D77]">1. HPV持续感染</h4>
+                            <p class="mt-2 text-gray-600">病毒存在，是必要条件但非充分条件。</p>
+                        </div>
+                        <div class="flex items-center justify-center flow-arrow">&rarr;</div>
+                        <div class="p-6 bg-gray-50 rounded-xl flex-1">
+                            <div class="text-5xl mb-4">🧬<span class="text-red-500">🔒</span></div>
+                            <h4 class="text-xl font-semibold text-[#006D77]">2. PAX1基因甲基化</h4>
+                            <p class="mt-2 text-gray-600">抑癌基因被“沉默”，细胞失去监控，这是癌变的关键信号。</p>
+                        </div>
+                         <div class="flex items-center justify-center flow-arrow">&rarr;</div>
+                        <div class="p-6 bg-gray-50 rounded-xl flex-1">
+                            <div class="text-5xl mb-4">📉</div>
+                            <h4 class="text-xl font-semibold text-[#006D77]">3. 细胞恶性转化</h4>
+                            <p class="mt-2 text-gray-600">细胞增殖失控，发展为高级别病变（CIN2+）乃至癌症。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Evidence -->
+        <section id="evidence" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-gray-800">压倒性的临床证据</h3>
+                    <p class="mt-2 text-lg text-gray-500">在HPV阳性人群中分流诊断CIN2+病变的核心效能对比。</p>
+                </div>
+                <div class="max-w-6xl mx-auto">
+                    <p class="text-center mb-12 text-gray-700">数据显示，PAX1甲基化检测在保持高灵敏度的同时，其<strong class="text-[#E29578]">特异度</strong>远超传统TCT细胞学检查。高特异度意味着更少的“假阳性”，能精准锁定真正需要进行下一步检查的患者。</p>
+                    <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 justify-center items-start">
+                        <!-- Specificity Chart -->
+                        <div class="w-full lg:w-1/2 flex flex-col items-center">
+                            <h4 class="text-xl font-semibold text-center mb-4 text-gray-700">特异度 (Specificity) 对比</h4>
+                            <div class="chart-container">
+                                <canvas id="specificityChart"></canvas>
+                            </div>
+                            <p class="text-center mt-4 text-sm text-gray-500">特异度越高，误诊率越低，能更好地区分出非病变人群。</p>
+                        </div>
+                        <!-- Sensitivity Chart -->
+                        <div class="w-full lg:w-1/2 flex flex-col items-center">
+                             <h4 class="text-xl font-semibold text-center mb-4 text-gray-700">灵敏度 (Sensitivity) 对比</h4>
+                            <div class="chart-container">
+                                <canvas id="sensitivityChart"></canvas>
+                            </div>
+                             <p class="text-center mt-4 text-sm text-gray-500">灵敏度越高，漏诊率越低，能更有效地发现病变人群。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Impact -->
+        <section id="impact" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-gray-800">引进项目的核心价值</h3>
+                    <p class="mt-2 text-lg text-gray-500">为患者、临床和医院带来多维度提升。</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow">
+                        <div class="text-3xl text-[#006D77]">✓</div>
+                        <h4 class="text-xl font-bold mt-2">提升诊疗精准度</h4>
+                        <p class="mt-2 text-gray-600">客观、量化的检测结果，精准区分高低风险，为临床决策提供可靠依据，大幅降低阴道镜转诊率（报告显示误判率从52%降至12%）。</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow">
+                        <div class="text-3xl text-[#006D77]">✓</div>
+                        <h4 class="text-xl font-bold mt-2">改善患者体验</h4>
+                        <p class="mt-2 text-gray-600">避免不必要的侵入性检查，减轻患者因假阳性结果带来的心理焦虑和经济负担，体现人文关怀。</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow">
+                        <div class="text-3xl text-[#006D77]">✓</div>
+                        <h4 class="text-xl font-bold mt-2">优化资源配置</h4>
+                        <p class="mt-2 text-gray-600">具备显著的卫生经济学优势，通过减少昂贵的下游检查，实现医疗资源的高效利用，符合价值医疗导向。</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow">
+                        <div class="text-3xl text-[#006D77]">✓</div>
+                        <h4 class="text-xl font-bold mt-2">响应国家战略</h4>
+                        <p class="mt-2 text-gray-600">引进前沿技术，响应《加速消除宫颈癌行动计划》，提升区域防治水平，彰显医院的社会责任与技术领导力。</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow">
+                         <div class="text-3xl text-[#006D77]">✓</div>
+                        <h4 class="text-xl font-bold mt-2">技术成熟合规</h4>
+                        <p class="mt-2 text-gray-600">基于成熟的PCR平台，拥有NMPA批准的商业化试剂盒，被写入专家共识，确保临床应用安全、规范、可靠。</p>
+                    </div>
+                     <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow">
+                         <div class="text-3xl text-[#006D77]">✓</div>
+                        <h4 class="text-xl font-bold mt-2">兼容未来趋势</h4>
+                        <p class="mt-2 text-gray-600">与居家自取样检测模式高度兼容，为未来筛查模式的变革提前布局，保持技术前瞻性。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Section -->
+        <section id="tech" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                 <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-gray-800">可靠的方法学：PCR荧光探针法</h3>
+                    <p class="mt-2 text-lg text-gray-500">一项精准、高效、标准化的分子诊断技术。</p>
+                </div>
+                 <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="p-4">
+                        <div class="text-4xl text-[#83C5BE] mb-2">🎯</div>
+                        <h4 class="font-semibold">客观定量</h4>
+                        <p class="text-sm text-gray-600">结果为精确数值，杜绝主观判断。</p>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-4xl text-[#83C5BE] mb-2">🔄</div>
+                        <h4 class="font-semibold">重复性好</h4>
+                        <p class="text-sm text-gray-600">标准化流程，结果稳定可靠。</p>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-4xl text-[#83C5BE] mb-2">⚙️</div>
+                        <h4 class="font-semibold">易于自动化</h4>
+                        <p class="text-sm text-gray-600">可实现高通量检测，满足筛查需求。</p>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-4xl text-[#83C5BE] mb-2">🛡️</div>
+                        <h4 class="font-semibold">平台成熟</h4>
+                        <p class="text-sm text-gray-600">无需引进大型新设备，可快速部署。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#006D77] text-white">
+        <div class="container mx-auto py-8 px-4 text-center">
+            <h3 class="text-2xl font-bold">综合结论与建议</h3>
+            <p class="mt-4 max-w-3xl mx-auto text-gray-200">《宫颈癌PAX1基因甲基化检测》是一项技术成熟、效能卓越、价值显著的新型分子诊断技术。它能精准弥补现有筛查流程的短板，是提升我院宫颈癌防治水平、实现价值医疗的战略选择。建议批准立项引进。</p>
+            <p class="mt-6 text-sm text-gray-400">&copy; 2025 朝阳区妇幼保健院 技术项目论证</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Chart.js Data and Configuration
+            const chartData = {
+                labels: ['PAX1/SOX1 甲基化', 'PAX1/JAM3 甲基化', 'TCT 细胞学 (≥ASCUS)'],
+                sensitivity: [77.16, 92.6, 68.0],
+                specificity: [91.67, 95.7, 69.9]
+            };
+            
+            const chartOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%'
+                            },
+                            color: '#555'
+                        },
+                        grid: {
+                            color: '#e0e0e0'
+                        }
+                    },
+                    y: {
+                         ticks: {
+                            color: '#555',
+                            font: {
+                                size: 12
+                            }
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.x !== null) {
+                                    label += context.parsed.x.toFixed(2) + '%';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Render Specificity Chart
+            const specCtx = document.getElementById('specificityChart').getContext('2d');
+            new Chart(specCtx, {
+                type: 'bar',
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        label: '特异度',
+                        data: chartData.specificity,
+                        backgroundColor: ['#006D77', '#2a9d8f', '#83C5BE'],
+                        borderColor: '#ffffff',
+                        borderWidth: 1,
+                        borderRadius: 5
+                    }]
+                },
+                options: { ...chartOptions }
+            });
+
+            // Render Sensitivity Chart
+            const sensCtx = document.getElementById('sensitivityChart').getContext('2d');
+            new Chart(sensCtx, {
+                type: 'bar',
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        label: '灵敏度',
+                        data: chartData.sensitivity,
+                        backgroundColor: ['#E29578', '#FFDDD2', '#EDF6F9'],
+                        borderColor: '#ffffff',
+                        borderWidth: 1,
+                        borderRadius: 5
+                    }]
+                },
+                options: { ...chartOptions }
+            });
+
+            // Active Nav Link on Scroll
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const header = document.getElementById('header');
+            
+            const observer = new IntersectionObserver((entries) => {
+                let currentSectionId = '';
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                       currentSectionId = entry.target.id;
+                    }
+                });
+
+                if(currentSectionId) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${currentSectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+
+            }, { rootMargin: '-100px 0px -50% 0px' });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
