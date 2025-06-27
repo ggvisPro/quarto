@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>临床思维能力测评系统（CTA） - 病史采集</title>
+    
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* 自定义滚动条样式 (可选，为了更好的视觉效果) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <div class="flex h-screen">
+        <aside class="w-64 bg-gray-800 text-white flex flex-col">
+            <div class="h-16 flex items-center justify-center border-b border-gray-700">
+                <h1 class="text-xl font-bold">CTA测评系统</h1>
+            </div>
+            <nav class="flex-1 px-4 py-4">
+                <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">信息收集站</h2>
+                <ul>
+                    <li class="mb-1">
+                        <a href="#" class="flex items-center px-3 py-2 text-sm bg-gray-900/50 rounded-md font-medium">
+                            <i class="fa-solid fa-notes-medical w-6 h-6 mr-3"></i>
+                            <span>病史采集</span>
+                        </a>
+                    </li>
+                    <li class="mb-1">
+                        <a href="#" class="flex items-center px-3 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded-md">
+                            <i class="fa-solid fa-file-waveform w-6 h-6 mr-3"></i>
+                            <span>初步诊断</span>
+                        </a>
+                    </li>
+                    <li class="mb-1">
+                        <a href="#" class="flex items-center px-3 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded-md">
+                            <i class="fa-solid fa-stethoscope w-6 h-6 mr-3"></i>
+                            <span>体格检查</span>
+                        </a>
+                    </li>
+                    <li class="mb-1">
+                        <a href="#" class="flex items-center px-3 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded-md">
+                            <i class="fa-solid fa-lightbulb w-6 h-6 mr-3"></i>
+                            <span>诊断与鉴别诊断</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="mt-6">
+                    <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">病情分析站</h2>
+                    <ul>
+                         </ul>
+                </div>
+                <div class="mt-6">
+                    <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">临床诊疗站</h2>
+                     <ul>
+                         </ul>
+                </div>
+                <div class="mt-6">
+                    <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">动态决策站</h2>
+                     <ul>
+                         </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="flex-1 flex flex-col">
+            <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-800">第一站：信息收集 - 病史采集</h2>
+                    <p class="text-sm text-gray-500">请通过与AI标准化病人对话，完成病史采集。</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm font-medium text-gray-600">
+                        <i class="fa-regular fa-clock mr-2"></i>
+                        <span>剩余时间: </span>
+                        <span class="font-mono text-red-600">14:23</span>
+                    </div>
+                    <button class="text-gray-500 hover:text-gray-800">
+                        <i class="fa-solid fa-circle-question fa-lg"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="flex-1 p-6 flex flex-col bg-gray-100">
+                <div class="flex-1 bg-white rounded-lg shadow-md p-4 overflow-y-auto hover:shadow-lg transition-shadow duration-300" id="chat-window">
+                    <div class="flex items-start mb-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center mr-3 flex-shrink-0">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div class="bg-gray-200 p-3 rounded-lg max-w-lg">
+                            <p class="text-sm text-gray-800">医生您好，我最近一直感觉不舒服，麻烦您了。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start justify-end mb-4">
+                        <div class="bg-blue-600 text-white p-3 rounded-lg max-w-lg">
+                            <p class="text-sm">你好，请问具体有什么不舒服？可以详细描述一下吗？</p>
+                        </div>
+                         <div class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center ml-3 flex-shrink-0">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start mb-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center mr-3 flex-shrink-0">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div class="bg-gray-200 p-3 rounded-lg max-w-lg">
+                            <p class="text-sm text-gray-800">我最近一周总是觉得肚子疼，一阵一阵的。</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-4">
+                     <form id="chat-form" class="flex items-center space-x-3">
+                        <input type="text" id="message-input" placeholder="请输入你想问诊的问题..." class="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                        <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            <i class="fa-solid fa-paper-plane mr-2"></i>发送
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="mt-6 text-right">
+                    <button class="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                        完成问诊，填写初步诊断<i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // 简单的JS交互，用于模拟聊天功能
+        const chatForm = document.getElementById('chat-form');
+        const messageInput = document.getElementById('message-input');
+        const chatWindow = document.getElementById('chat-window');
+
+        chatForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // 阻止表单默认提交行为
+            
+            const messageText = messageInput.value.trim();
+            if (messageText === '') return;
+
+            // 1. 创建并显示用户的消息
+            const userMessageElement = document.createElement('div');
+            userMessageElement.className = 'flex items-start justify-end mb-4';
+            userMessageElement.innerHTML = `
+                <div class="bg-blue-600 text-white p-3 rounded-lg max-w-lg">
+                    <p class="text-sm">${messageText}</p>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center ml-3 flex-shrink-0">
+                    <i class="fa-solid fa-user-doctor"></i>
+                </div>
+            `;
+            chatWindow.appendChild(userMessageElement);
+
+            // 2. 清空输入框
+            messageInput.value = '';
+
+            // 3. 滚动到最新消息
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+
+            // 4. 模拟AI回复 (延迟1秒)
+            setTimeout(() => {
+                const aiMessageElement = document.createElement('div');
+                aiMessageElement.className = 'flex items-start mb-4';
+                aiMessageElement.innerHTML = `
+                    <div class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center mr-3 flex-shrink-0">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="bg-gray-200 p-3 rounded-lg max-w-lg">
+                        <p class="text-sm text-gray-800">关于您问的“${messageText}”，我的回答是...</p>
+                    </div>
+                `;
+                chatWindow.appendChild(aiMessageElement);
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
