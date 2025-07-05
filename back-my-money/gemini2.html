@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>控诉 [公司名称] 拖欠工资</title>
+    <meta name="description" content="我们是一群被[公司名称]恶意拖欠工资的员工。我们在此公开事实，要求公司立即支付我们的血汗钱！">
+    <meta property="og:title" content="控诉 [公司名称] 拖欠工资">
+    <meta property="og:description" content="我们在此公开事实，要求[公司名称]立即支付我们的血汗钱！">
+    <meta property="og:type" content="website">
+
+    <script
+        src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* 可以在这里添加一些Tailwind无法直接实现的自定义样式, 但本项目中非必需 */
+    </style>
+</head>
+
+<body class="bg-slate-900 text-gray-200 font-sans antialiased">
+
+    <header class="min-h-screen flex items-center justify-center bg-cover bg-center"
+        style="background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 1)), url('https://images.unsplash.com/photo-1521790797524-1ca561c5b86d?q=80&w=2070&auto=format&fit=crop');">
+        <div class="text-center p-8">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">
+                <span class="text-red-500">[公司名称]</span>，还我血汗钱！
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+                我们是[公司名称]的前/现任员工，公司已无理拖欠我们数月工资。我们在此公开陈述事实，维护我们的合法权益。
+            </p>
+            <a href="#facts"
+                class="inline-block bg-red-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-red-700 transition-all duration-300 ease-in-out transform hover:scale-110">
+                <i class="fas fa-arrow-down mr-2"></i> 查看事实证据
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section id="facts" class="py-20 bg-slate-900">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">核心事实</h2>
+                    <p class="text-gray-400 mt-2">以下是本次事件的关键信息，有据可查。</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div
+                        class="bg-slate-800 p-8 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/30 hover:-translate-y-2">
+                        <div class="text-red-500 mb-4">
+                            <i class="fas fa-money-bill-wave text-5xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">拖欠总额</h3>
+                        <p class="text-gray-300 text-3xl font-mono">¥ [1,000,000.00]</p>
+                    </div>
+                    <div
+                        class="bg-slate-800 p-8 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/30 hover:-translate-y-2">
+                        <div class="text-red-500 mb-4">
+                            <i class="fas fa-calendar-times text-5xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">拖欠时长</h3>
+                        <p class="text-gray-300 text-3xl font-mono">[3] 个月以上</p>
+                    </div>
+                    <div
+                        class="bg-slate-800 p-8 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/30 hover:-translate-y-2">
+                        <div class="text-red-500 mb-4">
+                            <i class="fas fa-users text-5xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">涉及员工</h3>
+                        <p class="text-gray-300 text-3xl font-mono">[200+] 人</p>
+                    </div>
+                    <div
+                        class="bg-slate-800 p-8 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/30 hover:-translate-y-2">
+                        <div class="text-red-500 mb-4">
+                            <i class="fas fa-comment-slash text-5xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">公司态度</h3>
+                        <p class="text-gray-300 text-xl">漠视 一拖再拖</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="timeline" class="py-20 bg-slate-800/50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">事件时间线</h2>
+                    <p class="text-gray-400 mt-2">从承诺到失信，这是我们经历的全过程。</p>
+                </div>
+                <div class="relative max-w-2xl mx-auto">
+                    <div class="absolute left-1/2 w-1 bg-slate-700 h-full transform -translate-x-1/2"></div>
+                    <div class="relative mb-8">
+                        <div
+                            class="absolute left-1/2 w-4 h-4 bg-red-500 rounded-full mt-1.5 transform -translate-x-1/2 border-4 border-slate-800">
+                        </div>
+                        <div class="w-full md:w-1/2 md:pr-8 md:text-right">
+                            <p class="text-gray-400 font-medium">[2025年4月10日]</p>
+                            <h3 class="text-xl font-bold text-white mt-1">最后一次正常发薪</h3>
+                            <p class="text-gray-300 mt-2">公司正常发放了3月份的工资。</p>
+                        </div>
+                    </div>
+                    <div class="relative mb-8">
+                        <div
+                            class="absolute left-1/2 w-4 h-4 bg-red-500 rounded-full mt-1.5 transform -translate-x-1/2 border-4 border-slate-800">
+                        </div>
+                        <div class="w-full md:w-1/2 md:pl-8 md:ml-auto">
+                            <p class="text-gray-400 font-medium">[2025年5月15日]</p>
+                            <h3 class="text-xl font-bold text-white mt-1">首次逾期与承诺</h3>
+                            <p class="text-gray-300 mt-2">4月工资未发。公司管理层口头承诺将于下周解决。</p>
+                        </div>
+                    </div>
+                    <div class="relative mb-8">
+                        <div
+                            class="absolute left-1/2 w-4 h-4 bg-red-500 rounded-full mt-1.5 transform -translate-x-1/2 border-4 border-slate-800">
+                        </div>
+                        <div class="w-full md:w-1/2 md:pr-8 md:text-right">
+                            <p class="text-gray-400 font-medium">[2025年6月]</p>
+                            <h3 class="text-xl font-bold text-white mt-1">承诺落空，开始拖延</h3>
+                            <p class="text-gray-300 mt-2">多次承诺均未兑现，管理层开始回避问题，拒绝正面沟通。</p>
+                        </div>
+                    </div>
+                    <div class="relative mb-8">
+                        <div
+                            class="absolute left-1/2 w-4 h-4 bg-red-500 rounded-full mt-1.5 transform -translate-x-1/2 border-4 border-slate-800">
+                        </div>
+                        <div class="w-full md:w-1/2 md:pl-8 md:ml-auto">
+                            <p class="text-gray-400 font-medium">[至今]</p>
+                            <h3 class="text-xl font-bold text-white mt-1">被迫维权</h3>
+                            <p class="text-gray-300 mt-2">在所有内部沟通渠道失效后，我们决定采取公开方式，寻求社会和法律的帮助。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="demands" class="py-20 bg-slate-900">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">我们的诉求</h2>
+                    <p class="text-gray-400 mt-2">我们要求公司立即采取以下行动，否则我们将采取进一步法律措施。</p>
+                </div>
+                <ul class="space-y-6">
+                    <li class="flex items-start text-lg">
+                        <i class="fas fa-gavel text-red-500 text-2xl mr-4 pt-1"></i>
+                        <span class="flex-1"><strong class="text-white">立即全额支付</strong>：立即支付所有拖欠员工的全部工资及法定经济补偿金。</span>
+                    </li>
+                    <li class="flex items-start text-lg">
+                        <i class="fas fa-gavel text-red-500 text-2xl mr-4 pt-1"></i>
+                        <span class="flex-1"><strong
+                                class="text-white">公开透明的解释</strong>：向所有受影响员工提供一份正式的书面说明，解释拖欠原因及后续处理方案。</span>
+                    </li>
+                    <li class="flex items-start text-lg">
+                        <i class="fas fa-gavel text-red-500 text-2xl mr-4 pt-1"></i>
+                        <span class="flex-1"><strong class="text-white">公开道歉</strong>：[公司名称]
+                            必须向所有被拖欠工资的员工进行公开、诚恳的道歉。</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="action" class="py-20 bg-red-900/30">
+            <div class="container mx-auto px-6 text-center">
+                <i class="fas fa-bullhorn text-5xl text-red-400 mb-4"></i>
+                <h2 class="text-3xl md:text-4xl font-bold text-white">请帮助我们扩散！</h2>
+                <p class="text-gray-300 mt-4 max-w-2xl mx-auto">您的每一次转发，都是对我们的支持，都能为我们争取权益增加一份力量。我们欢迎媒体朋友联系报道。</p>
+                <div class="mt-8">
+                    <p class="text-lg font-semibold text-white">媒体联系邮箱:</p>
+                    <a href="mailto:media-contact@[your-domain].com"
+                        class="text-red-400 text-xl hover:text-red-300 transition-colors duration-300">[media-contact@example.com]</a>
+                </div>
+                <div class="mt-8 flex justify-center space-x-6">
+                    <a href="#"
+                        class="text-gray-300 hover:text-white transform hover:scale-110 transition-all duration-300"
+                        title="分享到微博">
+                        <i class="fab fa-weibo text-4xl"></i>
+                    </a>
+                    <a href="#"
+                        class="text-gray-300 hover:text-white transform hover:scale-110 transition-all duration-300"
+                        title="分享到微信">
+                        <i class="fab fa-weixin text-4xl"></i>
+                    </a>
+                    <a href="#"
+                        class="text-gray-300 hover:text-white transform hover:scale-110 transition-all duration-300"
+                        title="分享到Twitter/X">
+                        <i class="fab fa-x-twitter text-4xl"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900 py-8">
+        <div class="container mx-auto px-6 text-center text-gray-500">
+            <p>&copy; 2025 [公司名称]全体维权员工. All rights reserved.</p>
+            <p class="mt-2 text-sm">本网站内容皆为事实陈述，我们对所有信息的真实性负责。</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

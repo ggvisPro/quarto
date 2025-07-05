@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正义之声 | 公司欠薪维权平台</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#e11d48', // 主色调（深红）
+                        secondary: '#1e40af', // 辅助色（深蓝）
+                        accent: '#f59e0b'  // 强调色（橙色）
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .btn-hover {
+            transition: all 0.3s ease;
+        }
+
+        .btn-hover:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: translateY(-5px);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -20px;
+            height: 100%;
+            width: 2px;
+            background-color: #e11d48;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 0;
+            left: -28px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #e11d48;
+            border: 3px solid white;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-balance-scale text-primary text-2xl mr-2"></i>
+                        <span class="font-bold text-xl text-gray-900">正义之声</span>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="#home"
+                            class="border-b-2 border-primary text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">首页</a>
+                        <a href="#situation"
+                            class="text-gray-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium">欠薪情况</a>
+                        <a href="#evidence"
+                            class="text-gray-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium">证据展示</a>
+                        <a href="#demand"
+                            class="text-gray-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium">我们的诉求</a>
+                        <a href="#support"
+                            class="text-gray-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium">寻求支持</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <button class="bg-primary text-white px-4 py-2 rounded-md btn-hover">
+                        <i class="fas fa-handshake mr-2"></i>支持我们
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section id="home" class="bg-gradient-to-r from-primary to-secondary text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold leading-tight">
+                        我们拒绝沉默！<br>捍卫劳动者合法权益
+                    </h1>
+                    <p class="mt-6 text-xl text-gray-100 max-w-2xl">
+                        <span class="font-bold">XX科技有限公司</span> 已拖欠员工工资<span class="font-bold">6个月</span>，涉及金额超过<span
+                            class="font-bold">300万元</span>。我们呼吁社会各界关注此事件，维护劳动者基本权益！
+                    </p>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                        <button class="bg-white text-primary font-bold py-3 px-6 rounded-lg btn-hover">
+                            <i class="fas fa-file-alt mr-2"></i>查看欠薪证据
+                        </button>
+                        <button class="bg-accent text-white font-bold py-3 px-6 rounded-lg btn-hover">
+                            <i class="fas fa-bullhorn mr-2"></i>曝光违法行为
+                        </button>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div
+                        class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-96 flex items-center justify-center text-gray-500">
+                        员工维权抗议图片展示区
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 数据统计 -->
+    <section class="bg-gray-100 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center card-hover">
+                    <div class="text-5xl font-bold text-primary">86</div>
+                    <div class="text-gray-600 mt-2 flex items-center justify-center">
+                        <i class="fas fa-users mr-2"></i>受影响员工人数
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center card-hover">
+                    <div class="text-5xl font-bold text-primary">6</div>
+                    <div class="text-gray-600 mt-2 flex items-center justify-center">
+                        <i class="fas fa-calendar-times mr-2"></i>拖欠工资月数
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center card-hover">
+                    <div class="text-5xl font-bold text-primary">3.2M</div>
+                    <div class="text-gray-600 mt-2 flex items-center justify-center">
+                        <i class="fas fa-yen-sign mr-2"></i>拖欠工资总额(元)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 欠薪情况 -->
+    <section id="situation" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-4">欠薪情况说明</h2>
+            <p class="text-gray-600 text-center max-w-3xl mx-auto mb-16">
+                自2023年1月起，XX科技有限公司开始无故拖欠员工工资，期间多次承诺补发却从未兑现。
+            </p>
+
+            <div class="relative">
+                <!-- 时间线 -->
+                <div class="border-l-2 border-primary ml-8 pl-8 space-y-12">
+                    <!-- 时间线项目1 -->
+                    <div class="relative timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="bg-gray-50 p-6 rounded-lg shadow card-hover">
+                            <div class="text-sm text-primary font-semibold">2023年1月15日</div>
+                            <h3 class="text-xl font-bold mt-2">首次拖欠工资</h3>
+                            <p class="mt-2 text-gray-600">
+                                公司以"银行系统问题"为由，未按时发放2022年12月份工资。承诺一周内补发，但未兑现。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 时间线项目2 -->
+                    <div class="relative timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="bg-gray-50 p-6 rounded-lg shadow card-hover">
+                            <div class="text-sm text-primary font-semibold">2023年3月10日</div>
+                            <h3 class="text-xl font-bold mt-2">第二次拖欠，虚假承诺</h3>
+                            <p class="mt-2 text-gray-600">
+                                累计拖欠三个月工资，员工集体询问。公司CEO召开全员会议，承诺4月底前结清所有欠款，并提供额外补偿。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 时间线项目3 -->
+                    <div class="relative timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="bg-gray-50 p-6 rounded-lg shadow card-hover">
+                            <div class="text-sm text-primary font-semibold">2023年5月5日</div>
+                            <h3 class="text-xl font-bold mt-2">承诺再次落空</h3>
+                            <p class="mt-2 text-gray-600">
+                                4月底承诺再次落空，公司管理层开始回避员工询问。部分员工生活陷入困境，无力支付房租和基本生活费用。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 时间线项目4 -->
+                    <div class="relative timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="bg-gray-50 p-6 rounded-lg shadow card-hover">
+                            <div class="text-sm text-primary font-semibold">2023年6月20日至今</div>
+                            <h3 class="text-xl font-bold mt-2">正式维权行动</h3>
+                            <p class="mt-2 text-gray-600">
+                                员工代表与公司协商未果，向劳动监察部门投诉。公司态度强硬，拒绝支付欠薪，并威胁解雇维权员工。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 证据展示 -->
+    <section id="evidence" class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-4">证据展示</h2>
+            <p class="text-gray-600 text-center max-w-3xl mx-auto mb-16">
+                以下是我们收集的部分证据，证明公司存在恶意拖欠工资行为
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 证据卡片1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div
+                        class="bg-gray-200 border-2 border-dashed w-full h-48 flex items-center justify-center text-gray-500">
+                        工资条截图
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">关键证据</span>
+                            <span class="ml-2 text-sm text-gray-500"><i
+                                    class="far fa-calendar mr-1"></i>2023年1-6月</span>
+                        </div>
+                        <h3 class="text-xl font-bold">工资支付记录缺失</h3>
+                        <p class="mt-2 text-gray-600">
+                            银行流水显示公司未支付2023年1月至6月工资，与公司声称的"已支付部分工资"不符。
+                        </p>
+                        <button class="mt-4 text-primary font-semibold flex items-center">
+                            <i class="fas fa-download mr-2"></i>下载完整记录
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 证据卡片2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div
+                        class="bg-gray-200 border-2 border-dashed w-full h-48 flex items-center justify-center text-gray-500">
+                        会议录音片段
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">录音证据</span>
+                            <span class="ml-2 text-sm text-gray-500"><i
+                                    class="far fa-calendar mr-1"></i>2023年3月10日</span>
+                        </div>
+                        <h3 class="text-xl font-bold">管理层承诺录音</h3>
+                        <p class="mt-2 text-gray-600">
+                            公司CEO在全员会议上明确承诺4月底前结清所有欠款，但从未兑现。
+                        </p>
+                        <button class="mt-4 text-primary font-semibold flex items-center">
+                            <i class="fas fa-headphones mr-2"></i>收听录音片段
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 证据卡片3 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div
+                        class="bg-gray-200 border-2 border-dashed w-full h-48 flex items-center justify-center text-gray-500">
+                        劳动监察投诉回执
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">官方文件</span>
+                            <span class="ml-2 text-sm text-gray-500"><i
+                                    class="far fa-calendar mr-1"></i>2023年6月25日</span>
+                        </div>
+                        <h3 class="text-xl font-bold">劳动监察部门受理回执</h3>
+                        <p class="mt-2 text-gray-600">
+                            劳动监察大队已正式受理我们的投诉，案件编号：LDJC20230625087。
+                        </p>
+                        <button class="mt-4 text-primary font-semibold flex items-center">
+                            <i class="fas fa-file-pdf mr-2"></i>查看回执文件
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 诉求部分 -->
+    <section id="demand" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-4">我们的诉求</h2>
+            <p class="text-gray-600 text-center max-w-3xl mx-auto mb-16">
+                我们要求公司立即解决以下问题，保障劳动者合法权益
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-gradient-to-br from-primary to-secondary text-white p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center">
+                        <i class="fas fa-gavel mr-3"></i>核心诉求
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-3"></i>
+                            <span>立即支付所有拖欠工资，总计人民币3,200,000元</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-3"></i>
+                            <span>按照《劳动法》规定支付拖欠工资的额外补偿金（应付金额的50%-100%）</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-3"></i>
+                            <span>依法为所有员工补缴拖欠的社会保险和住房公积金</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-3"></i>
+                            <span>公司公开道歉，承认拖欠工资的违法行为</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="space-y-8">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md card-hover">
+                        <h3 class="text-xl font-bold flex items-center text-secondary">
+                            <i class="fas fa-shield-alt mr-3"></i>员工保护要求
+                        </h3>
+                        <p class="mt-2 text-gray-600">
+                            立即停止对维权员工的威胁和报复行为，保障所有员工合法权益不受侵害。
+                        </p>
+                    </div>
+
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md card-hover">
+                        <h3 class="text-xl font-bold flex items-center text-accent">
+                            <i class="fas fa-clipboard-check mr-3"></i>制度改进要求
+                        </h3>
+                        <p class="mt-2 text-gray-600">
+                            建立透明的工资支付监督机制，确保未来工资按时足额发放，防止类似事件再次发生。
+                        </p>
+                    </div>
+
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md card-hover">
+                        <h3 class="text-xl font-bold flex items-center text-primary">
+                            <i class="fas fa-hand-holding-usd mr-3"></i>经济补偿要求
+                        </h3>
+                        <p class="mt-2 text-gray-600">
+                            对因欠薪导致生活困难的员工提供适当经济补偿，包括但不限于房租、贷款利息等额外支出。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 寻求支持 -->
+    <section id="support" class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-4">寻求支持</h2>
+            <p class="text-gray-600 text-center max-w-3xl mx-auto mb-16">
+                我们需要您的帮助！请通过以下方式支持我们的维权行动
+            </p>
+
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-1/2 bg-gradient-to-r from-primary to-secondary text-white p-12">
+                        <h3 class="text-2xl font-bold mb-4">您的支持至关重要</h3>
+                        <p class="mb-6">
+                            86名员工及其家庭正因公司欠薪陷入困境。您的每一次转发、签名和支持都能帮助我们早日拿回血汗钱！
+                        </p>
+                        <div class="flex items-center mb-4">
+                            <div class="text-5xl font-bold mr-4">86</div>
+                            <div>个家庭等待工资维持生计</div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="text-5xl font-bold mr-4">320万</div>
+                            <div>元欠薪等待支付</div>
+                        </div>
+                    </div>
+
+                    <div class="md:w-1/2 p-12">
+                        <h3 class="text-2xl font-bold mb-6">立即行动</h3>
+                        <div class="space-y-4">
+                            <button
+                                class="w-full bg-blue-600 text-white py-4 rounded-lg flex items-center justify-center btn-hover">
+                                <i class="fab fa-weibo mr-3 text-xl"></i>
+                                微博转发曝光
+                            </button>
+
+                            <button
+                                class="w-full bg-green-600 text-white py-4 rounded-lg flex items-center justify-center btn-hover">
+                                <i class="fas fa-file-signature mr-3"></i>
+                                签署联名请愿书
+                            </button>
+
+                            <button
+                                class="w-full bg-purple-600 text-white py-4 rounded-lg flex items-center justify-center btn-hover">
+                                <i class="fas fa-newspaper mr-3"></i>
+                                联系媒体报道
+                            </button>
+
+                            <button
+                                class="w-full bg-gray-800 text-white py-4 rounded-lg flex items-center justify-center btn-hover">
+                                <i class="fas fa-legal mr-3"></i>
+                                提供法律援助
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">正义之声</h3>
+                    <p class="text-gray-400">
+                        劳动者维权平台，致力于为遭遇欠薪的劳动者提供发声渠道和法律援助。
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4">快速链接</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#home" class="hover:text-white">首页</a></li>
+                        <li><a href="#situation" class="hover:text-white">欠薪情况</a></li>
+                        <li><a href="#evidence" class="hover:text-white">证据展示</a></li>
+                        <li><a href="#demand" class="hover:text-white">我们的诉求</a></li>
+                        <li><a href="#support" class="hover:text-white">寻求支持</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4">法律援助</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">劳动法咨询</a></li>
+                        <li><a href="#" class="hover:text-white">律师推荐</a></li>
+                        <li><a href="#" class="hover:text-white">维权指南</a></li>
+                        <li><a href="#" class="hover:text-white">劳动仲裁流程</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4">联系我们</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3"></i>
+                            <span>contact@justice-voice.org</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fab fa-weibo mt-1 mr-3"></i>
+                            <span>@正义之声-劳动者维权</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone mt-1 mr-3"></i>
+                            <span>法律援助热线: 400-123-4567</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-400">
+                <p>© 2023 正义之声 - 劳动者维权平台。本网站仅用于曝光XX科技有限公司欠薪行为，所有内容均基于事实。</p>
+                <p class="mt-2">注意：请勿在本站发布不实信息，所有证据均需经过法律审核。</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 回到顶部按钮 -->
+    <button id="backToTop"
+        class="fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-lg opacity-0 transition-opacity">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // 回到顶部按钮功能
+        const backToTopBtn = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.remove('opacity-0');
+                backToTopBtn.classList.add('opacity-100');
+            } else {
+                backToTopBtn.classList.remove('opacity-100');
+                backToTopBtn.classList.add('opacity-0');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 平滑滚动导航
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工资拖欠投诉 - 维护劳动者权益</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 自定义动画效果 */
+        .hover-grow {
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .hover-grow:hover {
+            transform: scale(1.05);
+        }
+
+        .hover-shadow {
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .hover-shadow:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* 渐变背景 */
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        /* 滚动动画 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-balance-scale text-2xl text-blue-600 mr-3"></i>
+                    <span class="text-xl font-bold text-gray-900">劳动权益保护</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#problem" class="text-gray-700 hover:text-blue-600 transition-colors">问题详情</a>
+                    <a href="#evidence" class="text-gray-700 hover:text-blue-600 transition-colors">证据展示</a>
+                    <a href="#rights" class="text-gray-700 hover:text-blue-600 transition-colors">权益维护</a>
+                    <a href="#contact" class="text-gray-700 hover:text-blue-600 transition-colors">联系我们</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#problem" class="block px-3 py-2 text-gray-700 hover:text-blue-600">问题详情</a>
+                <a href="#evidence" class="block px-3 py-2 text-gray-700 hover:text-blue-600">证据展示</a>
+                <a href="#rights" class="block px-3 py-2 text-gray-700 hover:text-blue-600">权益维护</a>
+                <a href="#contact" class="block px-3 py-2 text-gray-700 hover:text-blue-600">联系我们</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section class="gradient-bg text-white pt-20 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="fade-in">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                    <i class="fas fa-exclamation-triangle text-yellow-400 mr-4"></i>
+                    工资拖欠投诉
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-gray-200">
+                    维护劳动者合法权益，揭露违法用工行为
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button
+                        class="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg text-lg font-semibold hover-grow">
+                        <i class="fas fa-bullhorn mr-2"></i>
+                        立即举报
+                    </button>
+                    <button
+                        class="bg-white text-gray-900 hover:bg-gray-100 px-8 py-3 rounded-lg text-lg font-semibold hover-grow">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        了解详情
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 问题概述 -->
+    <section id="problem" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    <i class="fas fa-search text-blue-600 mr-3"></i>
+                    问题详情
+                </h2>
+                <p class="text-xl text-gray-600">详细说明工资拖欠的具体情况</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-red-50 p-6 rounded-lg border-l-4 border-red-500 hover-shadow fade-in">
+                    <h3 class="text-xl font-semibold text-red-800 mb-3">
+                        <i class="fas fa-calendar-times mr-2"></i>
+                        拖欠时间
+                    </h3>
+                    <p class="text-red-700">
+                        工资拖欠已持续 <span class="font-bold text-2xl">X个月</span>，
+                        涉及 <span class="font-bold text-2xl">X名</span> 员工
+                    </p>
+                </div>
+
+                <div class="bg-orange-50 p-6 rounded-lg border-l-4 border-orange-500 hover-shadow fade-in">
+                    <h3 class="text-xl font-semibold text-orange-800 mb-3">
+                        <i class="fas fa-dollar-sign mr-2"></i>
+                        拖欠金额
+                    </h3>
+                    <p class="text-orange-700">
+                        总计拖欠工资约 <span class="font-bold text-2xl">¥XXX,XXX</span> 元，
+                        严重影响员工生活
+                    </p>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500 hover-shadow fade-in">
+                    <h3 class="text-xl font-semibold text-blue-800 mb-3">
+                        <i class="fas fa-building mr-2"></i>
+                        公司信息
+                    </h3>
+                    <p class="text-blue-700">
+                        <strong>公司名称：</strong>[公司名称]<br>
+                        <strong>负责人：</strong>[负责人姓名]<br>
+                        <strong>地址：</strong>[公司地址]
+                    </p>
+                </div>
+
+                <div class="bg-purple-50 p-6 rounded-lg border-l-4 border-purple-500 hover-shadow fade-in">
+                    <h3 class="text-xl font-semibold text-purple-800 mb-3">
+                        <i class="fas fa-users mr-2"></i>
+                        受影响员工
+                    </h3>
+                    <p class="text-purple-700">
+                        包括技术人员、销售人员、行政人员等多个部门，
+                        涉及不同岗位和职级的员工
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 证据展示 -->
+    <section id="evidence" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    <i class="fas fa-file-alt text-green-600 mr-3"></i>
+                    证据展示
+                </h2>
+                <p class="text-xl text-gray-600">以下是相关证据材料</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-lg hover-shadow fade-in">
+                    <div class="text-center">
+                        <i class="fas fa-file-contract text-4xl text-blue-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-3">劳动合同</h3>
+                        <p class="text-gray-600 mb-4">员工与公司签订的正式劳动合同</p>
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded hover-grow">
+                            <i class="fas fa-eye mr-2"></i>查看详情
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg hover-shadow fade-in">
+                    <div class="text-center">
+                        <i class="fas fa-receipt text-4xl text-green-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-3">工资条</h3>
+                        <p class="text-gray-600 mb-4">历史工资发放记录和工资条</p>
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded hover-grow">
+                            <i class="fas fa-eye mr-2"></i>查看详情
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg hover-shadow fade-in">
+                    <div class="text-center">
+                        <i class="fas fa-comments text-4xl text-purple-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-3">沟通记录</h3>
+                        <p class="text-gray-600 mb-4">与公司沟通的邮件、聊天记录</p>
+                        <button class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded hover-grow">
+                            <i class="fas fa-eye mr-2"></i>查看详情
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 权益维护 -->
+    <section id="rights" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    <i class="fas fa-shield-alt text-red-600 mr-3"></i>
+                    权益维护
+                </h2>
+                <p class="text-xl text-gray-600">了解您的权利和维权途径</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="text-center p-6 bg-gradient-to-b from-red-50 to-red-100 rounded-lg hover-shadow fade-in">
+                    <i class="fas fa-gavel text-3xl text-red-600 mb-4"></i>
+                    <h3 class="text-lg font-semibold mb-2">法律维权</h3>
+                    <p class="text-sm text-gray-600">通过法律途径维护合法权益</p>
+                </div>
+
+                <div class="text-center p-6 bg-gradient-to-b from-blue-50 to-blue-100 rounded-lg hover-shadow fade-in">
+                    <i class="fas fa-phone text-3xl text-blue-600 mb-4"></i>
+                    <h3 class="text-lg font-semibold mb-2">投诉举报</h3>
+                    <p class="text-sm text-gray-600">向相关部门投诉举报</p>
+                </div>
+
+                <div
+                    class="text-center p-6 bg-gradient-to-b from-green-50 to-green-100 rounded-lg hover-shadow fade-in">
+                    <i class="fas fa-handshake text-3xl text-green-600 mb-4"></i>
+                    <h3 class="text-lg font-semibold mb-2">劳动仲裁</h3>
+                    <p class="text-sm text-gray-600">申请劳动争议仲裁</p>
+                </div>
+
+                <div
+                    class="text-center p-6 bg-gradient-to-b from-purple-50 to-purple-100 rounded-lg hover-shadow fade-in">
+                    <i class="fas fa-users text-3xl text-purple-600 mb-4"></i>
+                    <h3 class="text-lg font-semibold mb-2">团结维权</h3>
+                    <p class="text-sm text-gray-600">与其他员工联合维权</p>
+                </div>
+            </div>
+
+            <div class="mt-12 bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg fade-in">
+                <div class="flex items-start">
+                    <i class="fas fa-lightbulb text-yellow-600 text-xl mr-3 mt-1"></i>
+                    <div>
+                        <h3 class="text-lg font-semibold text-yellow-800 mb-2">重要提醒</h3>
+                        <p class="text-yellow-700">
+                            根据《劳动法》和《劳动合同法》，用人单位应当按时足额支付劳动者工资。
+                            拖欠工资属于违法行为，劳动者有权要求支付并可申请经济补偿。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="py-16 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <i class="fas fa-envelope text-blue-400 mr-3"></i>
+                    联系我们
+                </h2>
+                <p class="text-xl text-gray-300">如果您也遇到类似问题，请联系我们</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="fade-in">
+                    <h3 class="text-xl font-semibold mb-4">
+                        <i class="fas fa-info-circle text-blue-400 mr-2"></i>
+                        举报信息
+                    </h3>
+                    <div class="space-y-3">
+                        <p class="flex items-center">
+                            <i class="fas fa-envelope text-blue-400 mr-3"></i>
+                            邮箱：report@example.com
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-phone text-blue-400 mr-3"></i>
+                            电话：12345678901
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-blue-400 mr-3"></i>
+                            地址：请通过邮件或电话联系
+                        </p>
+                    </div>
+                </div>
+
+                <div class="fade-in">
+                    <h3 class="text-xl font-semibold mb-4">
+                        <i class="fas fa-share-alt text-green-400 mr-2"></i>
+                        分享传播
+                    </h3>
+                    <p class="text-gray-300 mb-4">
+                        请帮助我们传播这个信息，让更多人了解工资拖欠问题，共同维护劳动者权益。
+                    </p>
+                    <div class="flex space-x-4">
+                        <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded hover-grow">
+                            <i class="fab fa-weixin mr-2"></i>微信
+                        </button>
+                        <button class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded hover-grow">
+                            <i class="fab fa-weibo mr-2"></i>微博
+                        </button>
+                        <button class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded hover-grow">
+                            <i class="fas fa-link mr-2"></i>复制链接
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-400">
+                © 2025 劳动权益保护网站 | 维护劳动者合法权益
+            </p>
+            <p class="text-sm text-gray-500 mt-2">
+                本网站旨在曝光违法用工行为，维护劳动者权益
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        document.getElementById('mobile-menu-btn').addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 滚动动画
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+
+        // 复制链接功能
+        document.querySelector('button[class*="bg-gray-600"]').addEventListener('click', function () {
+            navigator.clipboard.writeText(window.location.href).then(function () {
+                alert('链接已复制到剪贴板！');
+            });
+        });
+
+        // 警告提示
+        function showWarning() {
+            if (confirm('这是一个模板网站。在发布真实投诉前，请确保:\n1. 所有信息属实\n2. 已收集充分证据\n3. 了解相关法律风险\n\n是否继续？')) {
+                alert('请记住：理性维权，依法维权！');
+            }
+        }
+
+        // 为举报按钮添加警告
+        document.querySelector('button[class*="bg-red-600"]').addEventListener('click', showWarning);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>控诉公司拖欠工资</title>
+    <!-- Tailwind CSS v3.0+ CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome 6 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <!-- Material Icons CDN (可选补充) -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* 按钮悬停放大效果 */
+        .btn-zoom:hover {
+            transform: scale(1.05);
+        }
+
+        /* 卡片悬停阴影加深 */
+        .card-hover:hover {
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.18);
+        }
+
+        /* 平滑过渡 */
+        .transition-all {
+            transition: all 0.2s cubic-bezier(.4, 0, .2, 1);
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-gray-100 to-blue-100 min-h-screen flex flex-col items-center">
+    <!-- 顶部导航 -->
+    <nav class="w-full bg-white shadow-md py-3 px-6 flex items-center justify-between sticky top-0 z-20">
+        <div class="flex items-center gap-2">
+            <i class="fa-solid fa-hand-holding-dollar text-blue-500 text-xl"></i>
+            <span class="text-xl font-bold text-gray-800">工资正义发声平台</span>
+        </div>
+        <a href="#submit"
+            class="btn-zoom transition-all bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl font-semibold shadow-md">
+            <i class="fa-solid fa-bullhorn mr-2"></i>我要发声
+        </a>
+    </nav>
+
+    <!-- 标题区 -->
+    <section class="mt-12 mb-6 text-center px-4">
+        <h1 class="text-4xl font-extrabold text-gray-800 mb-3">公司拖欠工资，谁来为我们主持公道？</h1>
+        <p class="text-lg text-gray-600 max-w-xl mx-auto">我们是普通的劳动者，理应得到公平的待遇。<br>
+            拖欠工资不仅伤害我们的权益，更让我们对公司失去信任。请大家一起发声，争取正当权益！
+        </p>
+    </section>
+
+    <!-- 控诉案例卡片区 -->
+    <section class="w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-6 px-4 mb-10">
+        <!-- 卡片1 -->
+        <div
+            class="bg-white card-hover transition-all shadow rounded-2xl p-6 flex flex-col gap-4 border border-blue-50">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-user-tie text-blue-400 text-2xl"></i>
+                <span class="font-semibold text-gray-700">匿名同事A</span>
+            </div>
+            <p class="text-gray-600">“从三月到现在工资一直被拖延，公司只口头承诺却没有任何实际行动。我们的生活已受到严重影响！”</p>
+            <div class="flex gap-2 text-sm text-gray-400 mt-2 items-center">
+                <i class="fa-regular fa-clock"></i> 2025-07-01
+            </div>
+        </div>
+        <!-- 卡片2 -->
+        <div
+            class="bg-white card-hover transition-all shadow rounded-2xl p-6 flex flex-col gap-4 border border-blue-50">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-user-nurse text-pink-400 text-2xl"></i>
+                <span class="font-semibold text-gray-700">匿名同事B</span>
+            </div>
+            <p class="text-gray-600">“公司拖欠工资已经3个月了，生活压力山大。希望大家团结一致，维护劳动者的合法权益！”</p>
+            <div class="flex gap-2 text-sm text-gray-400 mt-2 items-center">
+                <span class="material-icons text-base">calendar_today</span> 2025-06-25
+            </div>
+        </div>
+        <!-- 卡片3 -->
+        <div
+            class="bg-white card-hover transition-all shadow rounded-2xl p-6 flex flex-col gap-4 border border-blue-50">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-user-secret text-gray-500 text-2xl"></i>
+                <span class="font-semibold text-gray-700">匿名同事C</span>
+            </div>
+            <p class="text-gray-600">“每次问工资进展都被搪塞，真心希望有关部门能帮我们讨回公道！”</p>
+            <div class="flex gap-2 text-sm text-gray-400 mt-2 items-center">
+                <i class="fa-solid fa-calendar-days"></i> 2025-06-30
+            </div>
+        </div>
+        <!-- 卡片4 -->
+        <div
+            class="bg-white card-hover transition-all shadow rounded-2xl p-6 flex flex-col gap-4 border border-blue-50">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-user-graduate text-green-400 text-2xl"></i>
+                <span class="font-semibold text-gray-700">匿名同事D</span>
+            </div>
+            <p class="text-gray-600">“我们付出了努力，公司却没有兑现最基本的承诺。希望大家都能重视劳动者权益。”</p>
+            <div class="flex gap-2 text-sm text-gray-400 mt-2 items-center">
+                <span class="material-icons text-base">date_range</span> 2025-06-28
+            </div>
+        </div>
+    </section>
+
+    <!-- 提交控诉表单 -->
+    <section id="submit" class="w-full max-w-xl mx-auto bg-white rounded-2xl shadow-lg p-8 mb-16 border border-blue-50">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-pen-to-square text-blue-500"></i> 我要控诉
+        </h2>
+        <form id="complaintForm" class="flex flex-col gap-5">
+            <div>
+                <label for="content" class="block font-medium text-gray-700 mb-2">控诉内容 <span
+                        class="text-red-500">*</span></label>
+                <textarea id="content" required rows="4"
+                    class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-300 outline-none transition-all resize-none"></textarea>
+            </div>
+            <div>
+                <label for="nickname" class="block font-medium text-gray-700 mb-2">您的昵称（可选）</label>
+                <input id="nickname" type="text" placeholder="如不填写将匿名"
+                    class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-300 outline-none transition-all" />
+            </div>
+            <button type="submit"
+                class="btn-zoom transition-all bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-xl shadow-md mt-2 flex items-center gap-2 justify-center">
+                <i class="fa-solid fa-paper-plane"></i> 提交控诉
+            </button>
+        </form>
+        <!-- 提交结果提示 -->
+        <div id="successMsg"
+            class="hidden mt-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl flex items-center gap-2">
+            <i class="fa-solid fa-circle-check"></i> 感谢您的发声！我们会保护您的隐私。
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="w-full text-center py-6 text-gray-400 text-sm">
+        <i class="fa-regular fa-copyright"></i> 2025 工资正义发声平台 | 关注劳动者权益
+    </footer>
+
+    <!-- 简单表单交互JS -->
+    <script>
+        // 控诉表单提交处理
+        document.getElementById('complaintForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            document.getElementById('successMsg').classList.remove('hidden');
+            // 重置表单
+            this.reset();
+            // 隐藏提示2秒后
+            setTimeout(() => {
+                document.getElementById('successMsg').classList.add('hidden');
+            }, 2500);
+        });
+    </script>
+</body>
+
+</html>

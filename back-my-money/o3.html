@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>薪资被拖欠 – 我们的声音</title>
+
+    <!-- Tailwind CSS v3.0+ CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome 6（图标库） -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-PvZc8GPuMbV0j7N9x2rwHqKZp0k6mDvGOfh2rPJO2eRtj4+CdKt6O5K6EUsjl3z847+20n9T7xrXkdB+q7fk3w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- 自定义动画时长（Tailwind 默认不含） -->
+    <style>
+        /* 轻微放大效果 & 动画时间统一 */
+        .transition-transform {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 leading-relaxed">
+    <!-- 页首导航 -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <h1 class="text-2xl font-semibold flex items-center gap-2">
+                <i class="fa-solid fa-building-user text-indigo-600"></i>
+                <span>欠薪曝光</span>
+            </h1>
+
+            <!-- 行动按钮（悬停放大） -->
+            <a href="#petition"
+                class="transition-transform transform hover:scale-105 bg-indigo-600 text-white px-4 py-2 rounded-md shadow hover:shadow-lg">
+                立即声援
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero 区 -->
+    <section class="bg-indigo-600 text-white text-center py-20 px-4 flex flex-col items-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">
+            我们的劳动<br class="sm:hidden" />不该被拖欠
+        </h2>
+        <p class="max-w-2xl text-lg md:text-xl">
+            某某科技公司自 2024 年 12 月起，已累计拖欠<span class="font-semibold underline">60+
+                名员工</span>工资，最长<span class="font-semibold underline">超过 6
+                个月</span>未发放。我们搭建此网站，公开事实、集中证据，并呼吁更多人关注与支持。
+        </p>
+
+        <a href="#evidence"
+            class="mt-8 inline-flex items-center gap-2 bg-white text-indigo-700 font-medium px-6 py-3 rounded-md shadow transition-transform transform hover:scale-105">
+            <i class="fa-solid fa-circle-info"></i>
+            查看事实与证据
+        </a>
+    </section>
+
+    <!-- 事实与证据卡片 -->
+    <section id="evidence" class="max-w-6xl mx-auto px-4 py-16">
+        <h3 class="text-3xl font-bold text-center mb-10">事实与证据</h3>
+
+        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <!-- 卡片模板 -->
+            <article
+                class="bg-white rounded-lg p-6 shadow-md transition-transform transform hover:scale-[1.02] hover:shadow-xl">
+                <div class="w-12 h-12 flex items-center justify-center bg-indigo-100 rounded-full text-indigo-600 mb-4">
+                    <i class="fa-solid fa-money-bills-wave text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-xl mb-2">工资逾期</h4>
+                <p class="text-sm leading-relaxed">
+                    2025年1–6月薪资至今未发放。公司仅以“现金流困难”为由口头承诺，未给出明确支付计划。
+                </p>
+            </article>
+
+            <article
+                class="bg-white rounded-lg p-6 shadow-md transition-transform transform hover:scale-[1.02] hover:shadow-xl">
+                <div class="w-12 h-12 flex items-center justify-center bg-indigo-100 rounded-full text-indigo-600 mb-4">
+                    <i class="fa-solid fa-file-contract text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-xl mb-2">合同违约</h4>
+                <p class="text-sm leading-relaxed">
+                    劳动合同第 5.2 条明确“工资应于次月 10 日前全额支付”。公司已明确违约。
+                </p>
+            </article>
+
+            <article
+                class="bg-white rounded-lg p-6 shadow-md transition-transform transform hover:scale-[1.02] hover:shadow-xl">
+                <div class="w-12 h-12 flex items-center justify-center bg-indigo-100 rounded-full text-indigo-600 mb-4">
+                    <i class="fa-solid fa-scale-balanced text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-xl mb-2">法律投诉</h4>
+                <p class="text-sm leading-relaxed">
+                    已向当地劳动监察大队递交材料（受理号
+                    <span class="whitespace-nowrap">2025-LA-0317</span>），等待仲裁排期。
+                </p>
+            </article>
+
+            <!-- 更多卡片可按需复制 -->
+        </div>
+    </section>
+
+    <!-- 公开信 / 请愿 -->
+    <section id="petition" class="bg-gray-100 py-16 px-4">
+        <div class="max-w-3xl mx-auto text-center">
+            <h3 class="text-3xl font-bold mb-6">加入公开信</h3>
+            <p class="mb-8">
+                扫描下方二维码，或点击按钮签署公开信。让更多人听见我们的声音，督促公司尽快履行支付义务。
+            </p>
+
+            <!-- 示例二维码（可替换为真实图片） -->
+            <img src="https://via.placeholder.com/180?text=QR+Code" alt="请愿二维码"
+                class="mx-auto mb-6 rounded-lg shadow-md" />
+
+            <a href="https://example.com/petition" target="_blank"
+                class="inline-flex items-center gap-2 bg-indigo-600 text-white px-8 py-3 rounded-md shadow transition-transform transform hover:scale-105 hover:shadow-lg">
+                <i class="fa-solid fa-pen-to-square"></i>
+                签署公开信
+            </a>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-white border-t py-6">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
+            <p>&copy; 2025 欠薪曝光. 保留所有权利。</p>
+
+            <!-- 社交链接 -->
+            <div class="flex gap-4">
+                <a href="https://weibo.com" target="_blank"
+                    class="text-gray-500 hover:text-indigo-600 transition-colors" aria-label="微博">
+                    <i class="fa-brands fa-weibo fa-lg"></i>
+                </a>
+                <a href="mailto:contact@example.com" class="text-gray-500 hover:text-indigo-600 transition-colors"
+                    aria-label="邮箱">
+                    <i class="fa-solid fa-envelope fa-lg"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 简单 JS（示例：可扩展功能） -->
+    <script>
+        // 如需更多交互，可在此添加 JS
+        // 例如：提交表单、动态加载数据等
+    </script>
+</body>
+
+</html>
