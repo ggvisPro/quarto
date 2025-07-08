@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quarto</title>
+    <style>
+        /* --- 全局样式 --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* 更现代的默认字体 */
+            background-color: #ecf0f1;
+            /* 更柔和的背景色 */
+            color: #34495e;
+            margin: 0;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 960px;
+            /* 稍宽的容器 */
+        }
+
+        /* --- 头部样式 --- */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .header p {
+            font-size: 1.15rem;
+            color: #7f8c8d;
+            margin-bottom: 0;
+        }
+
+        /* --- 模块样式 (展开/折叠) --- */
+        .module {
+            background-color: #ffffff;
+            border-radius: 10px;
+            /* 更圆润的边角 */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            /* 更强的阴影效果 */
+            margin-bottom: 25px;
+            overflow: hidden;
+            border: 1px solid #d7dbdd;
+            /* হালকা বর্ডার */
+        }
+
+        .module-title {
+            padding: 20px 30px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            color: #34495e;
+            transition: background-color 0.2s ease;
+        }
+
+        .module-title:hover {
+            background-color: #f0f3f5;
+        }
+
+        /* 折叠箭头 (Unicode) */
+        .module-title::after {
+            content: '\25BE';
+            /* 向下的三角形 */
+            font-size: 1em;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .module.collapsed .module-title::after {
+            transform: rotate(-90deg);
+            /* 向右的三角形 */
+        }
+
+        .module-content {
+            padding: 25px 30px;
+            border-top: 1px solid #e0e6ed;
+            display: none;
+            /* 初始隐藏 */
+        }
+
+        .module.open .module-content {
+            display: block;
+        }
+
+        /* --- 链接网格布局 --- */
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            /* 更宽的最小宽度 */
+            gap: 18px;
+            /* 更大的间距 */
+        }
+
+        .link-item a {
+            display: block;
+            padding: 15px 20px;
+            /* 更大的内边距 */
+            background-color: #f9fafa;
+            color: #495057;
+            text-decoration: none;
+            border-radius: 8px;
+            /* 更圆润的链接 */
+            transition: all 0.2s ease-in-out;
+            text-align: center;
+            font-size: 1rem;
+            border: 1px solid #e0e6ed;
+            /* হালকা বর্ডার */
+        }
+
+        .link-item a:hover {
+            background-color: #e8f0fe;
+            color: #2c3e50;
+            transform: translateY(-3px);
+            /* 更明显的悬停效果 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border-color: #c6d9f1;
+        }
+
+        /* --- 响应式布局 --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .link-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 15px;
+            }
+
+            .module-title {
+                padding: 15px 20px;
+                font-size: 1.1rem;
+            }
+
+            .module-content {
+                padding: 20px;
+            }
+
+            .link-item a {
+                padding: 12px 15px;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* --- 页脚 --- */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            font-size: 0.9rem;
+            color: #95a5a6;
+            border-top: 1px solid #e0e6ed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1>Quarto</h1>
+            <p>咦，你怎么会出现在这里呢？</p>
+        </header>
+
+        <div class="module">
+            <div class="module-title">
+                献灯使
+            </div>
+            <div class="module-content">
+                <div class="link-grid">
+                    <div class="link-item"><a href="./kentoshi/index.html" target="_blank">目录</a></div>
+                    <div class="link-item"><a href="./kentoshi/chapter1.html" target="_blank">献灯使</a></div>
+                    <div class="link-item"><a href="./kentoshi/chapter2.html" target="_blank">韦驮天无远弗届</a></div>
+                    <div class="link-item"><a href="./kentoshi/chapter3.html" target="_blank">不死之岛</a></div>
+                    <div class="link-item"><a href="./kentoshi/chapter4.html" target="_blank">彼岸</a></div>
+                    <div class="link-item"><a href="./kentoshi/chapter5.html" target="_blank">动物们的巴别塔</a></div>
+                    <div class="link-item"><a href="./kentoshi/chapter6.html" target="_blank">解说</a></div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <footer class="footer">
+            <p>&copy; 2025 ggvis</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modules = document.querySelectorAll('.module');
+
+            modules.forEach(module => {
+                const title = module.querySelector('.module-title');
+                const content = module.querySelector('.module-content');
+
+                // 初始状态：如果模块没有 'open' 类，则添加 'collapsed' 类
+                if (!module.classList.contains('open')) {
+                    module.classList.add('collapsed');
+                    content.style.display = 'none';
+                } else {
+                    content.style.display = 'block'; // 确保初始 'open' 的模块内容显示
+                }
+
+                title.addEventListener('click', () => {
+                    module.classList.toggle('open');
+                    module.classList.toggle('collapsed');
+                    content.style.display = module.classList.contains('open') ? 'block' : 'none';
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
