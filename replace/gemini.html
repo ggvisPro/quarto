@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高级字符串替换工具</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Marked.js for Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- DOMPurify for sanitizing HTML output from Marked -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.8/dist/purify.min.js"></script>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom styles for the app */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Styling for the rendered Markdown output */
+        .markdown-body {
+            all: revert; /* Reset styles to browser defaults */
+        }
+        .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 0.3em;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+        .markdown-body p { margin-bottom: 1rem; }
+        .markdown-body ul, .markdown-body ol { padding-left: 2em; margin-bottom: 1rem; }
+        .markdown-body blockquote {
+            padding: 0 1em;
+            color: #6a737d;
+            border-left: 0.25em solid #dfe2e5;
+            margin-left: 0;
+        }
+        .markdown-body code {
+            padding: 0.2em 0.4em;
+            margin: 0;
+            font-size: 85%;
+            background-color: rgba(27,31,35,0.05);
+            border-radius: 6px;
+        }
+        .markdown-body pre {
+            word-wrap: normal;
+            padding: 16px;
+            overflow: auto;
+            font-size: 85%;
+            line-height: 1.45;
+            background-color: #f6f8fa;
+            border-radius: 6px;
+        }
+        .markdown-body pre code {
+            display: inline;
+            max-width: auto;
+            padding: 0;
+            margin: 0;
+            overflow: visible;
+            line-height: inherit;
+            word-wrap: normal;
+            background-color: transparent;
+            border: 0;
+        }
+
+        /* Highlighting styles */
+        .highlight-match {
+            background-color: rgba(255, 229, 100, 0.5); /* Yellow for matched text */
+            border-radius: 3px;
+        }
+        .highlight-replace {
+            background-color: rgba(187, 247, 208, 0.7); /* Green for replaced text */
+            border-radius: 3px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Custom scrollbar for better aesthetics */
+        textarea::-webkit-scrollbar {
+            width: 8px;
+        }
+        textarea::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        textarea::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        textarea::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-900">高级字符串替换工具</h1>
+            <p class="text-lg text-gray-600 mt-2">支持 Markdown 实时预览、正则和高亮显示</p>
+        </header>
+
+        <!-- Replacement Rules Section -->
+        <div class="bg-white p-6 rounded-2xl shadow-lg mb-8">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-800">替换规则</h2>
+            <div id="rules-container" class="space-y-4">
+                <!-- Rule rows will be dynamically inserted here -->
+            </div>
+            <button id="add-rule-btn" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                添加新规则
+            </button>
+        </div>
+
+        <!-- Input and Output Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Input Column -->
+            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">输入 (Markdown)</h3>
+                <div class="relative">
+                    <div id="input-highlighter" class="absolute inset-0 p-3 text-base leading-relaxed font-mono whitespace-pre-wrap pointer-events-none overflow-hidden markdown-body" aria-hidden="true"></div>
+                    <textarea id="input-text" class="w-full h-96 p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 font-mono text-base leading-relaxed bg-transparent relative z-10 resize-none" placeholder="在此输入要处理的文本... 支持 Markdown 语法。&#10;&#10;例如:&#10;# 这是一个标题&#10;* 列表项 1&#10;* 列表项 2" spellcheck="false"></textarea>
+                </div>
+            </div>
+
+            <!-- Output Column -->
+            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">输出 (Markdown)</h3>
+                    <button id="copy-btn" class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                        <span id="copy-btn-text">复制</span>
+                    </button>
+                </div>
+                <div id="output-preview" class="w-full h-96 p-3 border border-gray-200 bg-gray-50 rounded-lg overflow-auto markdown-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM element references
+        const rulesContainer = document.getElementById('rules-container');
+        const addRuleBtn = document.getElementById('add-rule-btn');
+        const inputText = document.getElementById('input-text');
+        const inputHighlighter = document.getElementById('input-highlighter');
+        const outputPreview = document.getElementById('output-preview');
+        const copyBtn = document.getElementById('copy-btn');
+        const copyBtnText = document.getElementById('copy-btn-text');
+
+        let rawOutputText = ''; // Variable to store the raw text for copying
+
+        // --- Core Logic ---
+
+        /**
+         * Main function to perform all replacements and update the UI.
+         */
+        function processTextAndRender() {
+            const rules = getRulesFromDOM();
+            const originalText = inputText.value;
+            let processedText = originalText;
+            
+            // Apply each rule sequentially
+            rules.forEach(rule => {
+                if (rule.search) { // Only process if search key is not empty
+                    try {
+                        if (rule.isRegex) {
+                            // Regex mode
+                            const flags = 'g' + (rule.isCaseSensitive ? '' : 'i');
+                            const regex = new RegExp(rule.search, flags);
+                            const replacementValue = `<span class="highlight-replace">${rule.replace}</span>`;
+                            processedText = processedText.replace(regex, replacementValue);
+                        } else {
+                            // Plain text mode
+                            const escapedSearch = escapeRegex(rule.search);
+                            const flags = 'g' + (rule.isCaseSensitive ? '' : 'i');
+                            const regex = new RegExp(escapedSearch, flags);
+                            const replacementValue = `<span class="highlight-replace">${rule.replace}</span>`;
+                            processedText = processedText.replace(regex, replacementValue);
+                        }
+                    } catch (e) {
+                        // Ignore invalid regex errors to not break the app
+                        console.error("Invalid Regex:", e.message);
+                    }
+                }
+            });
+
+            // Store raw text for copy functionality (by stripping HTML tags)
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = processedText;
+            rawOutputText = tempDiv.textContent || tempDiv.innerText || '';
+
+            // Render output markdown
+            outputPreview.innerHTML = DOMPurify.sanitize(marked.parse(processedText));
+            
+            // Update input highlighter
+            highlightInput(originalText, rules);
+        }
+
+        /**
+         * Highlights matching parts in the input text area.
+         * @param {string} text - The original input text.
+         * @param {Array} rules - The array of replacement rules.
+         */
+        function highlightInput(text, rules) {
+            let highlightedText = text;
+            
+            // Create a combined regex to find all matches at once
+            const searchTerms = rules
+                .map(rule => rule.search)
+                .filter(Boolean) // Filter out empty search terms
+                .map(term => escapeRegex(term)); // Escape all terms to be safe in a group
+
+            if (searchTerms.length > 0) {
+                try {
+                    const combinedRegex = new RegExp(`(${searchTerms.join('|')})`, 'gi');
+                    highlightedText = text.replace(combinedRegex, `<mark class="highlight-match">$1</mark>`);
+                } catch(e) {
+                    console.error("Highlighting Regex Error:", e.message);
+                }
+            }
+            
+            // Use innerHTML to render the highlights
+            inputHighlighter.innerHTML = highlightedText + '\n'; // Add newline to match textarea behavior
+        }
+
+        // --- Rule Management ---
+
+        let ruleIdCounter = 0;
+
+        /**
+         * Creates and appends a new rule row to the DOM.
+         */
+        function addNewRule() {
+            ruleIdCounter++;
+            const ruleId = `rule-${ruleIdCounter}`;
+            
+            const ruleDiv = document.createElement('div');
+            ruleDiv.className = 'rule-item p-4 border border-gray-200 rounded-lg grid grid-cols-1 md:grid-cols-12 gap-4 items-center bg-gray-50';
+            ruleDiv.id = ruleId;
+
+            ruleDiv.innerHTML = `
+                <!-- Search Input -->
+                <div class="md:col-span-5">
+                    <label for="${ruleId}-search" class="text-sm font-medium text-gray-700 block mb-1">查找内容</label>
+                    <input type="text" id="${ruleId}-search" class="rule-search w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="要查找的文本或正则">
+                </div>
+
+                <!-- Arrow Icon -->
+                <div class="hidden md:flex justify-center items-center text-gray-400">
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                </div>
+
+                <!-- Replace Input -->
+                <div class="md:col-span-5">
+                    <label for="${ruleId}-replace" class="text-sm font-medium text-gray-700 block mb-1">替换为</label>
+                    <input type="text" id="${ruleId}-replace" class="rule-replace w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="替换后的内容">
+                </div>
+
+                <!-- Options and Actions -->
+                <div class="md:col-span-1 flex items-center justify-end space-x-2">
+                     <div class="flex items-center space-x-3 mt-5">
+                        <div class="relative flex items-start" title="使用正则表达式">
+                            <input id="${ruleId}-regex" type="checkbox" class="rule-regex h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                            <label for="${ruleId}-regex" class="ml-1 text-sm text-gray-700">正则</label>
+                        </div>
+                        <div class="relative flex items-start" title="区分大小写">
+                            <input id="${ruleId}-case" type="checkbox" class="rule-case h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                            <label for="${ruleId}-case" class="ml-1 text-sm text-gray-700">大小写</label>
+                        </div>
+                    </div>
+                    <button class="remove-rule-btn text-gray-400 hover:text-red-500 mt-5" title="删除此规则">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                    </button>
+                </div>
+            `;
+            rulesContainer.appendChild(ruleDiv);
+        }
+
+        /**
+         * Reads all rules from the DOM and returns them as an array of objects.
+         * @returns {Array<Object>}
+         */
+        function getRulesFromDOM() {
+            const rules = [];
+            const ruleElements = rulesContainer.querySelectorAll('.rule-item');
+            ruleElements.forEach(ruleEl => {
+                rules.push({
+                    search: ruleEl.querySelector('.rule-search').value,
+                    replace: ruleEl.querySelector('.rule-replace').value,
+                    isRegex: ruleEl.querySelector('.rule-regex').checked,
+                    isCaseSensitive: ruleEl.querySelector('.rule-case').checked,
+                });
+            });
+            return rules;
+        }
+
+        // --- Utility Functions ---
+
+        /**
+         * Escapes special characters in a string for use in a regular expression.
+         * @param {string} str - The string to escape.
+         * @returns {string} The escaped string.
+         */
+        function escapeRegex(str) {
+            return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        /**
+         * Copies text to the clipboard.
+         * @param {string} text - The text to copy.
+         */
+        function copyToClipboard(text) {
+            // Use modern clipboard API if available
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showCopyFeedback();
+                }).catch(err => {
+                    console.error('Clipboard API failed:', err);
+                    fallbackCopy(text);
+                });
+            } else {
+                // Fallback for older browsers or insecure contexts
+                fallbackCopy(text);
+            }
+        }
+        
+        function fallbackCopy(text) {
+             const textArea = document.createElement('textarea');
+             textArea.value = text;
+             textArea.style.position = 'fixed'; // Prevent scrolling to bottom of page in MS Edge.
+             textArea.style.left = '-9999px';
+             document.body.appendChild(textArea);
+             textArea.focus();
+             textArea.select();
+             try {
+                 const successful = document.execCommand('copy');
+                 if (successful) showCopyFeedback();
+             } catch (err) {
+                 console.error('Fallback copy failed:', err);
+             }
+             document.body.removeChild(textArea);
+        }
+
+        /**
+         * Provides visual feedback when the copy button is clicked.
+         */
+        function showCopyFeedback() {
+            copyBtnText.textContent = '已复制!';
+            copyBtn.classList.add('text-green-600', 'border-green-500');
+            setTimeout(() => {
+                copyBtnText.textContent = '复制';
+                copyBtn.classList.remove('text-green-600', 'border-green-500');
+            }, 2000);
+        }
+
+        // --- Event Listeners ---
+
+        // Listen for input on the main text area
+        inputText.addEventListener('input', processTextAndRender);
+        
+        // Sync scrolling between textarea and highlighter
+        inputText.addEventListener('scroll', () => {
+            inputHighlighter.scrollTop = inputText.scrollTop;
+            inputHighlighter.scrollLeft = inputText.scrollLeft;
+        });
+
+        // Use event delegation for rule inputs and buttons
+        rulesContainer.addEventListener('input', (e) => {
+            if (e.target.matches('.rule-search, .rule-replace, .rule-regex, .rule-case')) {
+                processTextAndRender();
+            }
+        });
+        
+        rulesContainer.addEventListener('click', (e) => {
+            const removeButton = e.target.closest('.remove-rule-btn');
+            if (removeButton) {
+                removeButton.closest('.rule-item').remove();
+                processTextAndRender();
+            }
+        });
+
+        // Add new rule button
+        addRuleBtn.addEventListener('click', addNewRule);
+
+        // Copy button
+        copyBtn.addEventListener('click', () => {
+            copyToClipboard(rawOutputText);
+        });
+
+        // --- Initialization ---
+
+        // Add one empty rule on page load
+        addNewRule();
+    </script>
+
+</body>
+</html>

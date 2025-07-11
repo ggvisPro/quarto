@@ -1,0 +1,155 @@
+<!--
+  string-replacer.html (fixed highlight)
+  ------------------------------------------------------
+  · Added correct highlighting of *replaced* text in output pane.
+  ------------------------------------------------------
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>String Replacer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    mark.match   { background:#fde047; padding:0 2px; border-radius:3px; }
+    mark.replace { background:#86efac; padding:0 2px; border-radius:3px; }
+    textarea { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace; }
+  </style>
+</head>
+<body class="min-h-screen bg-gray-100 antialiased">
+  <div class="container mx-auto p-4 space-y-6 max-w-7xl">
+    <h1 class="text-2xl font-bold text-center">🛠️ String Replacer</h1>
+
+    <section class="bg-white shadow rounded-2xl p-6 space-y-4">
+      <h2 class="text-lg font-semibold">Replacement Rules</h2>
+      <div id="rules" class="space-y-3"></div>
+      <button id="addRule" class="px-3 py-1.5 rounded-xl bg-indigo-600 text-white hover:bg-indigo-500 transition">＋ Add Rule</button>
+    </section>
+
+    <section class="grid md:grid-cols-2 gap-6">
+      <div class="bg-white shadow rounded-2xl p-6 space-y-4">
+        <h2 class="text-lg font-semibold">Input (Markdown)</h2>
+        <textarea id="inputText" class="w-full h-48 p-3 border rounded-xl shadow-inner resize-vertical"></textarea>
+        <div class="border rounded-xl p-4 bg-gray-50 overflow-auto prose max-w-none" id="inputPreview"></div>
+      </div>
+
+      <div class="bg-white shadow rounded-2xl p-6 space-y-4">
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-semibold">Output (Markdown)</h2>
+          <button id="copyBtn" class="px-3 py-1.5 rounded-xl border hover:bg-gray-100 transition">Copy</button>
+        </div>
+        <textarea id="outputText" readonly class="w-full h-48 p-3 border rounded-xl shadow-inner bg-gray-100 resize-vertical"></textarea>
+        <div class="border rounded-xl p-4 bg-gray-50 overflow-auto prose max-w-none" id="outputPreview"></div>
+      </div>
+    </section>
+  </div>
+
+  <template id="ruleRow">
+    <div class="flex flex-wrap gap-2 items-center">
+      <input type="text" placeholder="key" class="rule-key border rounded-lg p-2 flex-1 min-w-[6rem]" />
+      <input type="text" placeholder="value" class="rule-value border rounded-lg p-2 flex-1 min-w-[6rem]" />
+      <label class="text-sm flex items-center gap-1"><input type="checkbox" class="rule-regex" /> RegEx</label>
+      <label class="text-sm flex items-center gap-1"><input type="checkbox" class="rule-case" /> Aa</label>
+      <label class="text-sm flex items-center gap-1"><input type="checkbox" class="rule-dotall" /> DotAll</label>
+      <button class="rule-del text-red-600 hover:text-red-500">🗑</button>
+    </div>
+  </template>
+
+  <script>
+    const escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const escapeHtml  = (s) => s
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/\"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+    function getRules() {
+      return [...document.querySelectorAll('#rules > .rule')].map(r => ({
+        key: r.querySelector('.rule-key').value,
+        value: r.querySelector('.rule-value').value,
+        regex: r.querySelector('.rule-regex').checked,
+        case: r.querySelector('.rule-case').checked,
+        dotall: r.querySelector('.rule-dotall').checked,
+      }));
+    }
+
+    function applyRules(text, rules) {
+      let out = text;
+      for (const r of rules) {
+        if (!r.key) continue;
+        const flags = `${r.case ? '' : 'i'}${r.dotall ? 's' : ''}g`;
+        const pattern = r.regex ? r.key : escapeRegExp(r.key);
+        try { out = out.replace(new RegExp(pattern, flags), r.value); } catch(_){}
+      }
+      return out;
+    }
+
+    // 🔥 FIXED highlight: output uses replacement value, not key
+    function highlight(src, rules, mode) {
+      let html = escapeHtml(src);
+      for (const r of rules) {
+        const target = mode === 'input' ? r.key : r.value;
+        if (!target) continue;
+        const flags = `${r.case ? '' : 'i'}${r.dotall ? 's' : ''}g`;
+        const pattern = mode === 'input'
+          ? (r.regex ? r.key : escapeRegExp(r.key))
+          : escapeRegExp(target);
+        try {
+          const re  = new RegExp(pattern, flags);
+          const cls = mode === 'input' ? 'match' : 'replace';
+          html = html.replace(re, m => `<mark class="${cls}">${escapeHtml(m)}</mark>`);
+        } catch(_){}
+      }
+      return html;
+    }
+
+    /* refs */
+    const rulesDiv = document.getElementById('rules');
+    const inputTA  = document.getElementById('inputText');
+    const outputTA = document.getElementById('outputText');
+    const inputPv  = document.getElementById('inputPreview');
+    const outputPv = document.getElementById('outputPreview');
+    const copyBtn  = document.getElementById('copyBtn');
+
+    addRule({ key:'World', value:'Markdown', regex:false, case:false, dotall:false });
+    inputTA.addEventListener('input', update);
+
+    function update() {
+      const rules = getRules();
+      const raw   = inputTA.value;
+      const out   = applyRules(raw, rules);
+      outputTA.value = out;
+      inputPv.innerHTML  = marked.parse(highlight(raw,  rules, 'input'));
+      outputPv.innerHTML = marked.parse(highlight(out,  rules, 'output'));
+    }
+
+    document.getElementById('addRule').addEventListener('click', () => addRule());
+
+    function addRule(prefill = {key:'',value:'',regex:false,case:false,dotall:false}) {
+      const tmpl = document.getElementById('ruleRow');
+      const node = tmpl.content.firstElementChild.cloneNode(true);
+      node.classList.add('rule');
+      rulesDiv.appendChild(node);
+      node.querySelector('.rule-key').value   = prefill.key;
+      node.querySelector('.rule-value').value = prefill.value;
+      node.querySelector('.rule-regex').checked = prefill.regex;
+      node.querySelector('.rule-case').checked  = prefill.case;
+      node.querySelector('.rule-dotall').checked= prefill.dotall;
+      [...node.querySelectorAll('input')].forEach(i => i.addEventListener('input', update));
+      node.querySelector('.rule-del').addEventListener('click', () => { node.remove(); update(); });
+      update();
+    }
+
+    copyBtn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(outputTA.value); copyBtn.textContent='✓ Copied'; }
+      catch { copyBtn.textContent='⚠︎ Fail'; }
+      setTimeout(() => copyBtn.textContent='Copy', 1500);
+    });
+
+    update();
+  </script>
+</body>
+</html>
