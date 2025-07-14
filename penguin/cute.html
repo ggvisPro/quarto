@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>“企”思妙想：关于企鹅的冷知识</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'ZCOOL KuaiLe', sans-serif;
+            background: linear-gradient(135deg, #a2d5f2, #e0f7fa, #a2d5f2);
+            color: #071a52;
+            text-align: center;
+            padding: 40px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 3em;
+            color: #fff;
+            text-shadow: 
+                -2px -2px 0 #071a52,  
+                 2px -2px 0 #071a52,
+                -2px  2px 0 #071a52,
+                 2px  2px 0 #071a52,
+                 4px 4px 0px #f4a261;
+            animation: bounce 1s infinite alternate;
+            margin-bottom: 50px;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0px); }
+            to   { transform: translateY(-10px); }
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 100%;
+            height: 400px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+            border: 6px solid #071a52;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .flip-card-front {
+            background: #fdf5e6; /* Changed from white to a soft cream color */
+        }
+
+        .flip-card-back {
+            background: #fde496;
+            color: #2c3e50;
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front img {
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 20px; /* Changed from circle to rounded rectangle */
+            border: 6px solid #f4a261;
+            margin-bottom: 20px;
+            image-rendering: pixelated; /*保持像素风*/
+        }
+
+        .flip-card-front h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.6em; /* Increased font size */
+            color: #e76f51;
+        }
+
+        .flip-card-back p {
+            font-size: 1.5em; /* Increased font size */
+            line-height: 1.7;
+        }
+
+        .footer-text {
+            margin-top: 50px;
+            font-family: 'Press Start 2P', cursive;
+            color: #fff;
+            font-size: 1em;
+            text-shadow: 2px 2px 0 #071a52;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>“企”思妙想</h1>
+
+        <div class="facts-grid">
+            <!-- 卡片 1 -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="Gemini_Generated_Image_d6hnfid6hnfid6hn.png" alt="企鹅插图1">
+                        <h2>“鹅”立鸡群</h2>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>企鹅是鸟，但不会飞！翅膀进化成了鳍状肢，让它们成为“鸟中游泳队”的C位担当！</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片 2 -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="Gemini_Generated_Image_ekgn56ekgn56ekgn.png" alt="企鹅插图2">
+                        <h2>天“南”地北</h2>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>并非所有企鹅都住南极！很多生活在温带，甚至有住在赤道的“鹅”生赢家！</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片 3 -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="Gemini_Generated_Image_nkx08ynkx08ynkx0.png" alt="企鹅插图3">
+                        <h2>黑白“分明”</h2>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>黑白“燕尾服”是伪装术！从上看融入深海，从下看融入天空，完美躲避天敌和猎物。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片 4 -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="Gemini_Generated_Image_rjcdv4rjcdv4rjcd.png" alt="企鹅插图4">
+                        <h2>“盐”值担当</h2>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>企鹅能喝海水，因为眼睛上有个腺体能把多余的盐分过滤掉，然后通过鼻子排出去！</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片 5 -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="Gemini_Generated_Image_ta81eeta81eeta81.png" alt="企鹅插图5">
+                        <h2>一“夫”一妻</h2>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>大多数企鹅都是忠诚的“一夫一妻”制，每年都会和同一个伴侣重逢，是动物界的模范夫妻！</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片 6 -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="Gemini_Generated_Image_yr3o9dyr3o9dyr3o.png" alt="企鹅插图6">
+                        <h2>“膝”下有黄金</h2>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>企鹅走路摇摆不是因为腿短，它们其实有膝盖！只是大部分藏在身体里看不见而已。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="footer-text">Hover on cards to flip!</p>
+    </div>
+</body>
+</html>

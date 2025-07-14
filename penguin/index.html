@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企鹅世界 - 18种企鹅大科普</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #b8c5d1 0%, #d6e3f0 50%, #e8f0f7 100%);
+            min-height: 100vh;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(45deg, #8e9aaf, #707b8a);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '🐧';
+            position: absolute;
+            font-size: 8rem;
+            opacity: 0.1;
+            top: -1rem;
+            left: 10%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .header::after {
+            content: '🐧';
+            position: absolute;
+            font-size: 6rem;
+            opacity: 0.1;
+            top: 2rem;
+            right: 15%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .intro {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .intro h2 {
+            color: #8e9aaf;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .penguins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .penguin-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+        }
+
+        .penguin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(142, 154, 175, 0.3);
+            border-color: #8e9aaf;
+        }
+
+        .penguin-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #e2e8f0, #cbd5e0);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .penguin-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .penguin-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .penguin-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .penguin-scientific {
+            font-style: italic;
+            color: #718096;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .penguin-taxonomy {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: #a0aec0;
+        }
+
+        .penguin-info {
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #8e9aaf;
+            min-width: 80px;
+        }
+
+        .penguin-description {
+            color: #4a5568;
+            font-size: 0.95rem;
+            text-align: justify;
+        }
+
+        .footer {
+            background: linear-gradient(45deg, #4a5568, #718096);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stats-bar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #8e9aaf;
+        }
+
+        .stat-label {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .fun-facts {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 3rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .fun-facts h2 {
+            color: #8e9aaf;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .fact-card {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid #8e9aaf;
+            transition: transform 0.3s ease;
+        }
+
+        .fact-card:hover {
+            transform: translateX(5px);
+        }
+
+        .fact-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .fact-title {
+            font-weight: bold;
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+        }
+
+        .fact-content {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .penguins-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-bar {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🐧 企鹅世界大百科 🐧</h1>
+        <p>探索南极和南半球的18种可爱企鹅朋友们</p>
+    </div>
+
+    <div class="container">
+        <div class="intro">
+            <h2>认识企鹅家族</h2>
+            <p>企鹅是一类不会飞的海鸟，主要生活在南半球。全世界共有18种企鹅，它们各具特色，从最小的小蓝企鹅到最大的帝企鹅，每一种都有独特的魅力。让我们一起来认识这些可爱的生物吧！</p>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-number">18</div>
+                <div class="stat-label">企鹅种类</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">130cm</div>
+                <div class="stat-label">最高身高</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">40kg</div>
+                <div class="stat-label">最重体重</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">22km/h</div>
+                <div class="stat-label">游泳速度</div>
+            </div>
+        </div>
+
+        <div class="penguins-grid">
+            <!-- 帝企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Aptenodytes forsteri.png" alt="帝企鹅"></div>
+                <div class="penguin-name">帝企鹅</div>
+                <div class="penguin-scientific">Aptenodytes forsteri</div>
+                <div class="penguin-taxonomy">属: Aptenodytes | 种: forsteri</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>100-130cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>22-40kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>南极洲</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>最大的企鹅</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    帝企鹅是世界上最大的企鹅，也是唯一在南极严冬繁殖的企鹅。雄性会在零下40度的严寒中孵蛋2个月，展现出令人敬佩的父爱。它们拥有橙黄色的颈部羽毛，是企鹅中的"皇室成员"。
+                </div>
+            </div>
+
+            <!-- 王企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Aptenodytes patagonicus.png" alt="王企鹅"></div>
+                <div class="penguin-name">王企鹅</div>
+                <div class="penguin-scientific">Aptenodytes patagonicus</div>
+                <div class="penguin-taxonomy">属: Aptenodytes | 种: patagonicus</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>85-95cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>12-16kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>亚南极岛屿</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>第二大企鹅</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    王企鹅是第二大的企鹅种类，拥有明亮的橙色颈部和耳部斑块。它们优雅的姿态和鲜艳的色彩使其被称为企鹅中的"贵族"。繁殖周期长达14-16个月，是企鹅中最长的。
+                </div>
+            </div>
+
+            <!-- 阿德利企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Pygoscelis adeliae.png" alt="阿德利企鹅"></div>
+                <div class="penguin-name">阿德利企鹅</div>
+                <div class="penguin-scientific">Pygoscelis adeliae</div>
+                <div class="penguin-taxonomy">属: Pygoscelis | 种: adeliae</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>60-70cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>3.8-8.2kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>南极洲</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>白色眼圈</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    阿德利企鹅以其标志性的白色眼圈而闻名，看起来就像戴着眼镜一样可爱。它们是真正的南极原住民，完全生活在南极大陆周围。性格活泼好动，是企鹅中的"运动健将"。
+                </div>
+            </div>
+
+            <!-- 颏带企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Pygoscelis antarcticus.png" alt="颏带企鹅"></div>
+                <div class="penguin-name">颏带企鹅</div>
+                <div class="penguin-scientific">Pygoscelis antarcticus</div>
+                <div class="penguin-taxonomy">属: Pygoscelis | 种: antarcticus</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>68-76cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>3-5kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>南极半岛</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>黑色颏带</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    颏带企鹅因头部有一条明显的黑色"颏带"而得名，看起来像戴着头盔的小士兵。它们是攀岩高手，能够在陡峭的岩石上灵活移动。性格比较激进，经常与其他企鹅发生小冲突。
+                </div>
+            </div>
+
+            <!-- 巴布亚企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Pygoscelis papua.png" alt="巴布亚企鹅"></div>
+                <div class="penguin-name">巴布亚企鹅</div>
+                <div class="penguin-scientific">Pygoscelis papua</div>
+                <div class="penguin-taxonomy">属: Pygoscelis | 种: papua</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>70-90cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>4.5-8.5kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>亚南极</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>橙红色嘴喙</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    巴布亚企鹅拥有鲜艳的橙红色嘴喙和脚蹼，头顶有白色斑块。它们是游泳速度最快的企鹅，最高可达35公里/小时。性格相对温和，是企鹅中的"和平主义者"。
+                </div>
+            </div>
+
+            <!-- 马卡罗尼企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Eudyptes chrysolophus.png" alt="马卡罗尼企鹅"></div>
+                <div class="penguin-name">马卡罗尼企鹅</div>
+                <div class="penguin-scientific">Eudyptes chrysolophus</div>
+                <div class="penguin-taxonomy">属: Eudyptes | 种: chrysolophus</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>60-70cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>3.3-6.4kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>亚南极岛屿</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>金黄色冠毛</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    马卡罗尼企鹅以其华丽的金黄色冠毛而闻名，看起来就像戴着时尚的羽毛帽。它们是数量最多的企鹅种类，性格活泼外向，喜欢群体生活。繁殖期时会进行精彩的求偶表演。
+                </div>
+            </div>
+
+            <!-- 皇家企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Eudyptes schlegeli.png" alt="皇家企鹅"></div>
+                <div class="penguin-name">皇家企鹅</div>
+                <div class="penguin-scientific">Eudyptes schlegeli</div>
+                <div class="penguin-taxonomy">属: Eudyptes | 种: schlegeli</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>65-76cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>3-8kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>麦考瑞岛</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>白色脸颊</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    皇家企鹅是马卡罗尼企鹅的近亲，但拥有独特的白色脸颊和喉部。它们只在麦考瑞岛繁殖，数量稀少，被认为是企鹅中的"皇室血统"。拥有优雅的金色冠毛。
+                </div>
+            </div>
+
+            <!-- 凤头企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Eudyptes robustus.png" alt="凤头企鹅"></div>
+                <div class="penguin-name">凤头企鹅</div>
+                <div class="penguin-scientific">Eudyptes robustus</div>
+                <div class="penguin-taxonomy">属: Eudyptes | 种: robustus</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>55-67cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>2.3-4.3kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>新西兰周围</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>直立冠毛</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    凤头企鹅拥有直立的金黄色冠毛，看起来非常威武。它们主要生活在新西兰周围的岛屿上，是濒危物种。性格比较内向，喜欢在岩石缝隙中筑巢。
+                </div>
+            </div>
+
+            <!-- 峡湾企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Eudyptes pachyrhynchus.png" alt="峡湾企鹅"></div>
+                <div class="penguin-name">峡湾企鹅</div>
+                <div class="penguin-scientific">Eudyptes pachyrhynchus</div>
+                <div class="penguin-taxonomy">属: Eudyptes | 种: pachyrhynchus</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>55-60cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>2-5.5kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>新西兰峡湾</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>浓密眉毛</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    峡湾企鹅是世界上最稀有的企鹅之一，拥有浓密的金黄色"眉毛"。它们生活在新西兰南岛的温带雨林中，是唯一在森林中筑巢的企鹅。非常害羞，很难在野外观察到。
+                </div>
+            </div>
+
+            <!-- 史纳尔岛企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Eudyptes sclateri.png" alt="史纳尔岛企鹅"></div>
+                <div class="penguin-name">史纳尔岛企鹅</div>
+                <div class="penguin-scientific">Eudyptes sclateri</div>
+                <div class="penguin-taxonomy">属: Eudyptes | 种: sclateri</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>50-70cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>2.5-4kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>史纳尔群岛</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>粗壮嘴喙</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    史纳尔岛企鹅只在新西兰史纳尔群岛繁殖，拥有粗壮的橙红色嘴喙和金黄色冠毛。它们是勇敢的探险家，经常游到很远的海域觅食。数量稀少，是需要保护的珍贵物种。
+                </div>
+            </div>
+
+            <!-- 黄眼企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Megadyptes antipodes.png" alt="黄眼企鹅"></div>
+                <div class="penguin-name">黄眼企鹅</div>
+                <div class="penguin-scientific">Megadyptes antipodes</div>
+                <div class="penguin-taxonomy">属: Megadyptes | 种: antipodes</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>62-79cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>3-8.5kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>新西兰</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>黄色眼睛</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    黄眼企鹅以其独特的黄色眼睛和头部的金黄色条纹而闻名。它们是世界上最稀有的企鹅之一，性格非常害羞和独立，不喜欢群体生活。是新西兰的象征性物种。
+                </div>
+            </div>
+
+            <!-- 小蓝企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Eudyptula minor.png" alt="小蓝企鹅"></div>
+                <div class="penguin-name">小蓝企鹅</div>
+                <div class="penguin-scientific">Eudyptula minor</div>
+                <div class="penguin-taxonomy">属: Eudyptula | 种: minor</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>30-35cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>1-1.2kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>澳洲、新西兰</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>最小的企鹅</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    小蓝企鹅是世界上最小的企鹅，拥有美丽的蓝色羽毛。它们晚上才上岸，白天在海中觅食。性格活泼可爱，经常成群结队地游泳，是澳大利亚和新西兰的人气明星。
+                </div>
+            </div>
+
+            <!-- 非洲企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Spheniscus demersus.png" alt="非洲企鹅"></div>
+                <div class="penguin-name">非洲企鹅</div>
+                <div class="penguin-scientific">Spheniscus demersus</div>
+                <div class="penguin-taxonomy">属: Spheniscus | 种: demersus</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>60-70cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>2.2-3.5kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>南非海岸</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>黑色条纹</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    非洲企鹅是唯一生活在非洲的企鹅，胸前有独特的黑色马蹄形条纹。它们能够承受较高的温度，经常在沙滩上晒太阳。被称为"驴企鹅"，因为它们的叫声像驴叫。
+                </div>
+            </div>
+
+            <!-- 麦哲伦企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Spheniscus magellanicus.png" alt="麦哲伦企鹅"></div>
+                <div class="penguin-name">麦哲伦企鹅</div>
+                <div class="penguin-scientific">Spheniscus magellanicus</div>
+                <div class="penguin-taxonomy">属: Spheniscus | 种: magellanicus</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>61-76cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>2.7-6.5kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>南美洲</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>双黑带</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    麦哲伦企鹅以探险家麦哲伦命名，胸前有两条黑色条纹。它们是长距离迁徙的冠军，每年游泳数千公里。性格勇敢冒险，是企鹅中的"探险家"。
+                </div>
+            </div>
+
+            <!-- 洪堡企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Spheniscus humboldti.png" alt="洪堡企鹅"></div>
+                <div class="penguin-name">洪堡企鹅</div>
+                <div class="penguin-scientific">Spheniscus humboldti</div>
+                <div class="penguin-taxonomy">属: Spheniscus | 种: humboldti</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>56-70cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>3.3-5.8kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>秘鲁、智利</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>粉色斑块</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    洪堡企鹅生活在南美洲太平洋沿岸，拥有粉色的裸露皮肤帮助散热。它们喜欢在洞穴中筑巢，是适应温暖气候的专家。性格温和友善，容易与人类亲近。
+                </div>
+            </div>
+
+            <!-- 加拉帕戈斯企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Spheniscus mendiculus.png" alt="加拉帕戈斯企鹅"></div>
+                <div class="penguin-name">加拉帕戈斯企鹅</div>
+                <div class="penguin-scientific">Spheniscus mendiculus</div>
+                <div class="penguin-taxonomy">属: Spheniscus | 种: mendiculus</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>49-53cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>1.7-2.6kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>加拉帕戈斯群岛</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>热带企鹅</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    加拉帕戈斯企鹅是唯一生活在赤道附近的企鹅，也是第二小的企鹅种类。它们适应了热带气候，拥有出色的散热能力。数量极少，是极度濒危的珍贵物种。
+                </div>
+            </div>
+
+            <!-- 白翅鳍脚企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Eudyptula minor.png" alt="白翅鳍脚企鹅"></div>
+                <div class="penguin-name">白翅鳍脚企鹅</div>
+                <div class="penguin-scientific">Eudyptula albosignata</div>
+                <div class="penguin-taxonomy">属: Eudyptula | 种: albosignata</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>30-35cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>0.9-1.4kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>新西兰</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>白色翅膀边缘</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    白翅鳍脚企鹅是小蓝企鹅的亚种，翅膀边缘有独特的白色条纹。它们非常小巧可爱，是新西兰特有的企鹅。夜间活动，白天隐藏在岩石缝隙中休息。
+                </div>
+            </div>
+
+            <!-- 南乔治亚企鹅 -->
+            <div class="penguin-card">
+                <div class="penguin-image"><img src="P/Eudyptes chrysocome.png" alt="南乔治亚企鹅"></div>
+                <div class="penguin-name">南乔治亚企鹅</div>
+                <div class="penguin-scientific">Eudyptes chrysocome</div>
+                <div class="penguin-taxonomy">属: Eudyptes | 种: chrysocome</div>
+                <div class="penguin-info">
+                    <div class="info-item">
+                        <span class="info-label">身高:</span>
+                        <span>45-58cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">体重:</span>
+                        <span>2-3.4kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">栖息地:</span>
+                        <span>亚南极岛屿</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">特征:</span>
+                        <span>跳跃移动</span>
+                    </div>
+                </div>
+                <div class="penguin-description">
+                    南乔治亚企鹅又称南跳岩企鹅，以其特殊的跳跃式移动方式而闻名。它们拥有亮丽的黄色冠毛和红色眼睛，性格活泼好动，是企鹅中的"体操运动员"。
+                </div>
+            </div>
+        
+    </div>
+
+    <div class="footer">
+        <h3>🐧 保护企鹅，保护我们的海洋朋友 🐧</h3>
+        <p>企鹅面临着气候变化、海洋污染等威胁，让我们一起行动起来保护这些可爱的生物！</p>
+    </div>
+</body>
+</html>
