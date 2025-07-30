@@ -591,6 +591,7 @@ Scale AI 的全球数据标注业务高度依赖其子公司（如 Remotasks 和
 
 ::: {.callout-note}
 
-Scare AI 声名狼藉，被成为：**建立在第三世界血汗工厂上的AI新殖民主义** \
+Scare AI 声名狼藉，被称为：**建立在第三世界血汗工厂上的 AI 新殖民主义** \
 见知乎：[如何评价Scale AI（AI数据标注独角兽公司） 的创始人汪滔（Alexandr Wang）](https://www.zhihu.com/question/10816744790)
+
 :::
